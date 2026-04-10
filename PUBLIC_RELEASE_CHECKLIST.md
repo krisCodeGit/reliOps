@@ -10,7 +10,7 @@ Use this before the first public GitHub push.
 
 ## Content Review
 
-- Read the public [README.md](/Users/kris/Documents/Documents - Kris’s MacBook Pro/UpliftPal/reliops_mvp/README.md) once as an external reader.
+- Read the public [README.md](README.md) once as an external reader.
 - Confirm the mock data is acceptable to publish and still clearly synthetic.
 - Remove any references to customers, deals, internal roadmaps, or private product plans from public files.
 

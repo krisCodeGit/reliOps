@@ -3,7 +3,7 @@
 import os
 from pathlib import Path
 
-# Base directory is the reliops_mvp root (parent of app/)
+# Base directory is the repo root (parent of app/)
 BASE_DIR = Path(__file__).resolve().parent.parent
 INSTANCE_DIR = BASE_DIR / 'instance'
 CACHE_DIR = INSTANCE_DIR / 'cache'

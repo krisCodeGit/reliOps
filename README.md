@@ -75,7 +75,7 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000) for the dashboard or [http:/
 - `docs/internal/` is reserved for local internal notes; its contents are ignored by git except for a small placeholder README.
 - The app currently allows open CORS and uses seeded demo data by default.
 - There is no authentication, tenancy, or deployment hardening in this MVP.
-- See [PUBLIC_RELEASE_CHECKLIST.md](/Users/kris/Documents/Documents - Kris’s MacBook Pro/UpliftPal/reliops_mvp/PUBLIC_RELEASE_CHECKLIST.md) before the first public push.
+- See [PUBLIC_RELEASE_CHECKLIST.md](PUBLIC_RELEASE_CHECKLIST.md) before the first public push.
 
 ## Development
 
@@ -90,12 +90,12 @@ If you change the mock data, rerun `python manage.py init-db` to rebuild the loc
 
 ## Contributing
 
-See [CONTRIBUTING.md](/Users/kris/Documents/Documents - Kris’s MacBook Pro/UpliftPal/reliops_mvp/CONTRIBUTING.md) for development expectations and repo conventions.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development expectations and repo conventions.
 
 ## Security
 
-See [SECURITY.md](/Users/kris/Documents/Documents - Kris’s MacBook Pro/UpliftPal/reliops_mvp/SECURITY.md) for reporting guidance.
+See [SECURITY.md](SECURITY.md) for reporting guidance.
 
 ## License
 
-This project is released under the MIT License. See [LICENSE](/Users/kris/Documents/Documents - Kris’s MacBook Pro/UpliftPal/reliops_mvp/LICENSE).
+This project is released under the MIT License. See [LICENSE](LICENSE).
