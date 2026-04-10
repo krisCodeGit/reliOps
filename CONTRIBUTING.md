@@ -1,6 +1,6 @@
 # Contributing
 
-This repository is still an MVP, so keep changes small, reviewable, and easy to run locally.
+This repository is still evolving, so keep changes small, reviewable, and easy to run locally.
 
 ## Local Setup
 
@@ -15,7 +15,7 @@ python manage.py run --debug
 ## Guidelines
 
 - Prefer straightforward Python and standard-library solutions.
-- Keep the dashboard copy aligned with what the product actually does.
+- Keep the dashboard copy aligned with what the app actually does.
 - If you change seeded data in `mock_data/`, rerun `python manage.py init-db`.
 - Do not commit local databases, cache files, or private notes from `docs/internal/`.
 

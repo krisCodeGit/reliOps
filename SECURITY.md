@@ -9,4 +9,4 @@ Instead, send a private report to the project maintainer with:
 - Expected impact
 - Any suggested remediation
 
-This MVP is not intended for production deployment without additional hardening. Known gaps include open CORS, no authentication, and a local SQLite runtime model.
+This public codebase is intended for evaluation and development use. Production deployment would require environment-specific hardening, access control, and operational safeguards.

@@ -1,21 +1,15 @@
-# ReliOps MVP
+# ReliOps
 
-Analyze reliability risks in distributed systems using dependency graphs, scoring models, and audit reports.
+ReliOps is a reliability analysis platform for distributed systems, built around dependency graphs, scoring models, and audit reports.
 
-ReliOps is a small Flask prototype for exploring reliability risk reviews against a service catalog and dependency graph. It ships with seeded mock data, a lightweight SQLite store, a browser dashboard, and a configuration audit flow for trying scans against sample service definitions.
-
-The current codebase is best described as a working MVP:
-
-- It is easy to run locally.
-- It is useful for demos, internal discussion, and product exploration.
-- It is not packaged as a production-ready platform.
+This public codebase captures the core workflow: seeded mock data, a database-backed model, a browser dashboard, and a configuration audit flow for evaluating service definitions against operational risk rules. It is designed to be easy to run locally while still communicating the platform direction clearly.
 
 ## What It Does
 
 - Scans services against a fixed set of reliability rules.
 - Scores aggregate operational risk across the environment.
 - Highlights blast-radius hotspots and incident recurrence signals.
-- Stores seeded mock services, dependencies, and incidents in SQLite.
+- Stores seeded mock services, dependencies, and incidents in a local database.
 - Exposes JSON endpoints for the dashboard and audit flow.
 
 The bundled dataset is synthetic. Service names, incidents, and impact figures are sample data for local demos only.
@@ -24,7 +18,7 @@ The bundled dataset is synthetic. Service names, incidents, and impact figures a
 
 - Python 3
 - Flask
-- SQLite
+- Database-backed persistence
 - Vanilla HTML, CSS, and JavaScript
 
 ## Project Layout
@@ -33,11 +27,11 @@ The bundled dataset is synthetic. Service names, incidents, and impact figures a
 app/
   __init__.py          Flask app and routes
   config.py            Paths and runtime settings
-  models.py            SQLite schema and query helpers
+  models.py            Database schema and query helpers
   rules_engine.py      Reliability scanning logic
   templates/           Dashboard and audit pages
 mock_data/             Seed data used for local demos
-docs/internal/         Local-only internal notes kept out of git
+docs/internal/         Local-only notes ignored in normal public commits
 manage.py              CLI for database setup and dev server
 ```
 
@@ -72,10 +66,9 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000) for the dashboard or [http:/
 ## Notes for a Public Repo
 
 - Runtime artifacts live under `instance/` and should not be committed.
-- `docs/internal/` is reserved for local internal notes; its contents are ignored by git except for a small placeholder README.
-- The app currently allows open CORS and uses seeded demo data by default.
-- There is no authentication, tenancy, or deployment hardening in this MVP.
-- See [PUBLIC_RELEASE_CHECKLIST.md](PUBLIC_RELEASE_CHECKLIST.md) before the first public push.
+- `docs/internal/` exists so private working notes can stay local without being published.
+- The public repo focuses on the scoring engine, graph analysis, and audit workflow.
+- See [PUBLIC_RELEASE_CHECKLIST.md](PUBLIC_RELEASE_CHECKLIST.md) before a public push.
 
 ## Development
 
@@ -86,7 +79,7 @@ python manage.py init-db
 python manage.py run --debug
 ```
 
-If you change the mock data, rerun `python manage.py init-db` to rebuild the local SQLite database.
+If you change the mock data, rerun `python manage.py init-db` to rebuild the local database.
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 # Public Release Checklist
 
-Use this before the first public GitHub push.
+Use this before any public GitHub push.
 
 ## Repo Hygiene
 

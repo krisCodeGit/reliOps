@@ -1,7 +1,7 @@
 # Internal Notes
 
-This folder is reserved for private working notes, drafts, and internal reference material.
+This directory exists so private working notes, drafts, and reference material can live locally without being committed.
 
 The public repo keeps the folder itself, but git ignores everything inside it except this file and the local `.gitignore`.
 
-That lets you keep `docs/internal/` in your normal workflow without accidentally publishing private material.
+That keeps the workflow simple while making it harder to publish internal material by accident.
