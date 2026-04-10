@@ -1,0 +1,142 @@
+[
+  {
+    "source_service": "order-router",
+    "target_service": "market-data-gateway",
+    "dep_type": "sync",
+    "is_critical": true,
+    "description": "Order router reads market prices for order validation"
+  },
+  {
+    "source_service": "order-router",
+    "target_service": "risk-engine",
+    "dep_type": "sync",
+    "is_critical": true,
+    "description": "Order router calls risk engine for pre-trade risk checks"
+  },
+  {
+    "source_service": "order-router",
+    "target_service": "trade-execution",
+    "dep_type": "sync",
+    "is_critical": true,
+    "description": "Order router sends approved orders to execution service"
+  },
+  {
+    "source_service": "trade-execution",
+    "target_service": "order-router",
+    "dep_type": "sync",
+    "is_critical": true,
+    "description": "Execution service validates orders through router"
+  },
+  {
+    "source_service": "trade-execution",
+    "target_service": "position-manager",
+    "dep_type": "async",
+    "is_critical": true,
+    "description": "Execution service publishes trade events to position manager"
+  },
+  {
+    "source_service": "risk-engine",
+    "target_service": "market-data-gateway",
+    "dep_type": "sync",
+    "is_critical": true,
+    "description": "Risk engine consumes market prices for risk calculations"
+  },
+  {
+    "source_service": "risk-engine",
+    "target_service": "position-manager",
+    "dep_type": "sync",
+    "is_critical": true,
+    "description": "Risk engine reads positions for risk computation"
+  },
+  {
+    "source_service": "risk-engine",
+    "target_service": "pricing-service",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Risk engine uses pricing models for derivatives valuation"
+  },
+  {
+    "source_service": "position-manager",
+    "target_service": "audit-log-service",
+    "dep_type": "async",
+    "is_critical": false,
+    "description": "Position manager publishes position events for audit"
+  },
+  {
+    "source_service": "portfolio-analytics",
+    "target_service": "position-manager",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Portfolio analytics queries position data"
+  },
+  {
+    "source_service": "portfolio-analytics",
+    "target_service": "pricing-service",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Portfolio analytics uses pricing for PnL calculations"
+  },
+  {
+    "source_service": "portfolio-analytics",
+    "target_service": "market-data-gateway",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Portfolio analytics reads market prices for analytics"
+  },
+  {
+    "source_service": "compliance-engine",
+    "target_service": "trade-execution",
+    "dep_type": "async",
+    "is_critical": false,
+    "description": "Compliance engine monitors executed trades"
+  },
+  {
+    "source_service": "compliance-engine",
+    "target_service": "audit-log-service",
+    "dep_type": "async",
+    "is_critical": false,
+    "description": "Compliance engine reads audit logs for rule validation"
+  },
+  {
+    "source_service": "settlement-service",
+    "target_service": "trade-execution",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Settlement service queries executed trades"
+  },
+  {
+    "source_service": "settlement-service",
+    "target_service": "position-manager",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Settlement service verifies positions"
+  },
+  {
+    "source_service": "analytics-dashboard",
+    "target_service": "position-manager",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Dashboard queries live position data"
+  },
+  {
+    "source_service": "analytics-dashboard",
+    "target_service": "audit-log-service",
+    "dep_type": "sync",
+    "is_critical": false,
+    "description": "Dashboard displays audit trail"
+  },
+  {
+    "source_service": "notification-service",
+    "target_service": "order-router",
+    "dep_type": "async",
+    "is_critical": false,
+    "description": "Notification service subscribes to order events"
+  },
+  {
+    "source_service": "notification-service",
+    "target_service": "risk-engine",
+    "dep_type": "async",
+    "is_critical": false,
+    "description": "Notification service subscribes to risk alerts"
+  }
+]

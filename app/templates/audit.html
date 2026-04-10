@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReliOps Configuration Audit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            background: #12131a;
+            border-bottom: 2px solid #1e2028;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e8762d, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar-nav a {
+            color: #8a8f98;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .navbar-nav a:hover {
+            color: #f5a623;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* States */
+        .state {
+            display: none;
+        }
+
+        .state.active {
+            display: block;
+        }
+
+        /* STATE 1: Upload */
+        .upload-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .upload-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f5a623, #e8762d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .upload-hero p {
+            font-size: 1.1rem;
+            color: #8a8f98;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Drop Zone */
+        .drop-zone {
+            border: 2px dashed #1e2028;
+            border-radius: 2px;
+            padding: 3rem;
+            text-align: center;
+            background: #12131a;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 2rem;
+        }
+
+        .drop-zone:hover {
+            border-color: #f5a623;
+            background: rgba(245, 166, 35, 0.05);
+        }
+
+        .drop-zone.dragging {
+            border-color: #f5a623;
+            background: rgba(245, 166, 35, 0.1);
+        }
+
+        .drop-zone-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .drop-zone-text {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .drop-zone-subtext {
+            font-size: 0.85rem;
+            color: #8a8f98;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        /* Example YAML */
+        .example-section {
+            margin: 3rem 0;
+        }
+
+        .example-section h3 {
+            font-size: 0.9rem;
+            color: #8a8f98;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .example-code {
+            background: #1e2028;
+            border: 2px solid #2a2d35;
+            border-radius: 2px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #b0b5bd;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f5a623;
+            color: #0a0a0f;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #e8762d;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5a623, #e8762d);
+            color: #0a0a0f;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(245, 166, 35, 0.3);
+        }
+
+        .btn-secondary {
+            background: #12131a;
+            color: #f5a623;
+            border: 2px solid #f5a623;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 166, 35, 0.1);
+        }
+
+        /* STATE 2: Loading */
+        .loading-container {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem;
+            border: 4px solid #1e2028;
+            border-top: 4px solid #f5a623;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-subtext {
+            font-size: 0.9rem;
+            color: #8a8f98;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 4px;
+            background: #1e2028;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f5a623, #e8762d);
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* STATE 3: Results */
+        .results-header {
+            margin-bottom: 3rem;
+        }
+
+        .score-card {
+            background: #12131a;
+            border: 2px solid #1e2028;
+            border-radius: 2px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f5a623, #e8762d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-grade {
+            display: inline-block;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .grade-a { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+        .grade-b { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+        .grade-c { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .grade-d { background: rgba(255, 152, 0, 0.2); color: #ff9800; }
+        .grade-f { background: rgba(244, 67, 54, 0.2); color: #f44336; }
+
+        .score-label {
+            color: #8a8f98;
+            font-size: 0.9rem;
+        }
+
+        /* Risk Summary */
+        .risk-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .risk-card {
+            background: #12131a;
+            border: 2px solid #1e2028;
+            border-radius: 2px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .risk-count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .risk-critical { color: #f44336; }
+        .risk-high { color: #ff9800; }
+        .risk-medium { color: #ffc107; }
+        .risk-low { color: #4caf50; }
+
+        .risk-label {
+            color: #8a8f98;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Findings */
+        .findings-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .finding-card {
+            background: #12131a;
+            border-left: 4px solid #f5a623;
+            border-right: 2px solid #1e2028;
+            border-top: 2px solid #1e2028;
+            border-bottom: 2px solid #1e2028;
+            border-radius: 2px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .finding-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .finding-severity {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .severity-critical { background: rgba(244, 67, 54, 0.2); color: #f44336; }
+        .severity-high { background: rgba(255, 152, 0, 0.2); color: #ff9800; }
+        .severity-medium { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .severity-low { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+
+        .finding-service {
+            color: #f5a623;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .finding-description {
+            color: #8a8f98;
+            margin-bottom: 0.75rem;
+        }
+
+        .blast-radius {
+            font-size: 0.85rem;
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+        }
+
+        /* Dependency Map */
+        .dependency-map {
+            background: #12131a;
+            border: 2px solid #1e2028;
+            border-radius: 2px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        #dependency-graph {
+            width: 100%;
+            height: 400px;
+        }
+
+        /* Recurrence Warnings */
+        .warning-card {
+            background: rgba(255, 152, 0, 0.1);
+            border: 2px solid #ff9800;
+            border-radius: 2px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .warning-title {
+            color: #ff9800;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-text {
+            color: #8a8f98;
+            font-size: 0.9rem;
+        }
+
+        /* Recommendations */
+        .recommendations-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .recommendation-item {
+            background: #12131a;
+            border: 2px solid #1e2028;
+            border-radius: 2px;
+            padding: 1.5rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .recommendation-item::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            top: 1.25rem;
+            color: #4caf50;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .recommendation-title {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-text {
+            color: #8a8f98;
+            font-size: 0.9rem;
+        }
+
+        /* Share Section */
+        .share-section {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 2px solid #1e2028;
+            border-bottom: 2px solid #1e2028;
+            margin-bottom: 2rem;
+        }
+
+        .share-section p {
+            color: #8a8f98;
+            margin-bottom: 1.5rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: #12131a;
+            border: 2px solid #1e2028;
+            border-radius: 2px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-section p {
+            color: #8a8f98;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Utility */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #8a8f98;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-logo">ReliOps</div>
+        <ul class="navbar-nav">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/audit" style="color: #f5a623;">Configuration Audit</a></li>
+            <li><a href="/api/dashboard">API</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- STATE 1: Upload -->
+        <div id="state-upload" class="state active">
+            <div class="upload-hero">
+                <h1>Run a Configuration Audit</h1>
+                <p>Upload a small YAML or JSON service definition and inspect the rule results against the same scanner used by the sample dashboard.</p>
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">📁</div>
+                <div class="drop-zone-text">Drop your YAML or JSON file here</div>
+                <div class="drop-zone-subtext">or click to browse (max 1MB)</div>
+                <input type="file" id="file-input" accept=".yaml,.yml,.json">
+            </div>
+
+            <div class="example-section">
+                <h3>Example Configuration</h3>
+                <div class="example-code">
+                    <button class="copy-btn" onclick="copyExample()">Copy</button>
+                    <pre>services:
+  - name: order-router
+    tier: 1
+    az_count: 1
+    has_failover: false
+    has_circuit_breaker: true
+    slo_target: 0.999
+    dependencies:
+      - market-data-gateway
+      - risk-engine
+  - name: market-data-gateway
+    tier: 1
+    az_count: 1
+    has_failover: false
+    slo_target: 0.9999</pre>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="loadSampleData()">Try with Sample Data</button>
+                <button class="btn btn-primary" id="run-audit-btn" onclick="runAudit()" style="display: none;">Run Audit</button>
+            </div>
+        </div>
+
+        <!-- STATE 2: Loading -->
+        <div id="state-loading" class="state">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <div class="loading-text">Analyzing your configuration...</div>
+                <div id="loading-step" class="loading-subtext">Scanning services...</div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATE 3: Results -->
+        <div id="state-results" class="state">
+            <div class="results-header">
+                <!-- Score Card -->
+                <div class="score-card fade-in">
+                    <div class="score-number" id="scoreNumber">0</div>
+                    <div class="score-grade" id="scoreGrade">F</div>
+                    <div class="score-label">Reliability Score</div>
+                </div>
+
+                <!-- Risk Summary -->
+                <div class="risk-summary" id="riskSummary"></div>
+            </div>
+
+            <!-- Top Findings -->
+            <div class="findings-section" id="findingsSection">
+                <h2 class="section-title">Critical Findings</h2>
+                <div id="findingsList"></div>
+            </div>
+
+            <!-- Dependency Map -->
+            <div class="findings-section">
+                <h2 class="section-title">Service Dependencies</h2>
+                <div class="dependency-map">
+                    <div id="dependency-graph"></div>
+                </div>
+            </div>
+
+            <!-- Recurrence Warnings -->
+            <div class="findings-section" id="recurrenceSection" class="hidden">
+                <h2 class="section-title">Recurrence Warnings</h2>
+                <div id="recurrenceWarnings"></div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="findings-section">
+                <h2 class="section-title">Recommendations</h2>
+                <div class="recommendations-list" id="recommendationsList"></div>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <p>Share or export the current audit output</p>
+                <div class="share-buttons">
+                    <button class="btn btn-secondary" onclick="shareReport()">Copy Summary</button>
+                    <button class="btn btn-secondary" onclick="downloadPDF()">Print / Save as PDF</button>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <h3>Need a baseline comparison?</h3>
+                <p>The seeded dashboard shows the same app running against the bundled sample dataset.</p>
+                <button class="btn btn-primary" onclick="openDashboard()">Open Sample Dashboard →</button>
+            </div>
+
+            <!-- Back Button -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-secondary" onclick="startOver()">Run Another Audit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentFileData = null;
+        let currentResults = null;
+        const loadingSteps = [
+            'Scanning services...',
+            'Analyzing dependencies...',
+            'Calculating blast radius...',
+            'Detecting recurrence patterns...',
+            'Generating recommendations...'
+        ];
+        let currentStep = 0;
+
+        // File upload handlers
+        document.getElementById('dropZone').addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+
+        document.getElementById('dropZone').addEventListener('dragover', (e) => {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.add('dragging');
+        });
+
+        document.getElementById('dropZone').addEventListener('dragleave', () => {
+            document.getElementById('dropZone').classList.remove('dragging');
+        });
+
+        document.getElementById('dropZone').addEventListener('drop', (e) => {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.remove('dragging');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        document.getElementById('file-input').addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+
+            const file = files[0];
+            if (file.size > 1024 * 1024) {
+                alert('File too large. Maximum 1MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const content = e.target.result;
+                    if (file.name.endsWith('.json')) {
+                        currentFileData = JSON.parse(content);
+                    } else {
+                        // Simple YAML parser (basic support)
+                        currentFileData = parseYAML(content);
+                    }
+                    document.getElementById('run-audit-btn').style.display = 'inline-block';
+                } catch (error) {
+                    alert('Error parsing file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseYAML(yaml) {
+            // Basic YAML parser for this specific structure
+            const result = { services: [] };
+            const lines = yaml.split('\n');
+            let currentService = null;
+            let currentDependencies = [];
+            let inDependencies = false;
+
+            for (let line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.startsWith('#')) continue;
+
+                if (trimmed.startsWith('- name:')) {
+                    if (currentService) {
+                        currentService.dependencies = currentDependencies;
+                        result.services.push(currentService);
+                    }
+                    currentService = { name: trimmed.replace('- name:', '').trim(), dependencies: [] };
+                    currentDependencies = [];
+                    inDependencies = false;
+                } else if (trimmed === 'dependencies:') {
+                    inDependencies = true;
+                } else if (inDependencies && trimmed.startsWith('- ')) {
+                    currentDependencies.push(trimmed.replace('- ', '').trim());
+                } else if (currentService && !inDependencies) {
+                    const [key, value] = trimmed.split(':').map(s => s.trim());
+                    if (key && value) {
+                        if (value === 'true') currentService[key] = true;
+                        else if (value === 'false') currentService[key] = false;
+                        else if (!isNaN(value)) currentService[key] = parseFloat(value);
+                        else currentService[key] = value;
+                    }
+                }
+            }
+
+            if (currentService) {
+                currentService.dependencies = currentDependencies;
+                result.services.push(currentService);
+            }
+
+            return result;
+        }
+
+        function copyExample() {
+            const exampleText = `services:
+  - name: order-router
+    tier: 1
+    az_count: 1
+    has_failover: false
+    has_circuit_breaker: true
+    slo_target: 0.999
+    dependencies:
+      - market-data-gateway
+      - risk-engine
+  - name: market-data-gateway
+    tier: 1
+    az_count: 1
+    has_failover: false
+    slo_target: 0.9999`;
+            navigator.clipboard.writeText(exampleText);
+            alert('Example copied to clipboard!');
+        }
+
+        function loadSampleData() {
+            currentFileData = {
+                services: [
+                    {
+                        name: 'order-router',
+                        tier: 1,
+                        az_count: 1,
+                        has_failover: false,
+                        has_circuit_breaker: true,
+                        slo_target: 0.999,
+                        dependencies: ['market-data-gateway', 'risk-engine']
+                    },
+                    {
+                        name: 'market-data-gateway',
+                        tier: 1,
+                        az_count: 1,
+                        has_failover: false,
+                        slo_target: 0.9999,
+                        dependencies: []
+                    },
+                    {
+                        name: 'risk-engine',
+                        tier: 2,
+                        az_count: 2,
+                        has_failover: true,
+                        has_circuit_breaker: true,
+                        slo_target: 0.99,
+                        dependencies: ['market-data-gateway']
+                    },
+                    {
+                        name: 'notification-service',
+                        tier: 3,
+                        az_count: 1,
+                        has_failover: false,
+                        has_circuit_breaker: false,
+                        slo_target: 0.95,
+                        dependencies: ['order-router']
+                    }
+                ]
+            };
+            runAudit();
+        }
+
+        function runAudit() {
+            if (!currentFileData) return;
+
+            setState('loading');
+            currentStep = 0;
+            animateLoadingSteps();
+
+            // Simulate audit processing
+            setTimeout(() => {
+                performAudit();
+            }, 3000);
+        }
+
+        function animateLoadingSteps() {
+            if (currentStep < loadingSteps.length) {
+                document.getElementById('loading-step').textContent = loadingSteps[currentStep];
+                currentStep++;
+                setTimeout(animateLoadingSteps, 600);
+            }
+        }
+
+        function performAudit() {
+            if (!currentFileData || !currentFileData.services) {
+                alert('Invalid configuration');
+                setState('upload');
+                return;
+            }
+
+            const services = currentFileData.services;
+            const findings = [];
+            const recommendations = new Set();
+
+            // Calculate risk scores
+            let totalRiskScore = 0;
+            const serviceScores = {};
+
+            services.forEach(service => {
+                let risk = 0;
+                const serviceFinding = [];
+
+                // Check for single AZ (CRITICAL)
+                if (service.az_count === 1) {
+                    risk += 30;
+                    serviceFinding.push({
+                        severity: 'CRITICAL',
+                        title: 'Single Availability Zone',
+                        description: `${service.name} runs in only 1 AZ. Complete regional outage risk.`,
+                        blastRadius: `Affects ${service.name}`
+                    });
+                    recommendations.add({
+                        title: 'Deploy to Multiple AZs',
+                        text: 'Distribute services across 2+ availability zones for resilience'
+                    });
+                }
+
+                // Check for no failover (HIGH)
+                if (!service.has_failover) {
+                    risk += 20;
+                    serviceFinding.push({
+                        severity: 'HIGH',
+                        title: 'No Active-Active Failover',
+                        description: `${service.name} lacks failover. Single point of failure.`,
+                        blastRadius: `Affects ${service.name} + dependents`
+                    });
+                }
+
+                // Check for no circuit breaker (HIGH)
+                if (!service.has_circuit_breaker) {
+                    risk += 15;
+                    serviceFinding.push({
+                        severity: 'HIGH',
+                        title: 'No Circuit Breaker',
+                        description: `${service.name} has no circuit breaker. Cascading failure risk.`,
+                        blastRadius: 'Full dependency chain'
+                    });
+                    recommendations.add({
+                        title: 'Implement Circuit Breakers',
+                        text: 'Add circuit breaker patterns (Hystrix, Resilience4j, etc.) to prevent cascades'
+                    });
+                }
+
+                // Check SLO targets (MEDIUM)
+                if (service.slo_target < 0.999) {
+                    risk += 10;
+                    serviceFinding.push({
+                        severity: 'MEDIUM',
+                        title: 'Low SLO Target',
+                        description: `${service.name} SLO of ${(service.slo_target * 100).toFixed(2)}% is below 3-nines.`,
+                        blastRadius: 'Affects downstream services'
+                    });
+                    recommendations.add({
+                        title: 'Tighten SLO Targets',
+                        text: 'Move to 99.9% or higher SLO targets for critical services'
+                    });
+                }
+
+                // Check dependencies (MEDIUM)
+                if (service.dependencies && service.dependencies.length > 3) {
+                    risk += 8;
+                    serviceFinding.push({
+                        severity: 'MEDIUM',
+                        title: 'High Dependency Count',
+                        description: `${service.name} has ${service.dependencies.length} dependencies. Increased failure points.`,
+                        blastRadius: 'Service reliability = product of all dependencies'
+                    });
+                }
+
+                serviceScores[service.name] = Math.min(100, risk);
+                findings.push(...serviceFinding);
+                totalRiskScore += risk;
+            });
+
+            // Calculate overall score (0-100, higher is better)
+            const avgRisk = services.length > 0 ? totalRiskScore / services.length : 0;
+            const reliabilityScore = Math.max(0, 100 - Math.round(avgRisk));
+
+            // Count findings by severity
+            const riskCounts = {
+                CRITICAL: findings.filter(f => f.severity === 'CRITICAL').length,
+                HIGH: findings.filter(f => f.severity === 'HIGH').length,
+                MEDIUM: findings.filter(f => f.severity === 'MEDIUM').length,
+                LOW: findings.filter(f => f.severity === 'LOW').length
+            };
+
+            // Detect recurrence (services with similar risk patterns)
+            const recurrenceWarnings = [];
+            const singleAZServices = services.filter(s => s.az_count === 1).map(s => s.name);
+            const noFailoverServices = services.filter(s => !s.has_failover).map(s => s.name);
+
+            if (singleAZServices.length > 1) {
+                recurrenceWarnings.push({
+                    pattern: 'Single Availability Zone',
+                    services: singleAZServices
+                });
+            }
+
+            if (noFailoverServices.length > 1) {
+                recurrenceWarnings.push({
+                    pattern: 'No Failover Configuration',
+                    services: noFailoverServices
+                });
+            }
+
+            currentResults = {
+                score: reliabilityScore,
+                riskCounts,
+                findings,
+                services,
+                recurrenceWarnings,
+                recommendations: Array.from(recommendations)
+            };
+
+            setState('results');
+            renderResults();
+        }
+
+        function renderResults() {
+            const results = currentResults;
+
+            // Render score
+            const score = Math.round(results.score);
+            document.getElementById('scoreNumber').textContent = score;
+
+            let grade = 'F';
+            let gradeClass = 'grade-f';
+            if (score >= 90) { grade = 'A'; gradeClass = 'grade-a'; }
+            else if (score >= 80) { grade = 'B'; gradeClass = 'grade-b'; }
+            else if (score >= 70) { grade = 'C'; gradeClass = 'grade-c'; }
+            else if (score >= 60) { grade = 'D'; gradeClass = 'grade-d'; }
+
+            const gradeEl = document.getElementById('scoreGrade');
+            gradeEl.textContent = grade;
+            gradeEl.className = `score-grade ${gradeClass}`;
+
+            // Render risk summary
+            const riskSummaryHTML = `
+                <div class="risk-card">
+                    <div class="risk-count risk-critical">${results.riskCounts.CRITICAL}</div>
+                    <div class="risk-label">Critical</div>
+                </div>
+                <div class="risk-card">
+                    <div class="risk-count risk-high">${results.riskCounts.HIGH}</div>
+                    <div class="risk-label">High</div>
+                </div>
+                <div class="risk-card">
+                    <div class="risk-count risk-medium">${results.riskCounts.MEDIUM}</div>
+                    <div class="risk-label">Medium</div>
+                </div>
+                <div class="risk-card">
+                    <div class="risk-count risk-low">${results.riskCounts.LOW}</div>
+                    <div class="risk-label">Low</div>
+                </div>
+            `;
+            document.getElementById('riskSummary').innerHTML = riskSummaryHTML;
+
+            // Render findings
+            const findingsHTML = results.findings.length > 0
+                ? results.findings.map(finding => `
+                    <div class="finding-card fade-in">
+                        <div class="finding-header">
+                            <span class="finding-severity severity-${finding.severity.toLowerCase()}">${finding.severity}</span>
+                            <span class="finding-service">${finding.title}</span>
+                        </div>
+                        <div class="finding-description">${finding.description}</div>
+                        <div class="blast-radius">📊 ${finding.blastRadius}</div>
+                    </div>
+                `).join('')
+                : '<div class="empty-state">No findings detected. Your configuration looks good!</div>';
+
+            document.getElementById('findingsList').innerHTML = findingsHTML;
+
+            // Render dependency graph
+            renderDependencyGraph(results.services);
+
+            // Render recurrence warnings
+            if (results.recurrenceWarnings.length > 0) {
+                document.getElementById('recurrenceSection').classList.remove('hidden');
+                const warningsHTML = results.recurrenceWarnings.map(warning => `
+                    <div class="warning-card">
+                        <div class="warning-title">⚠️ ${warning.pattern}</div>
+                        <div class="warning-text">Found in: ${warning.services.join(', ')}</div>
+                    </div>
+                `).join('');
+                document.getElementById('recurrenceWarnings').innerHTML = warningsHTML;
+            } else {
+                document.getElementById('recurrenceSection').classList.add('hidden');
+            }
+
+            // Render recommendations
+            const recommendationsHTML = results.recommendations.map(rec => `
+                <div class="recommendation-item fade-in">
+                    <div class="recommendation-title">${rec.title}</div>
+                    <div class="recommendation-text">${rec.text}</div>
+                </div>
+            `).join('');
+            document.getElementById('recommendationsList').innerHTML = recommendationsHTML || '<div class="empty-state">All systems optimal!</div>';
+        }
+
+        function renderDependencyGraph(services) {
+            const container = document.getElementById('dependency-graph');
+            container.innerHTML = '';
+
+            if (!services || services.length === 0) return;
+
+            // Prepare nodes and links
+            const nodes = services.map((s, i) => ({
+                id: s.name,
+                name: s.name,
+                tier: s.tier || 1,
+                index: i
+            }));
+
+            const links = [];
+            services.forEach(service => {
+                if (service.dependencies) {
+                    service.dependencies.forEach(dep => {
+                        const target = services.find(s => s.name === dep);
+                        if (target) {
+                            links.push({
+                                source: service.name,
+                                target: dep
+                            });
+                        }
+                    });
+                }
+            });
+
+            // D3 force simulation
+            const width = container.clientWidth;
+            const height = 400;
+
+            const svg = d3.select('#dependency-graph')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            const simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(120))
+                .force('charge', d3.forceManyBody().strength(-300))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('y', d3.forceY(height / 2).strength(0.1));
+
+            // Links
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#1e2028')
+                .attr('stroke-width', 2);
+
+            // Nodes
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(nodes)
+                .enter()
+                .append('g')
+                .attr('class', 'node');
+
+            node.append('circle')
+                .attr('r', 25)
+                .attr('fill', '#f5a623')
+                .attr('stroke', '#e8762d')
+                .attr('stroke-width', 2);
+
+            node.append('text')
+                .text(d => d.name.substring(0, 3).toUpperCase())
+                .attr('text-anchor', 'middle')
+                .attr('dy', '0.3em')
+                .attr('fill', '#0a0a0f')
+                .attr('font-weight', 600)
+                .attr('font-size', '12px')
+                .attr('font-family', 'Inter, sans-serif');
+
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node.attr('transform', d => `translate(${d.x},${d.y})`);
+            });
+
+            // Add titles
+            node.append('title').text(d => d.name);
+        }
+
+        function shareReport() {
+            if (!currentResults) {
+                alert('Run an audit first so there is something to copy.');
+                return;
+            }
+
+            const findings = (currentResults.risk_findings || [])
+                .slice(0, 5)
+                .map(item => `- ${item.service || 'service'}: ${item.description || item.rule_name || 'finding'}`)
+                .join('\n');
+            const summary = [
+                `Reliability score: ${currentResults.overall_risk_score || 0} (${currentResults.risk_label || 'N/A'})`,
+                `Material exposures: ${currentResults.material_exposures || 0}`,
+                '',
+                'Top findings:',
+                findings || '- None'
+            ].join('\n');
+
+            navigator.clipboard.writeText(summary)
+                .then(() => alert('Audit summary copied to the clipboard.'))
+                .catch(() => alert('Clipboard copy failed. You can still print the page or copy the text manually.'));
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+
+        function openDashboard() {
+            window.location.href = '/';
+        }
+
+        function startOver() {
+            setState('upload');
+            currentFileData = null;
+            currentResults = null;
+            document.getElementById('file-input').value = '';
+            document.getElementById('run-audit-btn').style.display = 'none';
+        }
+
+        function setState(state) {
+            document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+            document.getElementById(`state-${state}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

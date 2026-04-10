@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReliOps Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0f 0%, #0f0f17 100%);
+            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* LAYOUT */
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+            padding: 16px 24px;
+            background: rgba(18, 19, 26, 0.6);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            color: #f5a623;
+            margin-right: 8px;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: #8a8f98;
+            margin-left: 12px;
+            padding-left: 12px;
+            border-left: 1px solid #1e2028;
+            display: inline-block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #8a8f98;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #f5a623;
+        }
+
+        .btn-demo {
+            background: linear-gradient(90deg, #e8762d 0%, #f5a623 100%);
+            color: #0a0a0f;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 166, 35, 0.3);
+        }
+
+        /* MAIN LAYOUT */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            background: rgba(18, 19, 26, 0.4);
+            border: 1px solid #1e2028;
+            padding: 48px;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .hero-headline {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, #ffffff 0%, #f5a623 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #8a8f98;
+            max-width: 600px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #e8762d 0%, #f5a623 100%);
+            color: #0a0a0f;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(245, 166, 35, 0.4);
+        }
+
+        .link-secondary {
+            color: #f5a623;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+
+        .link-secondary:hover {
+            gap: 12px;
+        }
+
+        /* CARDS */
+        .card {
+            background: rgba(18, 19, 26, 0.6);
+            border: 1px solid #1e2028;
+            padding: 32px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .card:hover {
+            background: rgba(18, 19, 26, 0.8);
+            border-color: #2a2d38;
+            box-shadow: 0 8px 32px rgba(245, 166, 35, 0.1);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-icon {
+            font-size: 18px;
+        }
+
+        /* RISK OVERVIEW */
+        .risk-score-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .risk-score {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .risk-score.low {
+            color: #2ecc71;
+        }
+
+        .risk-score.medium {
+            color: #f39c12;
+        }
+
+        .risk-score.high {
+            color: #e74c3c;
+        }
+
+        .risk-score.critical {
+            color: #c0392b;
+            animation: pulse-critical 2s infinite;
+        }
+
+        @keyframes pulse-critical {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .risk-label {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .risk-label.low {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+
+        .risk-label.medium {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+            border: 1px solid #f39c12;
+        }
+
+        .risk-label.high {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .risk-label.critical {
+            background: rgba(192, 57, 43, 0.2);
+            color: #c0392b;
+            border: 1px solid #c0392b;
+        }
+
+        .risk-subtitle {
+            font-size: 13px;
+            color: #8a8f98;
+            margin-top: 16px;
+        }
+
+        /* CRITICAL ISSUES LIST */
+        .issues-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .issue-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: rgba(245, 166, 35, 0.08);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+
+        .issue-item:hover {
+            background: rgba(245, 166, 35, 0.12);
+            border-color: rgba(245, 166, 35, 0.4);
+            padding-left: 20px;
+        }
+
+        .issue-content {
+            flex: 1;
+        }
+
+        .issue-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .issue-detail {
+            font-size: 12px;
+            color: #8a8f98;
+        }
+
+        .severity-badge {
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .severity-critical {
+            background: rgba(192, 57, 43, 0.3);
+            color: #ff6b6b;
+        }
+
+        .severity-high {
+            background: rgba(231, 76, 60, 0.3);
+            color: #ff8c42;
+        }
+
+        .severity-medium {
+            background: rgba(243, 156, 18, 0.3);
+            color: #ffa726;
+        }
+
+        /* GRID SECTIONS */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .dashboard-grid.full-width {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-grid.two-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 1366px) {
+            .dashboard-grid.two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* BLAST RADIUS */
+        .blast-radius-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .service-item {
+            padding: 12px;
+            background: rgba(245, 166, 35, 0.05);
+            border-left: 3px solid #f5a623;
+            border-radius: 2px;
+        }
+
+        .service-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        .service-impact {
+            font-size: 12px;
+            color: #8a8f98;
+        }
+
+        .impact-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border-radius: 2px;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* SYSTEM RISK MAP */
+        .risk-map {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tier-group {
+            padding: 16px;
+            background: rgba(18, 19, 26, 0.4);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+        }
+
+        .tier-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #8a8f98;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .services-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .service-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .service-dot:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .status-critical { background: #c0392b; }
+        .status-high { background: #e74c3c; }
+        .status-medium { background: #f39c12; }
+        .status-low { background: #2ecc71; }
+        .status-none { background: #3a3f4a; }
+
+        /* INCIDENT RECURRENCE */
+        .recurrence-stats {
+            margin-bottom: 24px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1e2028;
+        }
+
+        .stat-label {
+            color: #8a8f98;
+            font-size: 13px;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: #f5a623;
+            font-size: 14px;
+        }
+
+        .recurrence-patterns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .pattern-item {
+            padding: 12px;
+            background: rgba(245, 166, 35, 0.05);
+            border-left: 3px solid #f5a623;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        /* RELIABILITY DEBT */
+        .debt-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .debt-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(18, 19, 26, 0.4);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+        }
+
+        .debt-label {
+            font-weight: 500;
+            color: #8a8f98;
+        }
+
+        .debt-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: #f5a623;
+            font-size: 14px;
+        }
+
+        .effort-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(18, 19, 26, 0.8);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .effort-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e8762d 0%, #f5a623 100%);
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        /* AI INSIGHTS */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .insight-card {
+            background: rgba(245, 166, 35, 0.08);
+            border: 1px solid rgba(245, 166, 35, 0.2);
+            padding: 16px;
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+
+        .insight-card:hover {
+            background: rgba(245, 166, 35, 0.12);
+            border-color: rgba(245, 166, 35, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .insight-icon {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .insight-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        /* D3 GRAPH */
+        #dependency-graph {
+            width: 100%;
+            height: 500px;
+            background: rgba(18, 19, 26, 0.8);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .graph-controls {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .graph-btn {
+            background: rgba(18, 19, 26, 0.9);
+            border: 1px solid #1e2028;
+            color: #8a8f98;
+            padding: 6px 12px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .graph-btn:hover {
+            background: rgba(18, 19, 26, 0.95);
+            border-color: #f5a623;
+            color: #f5a623;
+        }
+
+        svg {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .node {
+            stroke: rgba(255, 255, 255, 0.3);
+            stroke-width: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .node:hover {
+            stroke: #f5a623;
+            stroke-width: 3px;
+            filter: drop-shadow(0 0 8px rgba(245, 166, 35, 0.5));
+        }
+
+        .node.highlighted {
+            stroke: #f5a623;
+            stroke-width: 3px;
+            filter: drop-shadow(0 0 12px rgba(245, 166, 35, 0.8));
+        }
+
+        .node.blast-affected {
+            animation: pulse-glow 1s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(245, 166, 35, 0.4)); }
+            50% { filter: drop-shadow(0 0 8px rgba(245, 166, 35, 0.8)); }
+        }
+
+        .link {
+            stroke: #3a3f4a;
+            stroke-width: 2px;
+            opacity: 0.6;
+            transition: all 0.2s;
+        }
+
+        .link.critical {
+            stroke: #e74c3c;
+            opacity: 0.8;
+        }
+
+        .link.highlighted {
+            stroke: #f5a623;
+            stroke-width: 3px;
+            opacity: 1;
+        }
+
+        .node-label {
+            font-size: 11px;
+            font-weight: 500;
+            text-anchor: middle;
+            pointer-events: none;
+            fill: #ffffff;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(18, 19, 26, 0.95);
+            border: 1px solid #f5a623;
+            padding: 12px 16px;
+            border-radius: 2px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 20;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .tooltip.visible {
+            display: block;
+        }
+
+        .tooltip-title {
+            font-weight: 600;
+            color: #f5a623;
+            margin-bottom: 8px;
+        }
+
+        .tooltip-item {
+            margin-bottom: 4px;
+            color: #8a8f98;
+        }
+
+        .tooltip-item.critical {
+            color: #ff6b6b;
+        }
+
+        /* LOADING SKELETON */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(18, 19, 26, 0.6) 25%, rgba(30, 32, 40, 0.6) 50%, rgba(18, 19, 26, 0.6) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-line {
+            height: 16px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-card {
+            height: 200px;
+            margin-bottom: 24px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid #1e2028;
+            margin-top: 48px;
+            color: #8a8f98;
+            font-size: 12px;
+        }
+
+        .footer-logo {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .footer-icon {
+            color: #f5a623;
+            margin-right: 4px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1366px) {
+            .container {
+                padding: 16px;
+            }
+
+            .hero-headline {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .dashboard-grid.two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-score {
+                font-size: 56px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+
+        /* COUNTER ANIMATION */
+        .counter {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        /* HIDDEN STATE */
+        .hidden {
+            display: none !important;
+        }
+
+        .loading .content {
+            opacity: 0.3;
+        }
+
+        .loading .spinner {
+            display: flex;
+        }
+
+        .spinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f5a623;
+            margin: 0 4px;
+            animation: spin 1.4s infinite;
+        }
+
+        .spinner-dot:nth-child(1) { animation-delay: -0.32s; }
+        .spinner-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes spin {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
+            40% { opacity: 1; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP BAR -->
+        <div class="top-bar">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>ReliOps<span class="logo-subtitle">by UpliftPal</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="/audit" class="nav-link">Run Audit</a>
+                <button class="btn-demo" onclick="window.location.href='/api/dashboard'">View JSON</button>
+            </div>
+        </div>
+
+        <!-- HERO SECTION -->
+        <div class="hero-section">
+            <h1 class="hero-headline">Reliability risk review for service teams</h1>
+            <p class="hero-subtitle">A local prototype for scanning service metadata, dependencies, and incident history to surface operational weak points.</p>
+            <div class="hero-ctas">
+                <button class="btn-primary" onclick="window.location.href='/audit'">Open Audit Tool</button>
+                <a href="/api/dashboard" class="link-secondary">View API Payload <span>→</span></a>
+            </div>
+        </div>
+
+        <!-- MAIN DASHBOARD -->
+        <div class="dashboard-layout">
+            <!-- ROW 1: Risk Overview & Critical Issues -->
+            <div class="dashboard-grid two-col">
+                <!-- OPERATIONAL RISK -->
+                <div class="card fade-in">
+                    <div class="card-title"><span class="card-icon">⚠️</span>Operational Reliability Risk</div>
+                    <div class="loading">
+                        <div class="spinner">
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                        </div>
+                        <div class="content">
+                            <div class="risk-score-container">
+                                <div class="risk-score counter" id="risk-score">--</div>
+                                <div class="risk-label" id="risk-label">Loading...</div>
+                                <div class="risk-subtitle" id="risk-exposures">Analyzing infrastructure...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CRITICAL ISSUES -->
+                <div class="card fade-in">
+                    <div class="card-title"><span class="card-icon">🔴</span>Critical Issues</div>
+                    <div class="loading">
+                        <div class="spinner">
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                        </div>
+                        <div class="content">
+                            <div class="issues-list" id="issues-list">
+                                <div class="skeleton skeleton-line" style="width: 100%; height: 60px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2: Blast Radius & Risk Map -->
+            <div class="dashboard-grid two-col">
+                <!-- FAILURE BLAST RADIUS -->
+                <div class="card fade-in" style="animation-delay: 0.1s;">
+                    <div class="card-title"><span class="card-icon">💥</span>Failure Blast Radius Simulation</div>
+                    <div class="loading">
+                        <div class="spinner">
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                        </div>
+                        <div class="content">
+                            <div class="blast-radius-content" id="blast-radius">
+                                <div class="skeleton skeleton-line" style="width: 100%; height: 40px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DRIFT SIGNALS -->
+                <div class="card fade-in" style="animation-delay: 0.15s;">
+                    <div class="card-title"><span class="card-icon">🧭</span>Drift Signals</div>
+                    <div class="loading">
+                        <div class="spinner">
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                        </div>
+                        <div class="content">
+                            <div class="risk-map" id="drift-content">
+                                <div class="skeleton skeleton-line" style="width: 100%; height: 100px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3: Incident Recurrence & Reliability Debt -->
+            <div class="dashboard-grid two-col">
+                <!-- RECURRENCE ALERTS -->
+                <div class="card fade-in" style="animation-delay: 0.2s;">
+                    <div class="card-title"><span class="card-icon">📊</span>Recurrence Alerts</div>
+                    <div class="loading">
+                        <div class="spinner">
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                        </div>
+                        <div class="content" id="recurrence-content">
+                            <div class="skeleton skeleton-line" style="width: 100%; height: 80px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RELIABILITY DEBT -->
+                <div class="card fade-in" style="animation-delay: 0.25s;">
+                    <div class="card-title"><span class="card-icon">💳</span>Reliability Debt</div>
+                    <div class="loading">
+                        <div class="spinner">
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                            <div class="spinner-dot"></div>
+                        </div>
+                        <div class="content" id="debt-content">
+                            <div class="skeleton skeleton-line" style="width: 100%; height: 80px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 4: Suggested Next Steps -->
+            <div class="card fade-in" style="animation-delay: 0.3s;">
+                <div class="card-title"><span class="card-icon">🧠</span>Suggested Next Steps</div>
+                <div class="loading">
+                    <div class="spinner">
+                        <div class="spinner-dot"></div>
+                        <div class="spinner-dot"></div>
+                        <div class="spinner-dot"></div>
+                    </div>
+                    <div class="content">
+                        <div class="insights-grid" id="insights-grid">
+                            <div class="skeleton skeleton-line" style="width: 100%; height: 60px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 5: Dependency Graph -->
+            <div class="card fade-in" style="animation-delay: 0.35s;">
+                <div class="card-title"><span class="card-icon">🔗</span>Dependency Graph</div>
+                <div class="loading">
+                    <div class="spinner">
+                        <div class="spinner-dot"></div>
+                        <div class="spinner-dot"></div>
+                        <div class="spinner-dot"></div>
+                    </div>
+                    <div class="content">
+                        <div id="dependency-graph"></div>
+                        <div class="graph-controls">
+                            <button class="graph-btn" id="zoom-reset">Reset View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="footer-logo"><span class="footer-icon">⚡</span>ReliOps by UpliftPal</div>
+            <div>Flask MVP for reliability scoring and dependency review.</div>
+        </div>
+    </div>
+
+    <!-- TOOLTIP -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script>
+        // ============ UTILITIES ============
+
+        const API_BASE = '/api';
+        const state = {
+            dashboardData: null,
+            dependencyData: null,
+            graph: null,
+            simulation: null
+        };
+
+        // Counter animation for risk score
+        function animateCounter(element, target, duration = 1000) {
+            let current = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 16);
+        }
+
+        // ============ DATA LOADING ============
+
+        async function loadDashboardData() {
+            try {
+                const response = await fetch(`${API_BASE}/dashboard`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                state.dashboardData = await response.json();
+                renderDashboard();
+                return true;
+            } catch (error) {
+                console.error('Dashboard load failed:', error);
+                showError('Failed to load dashboard data');
+                return false;
+            }
+        }
+
+        async function loadDependencyData() {
+            try {
+                const response = await fetch(`${API_BASE}/dependencies`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                state.dependencyData = await response.json();
+                renderDependencyGraph();
+                return true;
+            } catch (error) {
+                console.error('Dependency load failed:', error);
+                return false;
+            }
+        }
+
+        function showError(message) {
+            console.error(message);
+            // Could add UI error display here
+        }
+
+        // ============ RENDERING ============
+
+        function getRiskLevel(score) {
+            if (score >= 80) return 'critical';
+            if (score >= 60) return 'high';
+            if (score >= 40) return 'medium';
+            return 'low';
+        }
+
+        function getRiskLevelLabel(score) {
+            const level = getRiskLevel(score);
+            return level.toUpperCase();
+        }
+
+        function getSeverityClass(severity) {
+            const s = severity.toLowerCase();
+            if (s === 'critical') return 'severity-critical';
+            if (s === 'high') return 'severity-high';
+            return 'severity-medium';
+        }
+
+        function renderDashboard() {
+            if (!state.dashboardData) return;
+
+            const data = state.dashboardData;
+
+            // Risk Score
+            const riskScore = data.overall_risk_score || 0;
+            const riskLevel = getRiskLevel(riskScore);
+            document.getElementById('risk-score').className = `risk-score counter ${riskLevel}`;
+            document.getElementById('risk-label').className = `risk-label ${riskLevel}`;
+            document.getElementById('risk-label').textContent = getRiskLevelLabel(riskScore);
+            document.getElementById('risk-exposures').textContent = `+${data.material_exposures || 0} material exposures detected`;
+
+            // Animate risk score
+            animateCounter(document.getElementById('risk-score'), riskScore);
+
+            // Remove loading state for risk card
+            document.querySelector('[id="risk-score"]').closest('.loading').classList.remove('loading');
+
+            // Critical Issues
+            renderCriticalIssues(data.critical_issues || []);
+
+            // Blast Radius
+            renderBlastRadius(data.blast_radius_hotspots || []);
+
+            // Drift Signals
+            renderDriftSignals(data.drift_signals || []);
+
+            // Incident Recurrence
+            renderIncidentRecurrence(data.recurrence_alerts || []);
+
+            // Reliability Debt
+            renderReliabilityDebt(data.reliability_debt || {});
+
+            // AI Insights
+            renderAIInsights(data.ai_insights || []);
+
+            // Load dependency graph
+            loadDependencyData();
+        }
+
+        function renderCriticalIssues(issues) {
+            const container = document.getElementById('issues-list');
+            container.innerHTML = '';
+
+            if (issues.length === 0) {
+                container.innerHTML = '<p style="color: #8a8f98;">No critical issues detected</p>';
+                container.closest('.loading').classList.remove('loading');
+                return;
+            }
+
+            issues.forEach((issue, idx) => {
+                const item = document.createElement('div');
+                item.className = 'issue-item fade-in';
+                item.style.animationDelay = `${idx * 0.05}s`;
+                item.innerHTML = `
+                    <div class="issue-content">
+                        <div class="issue-title">${escapeHtml(issue.service || 'Unknown Service')} · ${escapeHtml(issue.rule || 'Risk')}</div>
+                        <div class="issue-detail">${escapeHtml(issue.description || '')}</div>
+                    </div>
+                    <span class="severity-badge ${getSeverityClass(issue.severity)}">${issue.severity}</span>
+                `;
+                container.appendChild(item);
+            });
+
+            container.closest('.loading').classList.remove('loading');
+        }
+
+        function renderBlastRadius(hotspots) {
+            const container = document.getElementById('blast-radius');
+            container.innerHTML = '';
+
+            if (!hotspots.length) {
+                container.innerHTML = '<p style="color: #8a8f98;">No blast-radius hotspots in the current sample.</p>';
+                container.closest('.loading').classList.remove('loading');
+                return;
+            }
+
+            const html = hotspots.slice(0, 5).map(item => `
+                <div class="service-item">
+                    <div class="service-name">${escapeHtml(item.service || 'Unknown Service')}</div>
+                    <div class="service-impact">Potentially affects ${item.affected_count || item.blast_radius || 0} downstream services.</div>
+                    <div class="impact-badge">Blast radius: ${item.blast_radius || 0}</div>
+                </div>
+            `).join('');
+
+            container.innerHTML = html;
+            container.closest('.loading').classList.remove('loading');
+        }
+
+        function renderDriftSignals(signals) {
+            const container = document.getElementById('drift-content');
+            container.innerHTML = '';
+
+            if (!signals.length) {
+                container.innerHTML = '<p style="color: #8a8f98;">No drift signals have been recorded yet.</p>';
+                container.closest('.loading').classList.remove('loading');
+                return;
+            }
+
+            signals.forEach(signal => {
+                const item = document.createElement('div');
+                item.className = 'tier-group';
+                item.innerHTML = `
+                    <div class="tier-label">${escapeHtml(signal.type || 'drift_signal')}</div>
+                    <div style="font-weight: 600; margin-bottom: 8px;">${escapeHtml(signal.service || 'System')}</div>
+                    <div style="color: #8a8f98; font-size: 13px;">Previous: ${escapeHtml(String(signal.prev_value ?? 'n/a'))}</div>
+                    <div style="color: #8a8f98; font-size: 13px;">Current: ${escapeHtml(String(signal.curr_value ?? 'n/a'))}</div>
+                `;
+                container.appendChild(item);
+            });
+
+            container.closest('.loading').classList.remove('loading');
+        }
+
+        function renderIncidentRecurrence(alerts) {
+            const container = document.getElementById('recurrence-content');
+            container.innerHTML = '';
+
+            if (!alerts.length) {
+                container.innerHTML = '<p style="color: #8a8f98;">No recurrence alerts in the current sample.</p>';
+                container.closest('.loading').classList.remove('loading');
+                return;
+            }
+
+            const html = `
+                <div class="recurrence-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Active Alerts</span>
+                        <span class="stat-value">${alerts.length}</span>
+                    </div>
+                </div>
+                <div class="recurrence-patterns">
+                    ${alerts.slice(0, 5).map(alert => `
+                        <div class="pattern-item">
+                            <strong>${escapeHtml(alert.service || 'Unknown Service')}</strong><br>
+                            <span style="color: #8a8f98;">${escapeHtml(alert.description || '')}</span><br>
+                            <span style="color: #f5a623;">Recurrence score: ${escapeHtml(String(Math.round(alert.recurrence_score || 0)))}%</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+            container.closest('.loading').classList.remove('loading');
+        }
+
+        function renderReliabilityDebt(debt) {
+            const container = document.getElementById('debt-content');
+            container.innerHTML = '';
+
+            const items = [
+                { label: 'Critical', count: debt.critical || 0 },
+                { label: 'High', count: debt.high || 0 },
+                { label: 'Medium', count: debt.medium || 0 }
+            ];
+
+            const totalEffort = debt.total_effort_days || 0;
+            const fillPercent = Math.min(100, (totalEffort / 30) * 100);
+
+            const html = `
+                ${items.map(item => `
+                    <div class="debt-item">
+                        <span class="debt-label">${item.label} Priority</span>
+                        <span class="debt-count">${item.count}</span>
+                    </div>
+                `).join('')}
+                <div style="margin-top: 16px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span class="stat-label">Estimated Remediation Effort (days)</span>
+                        <span class="stat-value">${totalEffort}</span>
+                    </div>
+                    <div class="effort-bar">
+                        <div class="effort-fill" style="width: ${fillPercent}%"></div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            container.closest('.loading').classList.remove('loading');
+        }
+
+        function renderAIInsights(insights) {
+            const container = document.getElementById('insights-grid');
+            container.innerHTML = '';
+
+            if (insights.length === 0) {
+                container.innerHTML = '<p style="color: #8a8f98;">No suggested next steps available.</p>';
+                container.closest('.loading').classList.remove('loading');
+                return;
+            }
+
+            insights.forEach((insight, idx) => {
+                const card = document.createElement('div');
+                card.className = 'insight-card fade-in';
+                card.style.animationDelay = `${idx * 0.05}s`;
+                card.innerHTML = `
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text">${escapeHtml(typeof insight === 'string' ? insight : (insight.text || ''))}</div>
+                `;
+                container.appendChild(card);
+            });
+
+            container.closest('.loading').classList.remove('loading');
+        }
+
+        // ============ D3 DEPENDENCY GRAPH ============
+
+        function renderDependencyGraph() {
+            if (!state.dependencyData) return;
+
+            const graphContainer = document.getElementById('dependency-graph');
+            const data = state.dependencyData;
+
+            // Clear previous
+            graphContainer.innerHTML = '';
+
+            // Dimensions
+            const width = graphContainer.clientWidth;
+            const height = 500;
+
+            // SVG
+            const svg = d3.select('#dependency-graph')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Add gradient for nodes
+            const defs = svg.append('defs');
+
+            // Force simulation
+            const simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links)
+                    .id(d => d.id)
+                    .distance(100))
+                .force('charge', d3.forceManyBody().strength(-300))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('collision', d3.forceCollide().radius(d => {
+                    const tierMap = { 'tier_1': 20, 'tier_2': 15, 'tier_3': 10 };
+                    return tierMap[d.tier] || 12;
+                }));
+
+            // Links
+            const link = svg.selectAll('line')
+                .data(data.links)
+                .enter()
+                .append('line')
+                .attr('class', d => `link ${d.critical ? 'critical' : ''}`)
+                .attr('marker-end', 'url(#arrowhead)');
+
+            // Arrow marker
+            defs.append('marker')
+                .attr('id', 'arrowhead')
+                .attr('markerWidth', 10)
+                .attr('markerHeight', 10)
+                .attr('refX', 9)
+                .attr('refY', 3)
+                .attr('orient', 'auto')
+                .append('polygon')
+                .attr('points', '0 0, 10 3, 0 6')
+                .attr('fill', '#3a3f4a');
+
+            // Nodes
+            const node = svg.selectAll('circle')
+                .data(data.nodes)
+                .enter()
+                .append('circle')
+                .attr('class', 'node')
+                .attr('r', d => {
+                    const tierMap = { 'tier_1': 18, 'tier_2': 13, 'tier_3': 8 };
+                    return tierMap[d.tier] || 10;
+                })
+                .attr('fill', d => {
+                    const riskMap = {
+                        'critical': '#c0392b',
+                        'high': '#e74c3c',
+                        'medium': '#f39c12',
+                        'low': '#2ecc71',
+                        'none': '#3a3f4a'
+                    };
+                    return riskMap[d.risk] || '#3a3f4a';
+                })
+                .call(d3.drag()
+                    .on('start', dragStart)
+                    .on('drag', dragged)
+                    .on('end', dragEnd))
+                .on('click', nodeClicked)
+                .on('mouseover', nodeHovered)
+                .on('mouseout', nodeUnhovered);
+
+            // Labels
+            const labels = svg.selectAll('text')
+                .data(data.nodes)
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .attr('dy', d => {
+                    const tierMap = { 'tier_1': 32, 'tier_2': 26, 'tier_3': 21 };
+                    return tierMap[d.tier] || 20;
+                })
+                .text(d => d.id);
+
+            // Simulation tick
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+
+            // Zoom
+            const zoom = d3.zoom().on('zoom', e => {
+                svg.selectAll('circle, line, text').attr('transform', e.transform);
+            });
+
+            svg.call(zoom);
+
+            // Reset zoom button
+            document.getElementById('zoom-reset').addEventListener('click', () => {
+                svg.transition()
+                    .duration(750)
+                    .call(zoom.transform, d3.zoomIdentity.translate(0, 0));
+            });
+
+            // Drag handlers
+            function dragStart(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragEnd(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            // Node interaction
+            function nodeClicked(event, d) {
+                // Clear previous
+                node.classed('highlighted', false).classed('blast-affected', false);
+                link.classed('highlighted', false);
+
+                // Highlight clicked node and connected
+                node.classed('highlighted', nd => nd.id === d.id);
+
+                const connectedIds = new Set();
+                link.classed('highlighted', l => {
+                    if (l.source.id === d.id || l.target.id === d.id) {
+                        connectedIds.add(l.source.id);
+                        connectedIds.add(l.target.id);
+                        return true;
+                    }
+                    return false;
+                });
+
+                node.classed('blast-affected', nd => connectedIds.has(nd.id) && nd.id !== d.id);
+            }
+
+            function nodeHovered(event, d) {
+                const tooltip = document.getElementById('tooltip');
+                tooltip.classList.add('visible');
+                tooltip.style.left = event.pageX + 12 + 'px';
+                tooltip.style.top = event.pageY + 12 + 'px';
+
+                const downstream = data.links.filter(l => l.source.id === d.id).length;
+                const upstream = data.links.filter(l => l.target.id === d.id).length;
+
+                tooltip.innerHTML = `
+                    <div class="tooltip-title">${d.id}</div>
+                    <div class="tooltip-item">Tier: ${d.tier.toUpperCase()}</div>
+                    <div class="tooltip-item ${d.risk === 'critical' ? 'critical' : ''}">Risk: ${d.risk.toUpperCase()}</div>
+                    <div class="tooltip-item">Downstream: ${downstream}</div>
+                    <div class="tooltip-item">Upstream: ${upstream}</div>
+                `;
+            }
+
+            function nodeUnhovered() {
+                document.getElementById('tooltip').classList.remove('visible');
+            }
+
+            document.addEventListener('mousemove', e => {
+                const tooltip = document.getElementById('tooltip');
+                if (tooltip.classList.contains('visible')) {
+                    tooltip.style.left = e.pageX + 12 + 'px';
+                    tooltip.style.top = e.pageY + 12 + 'px';
+                }
+            });
+
+            // Remove loading
+            document.getElementById('dependency-graph').closest('.loading').classList.remove('loading');
+        }
+
+        // ============ UTILITIES ============
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // ============ INIT ============
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local runtime state
+instance/*
+!instance/.gitkeep
+
+# Logs and local config
+*.log
+.env
+.env.*
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Internal working docs stay local
+docs/internal/**
+!docs/internal/
+!docs/internal/.gitignore
+!docs/internal/README.md
