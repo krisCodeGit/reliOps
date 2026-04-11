@@ -1,4 +1,9 @@
-"""CLI entrypoint for ReliOps MVP."""
+"""
+ReliOps - CLI entrypoint.
+Database init, dev server, and management commands.
+
+Author: Kris R. (UpliftPal)
+"""
 
 import sys
 import os
@@ -19,7 +24,7 @@ def cmd_init_db():
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='ReliOps MVP CLI')
+    parser = argparse.ArgumentParser(description='ReliOps CLI')
     subparsers = parser.add_subparsers(dest='command')
 
     subparsers.add_parser('init-db', help='Initialize database and seed with mock data')

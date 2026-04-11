@@ -1,8 +1,9 @@
 """
-ReliOps Rules Engine
-Automated reliability risk detection and assessment.
-Scans service architectures against production SRE best practices.
-Uses only Python standard library.
+ReliOps - Rules Engine.
+8-rule reliability scanner, risk scoring, blast radius calculation,
+and deterministic insight generation.
+
+Author: Kris R. (UpliftPal)
 """
 
 from datetime import datetime, timedelta
@@ -442,7 +443,7 @@ class RulesEngine:
                      0.02 if violation.severity == self.MEDIUM else 0.01
             score += violation.recurrence_score * weight
 
-        # Add SLO breach penalties (normalized — SLO gaps are small decimals)
+        # Add SLO breach penalties (SLO gaps are small decimals)
         for service in self.services.values():
             slo_target = service.get('slo_target')
             slo_current = service.get('slo_current')
@@ -588,10 +589,72 @@ def detect_drift(db_path):
     return engine.detect_drift_signals(snapshot['data'], curr_snapshot)
 
 
+# ---------------------------------------------------------------------------
+# Insight generation: hybrid AI + deterministic
+# ---------------------------------------------------------------------------
+
+# Module-level flag set by generate_insights() to track which path was used.
+# Consumed by build_dashboard_json() in __init__.py for the insights_source field.
+_last_insights_source = 'rules-engine'
+
+
 def generate_insights(db_path, violations, risk_score):
     """Generate natural language insights from violations and score.
 
-    These are designed to sound like a senior SRE analyst briefing,
+    If AI_INSIGHTS_ENABLED is set, attempts to use an LLM for richer insights.
+    Falls back to deterministic pattern-based insights on any failure.
+
+    Args:
+        db_path: str, path to SQLite database
+        violations: list[RuleViolation]
+        risk_score: dict with 'score', 'label', 'violation_counts'
+
+    Returns:
+        list[str], up to 5 insight strings
+    """
+    global _last_insights_source
+
+    from app.config import AI_INSIGHTS_ENABLED
+
+    if AI_INSIGHTS_ENABLED and violations:
+        try:
+            ai_result = _get_ai_insights(violations, risk_score)
+            if ai_result:
+                _last_insights_source = 'ai'
+                return ai_result
+        except Exception as e:
+            import logging
+            logging.getLogger('reliops.ai').warning(
+                "AI insights failed, falling back to deterministic: %s", e
+            )
+
+    _last_insights_source = 'rules-engine'
+    return _generate_deterministic_insights(db_path, violations, risk_score)
+
+
+def _get_ai_insights(violations, risk_score):
+    """
+    Sanitize violations and call the configured AI provider.
+
+    Returns:
+        list[str] or None
+    """
+    from app.enterprise.ai_sanitizer import sanitize_violations, build_ai_prompt
+    from app.enterprise.ai_providers import get_ai_provider
+
+    provider = get_ai_provider()
+    if not provider:
+        return None
+
+    sanitized = sanitize_violations(violations, risk_score)
+    prompt = build_ai_prompt(sanitized)
+    return provider.get_insights(prompt)
+
+
+def _generate_deterministic_insights(db_path, violations, risk_score):
+    """Original pattern-based insight generation.
+
+    Produces insights that sound like a senior SRE analyst briefing,
     referencing specific services, numbers, and patterns.
     """
     insights = []
@@ -628,7 +691,7 @@ def generate_insights(db_path, violations, risk_score):
                         incident_date = datetime.strptime(str(d)[:10], '%Y-%m-%d')
                         delta = (datetime.now() - incident_date).days
                         days_ago = f"{delta} days ago"
-                    except:
+                    except Exception:
                         pass
                 insights.append(
                     f"Recurrence risk: {v.rule_name.replace('_', ' ')} pattern detected on "

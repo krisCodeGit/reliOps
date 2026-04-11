@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReliOps Configuration Audit</title>
+    <title>ReliOps | Configuration Audit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
@@ -190,6 +190,23 @@
             gap: 1rem;
             justify-content: center;
             margin-bottom: 2rem;
+        }
+
+        .enterprise-note {
+            text-align: center;
+            color: #8a8f98;
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .enterprise-note a {
+            color: #f5a623;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .enterprise-note a:hover {
+            text-decoration: underline;
         }
 
         .btn {
@@ -556,6 +573,234 @@
         .hidden {
             display: none !important;
         }
+
+        /* RESPONSIVE: TABLET */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 0.75rem 1rem;
+            }
+            .navbar-nav {
+                gap: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .upload-hero {
+                padding: 2rem 1rem;
+            }
+            .upload-hero h1 {
+                font-size: 2rem;
+            }
+            .upload-hero p {
+                font-size: 0.95rem;
+            }
+            .drop-zone {
+                padding: 2rem;
+            }
+            .score-card {
+                padding: 2rem 1rem;
+            }
+            .score-number {
+                font-size: 3rem;
+            }
+            .score-grade {
+                font-size: 1.5rem;
+            }
+            .risk-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .finding-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .recommendations-list {
+                grid-template-columns: 1fr;
+            }
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .enterprise-note {
+                font-size: 0.9rem;
+            }
+            #dependency-graph {
+                height: 300px;
+            }
+        }
+
+        /* RESPONSIVE: MOBILE */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0.5rem 0.75rem;
+            }
+            .navbar-logo {
+                font-size: 1.2rem;
+            }
+            .navbar-nav {
+                gap: 0.75rem;
+            }
+            .navbar-nav a {
+                font-size: 0.8rem;
+            }
+            .container {
+                padding: 0.75rem;
+            }
+            .upload-hero {
+                padding: 1.5rem 0.75rem;
+            }
+            .upload-hero h1 {
+                font-size: 1.5rem;
+            }
+            .upload-hero p {
+                font-size: 0.85rem;
+                margin-bottom: 2rem;
+            }
+            .drop-zone {
+                padding: 1.5rem;
+            }
+            .drop-zone-icon {
+                font-size: 2rem;
+            }
+            .drop-zone-text {
+                font-size: 0.9rem;
+            }
+            .example-code {
+                font-size: 0.75rem;
+                padding: 1rem;
+            }
+            .score-card {
+                padding: 1.5rem 1rem;
+            }
+            .score-number {
+                font-size: 2.5rem;
+            }
+            .score-grade {
+                font-size: 1.2rem;
+            }
+            .risk-summary {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            .risk-card {
+                padding: 1rem;
+            }
+            .risk-count {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .finding-card {
+                padding: 1rem;
+            }
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .cta-section {
+                padding: 1.5rem;
+            }
+            #dependency-graph {
+                height: 250px;
+            }
+        }
+        /* JSON VIEWER MODAL */
+        .json-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+        .json-modal-overlay.active {
+            display: flex;
+            flex-direction: column;
+        }
+        .json-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(18, 19, 26, 0.95);
+            border-bottom: 1px solid #1e2028;
+            flex-shrink: 0;
+        }
+        .json-modal-header .logo {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .json-modal-header .logo-icon {
+            color: #f5a623;
+            margin-right: 6px;
+        }
+        .json-modal-nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .json-modal-back {
+            color: #f5a623;
+            background: none;
+            border: 1px solid rgba(245, 166, 35, 0.3);
+            padding: 6px 16px;
+            border-radius: 2px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+        .json-modal-back:hover {
+            background: rgba(245, 166, 35, 0.1);
+        }
+        .json-modal-close {
+            color: #8a8f98;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px 8px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .json-modal-close:hover {
+            color: #fff;
+        }
+        .json-modal-body {
+            flex: 1;
+            overflow: auto;
+            padding: 24px;
+        }
+        .json-modal-body pre {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #c8ccd4;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin: 0;
+        }
+        .json-modal-label {
+            font-size: 12px;
+            color: #8a8f98;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .json-modal-endpoint {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 12px;
+            color: #f5a623;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -565,7 +810,8 @@
         <ul class="navbar-nav">
             <li><a href="/">Dashboard</a></li>
             <li><a href="/audit" style="color: #f5a623;">Configuration Audit</a></li>
-            <li><a href="/api/dashboard">API</a></li>
+            <li><a href="/enterprise">Enterprise</a></li>
+            <li><a href="/help">Help</a></li>
         </ul>
     </nav>
 
@@ -573,8 +819,8 @@
         <!-- STATE 1: Upload -->
         <div id="state-upload" class="state active">
             <div class="upload-hero">
-                <h1>Run a Configuration Audit</h1>
-                <p>Upload a small YAML or JSON service definition and inspect the rule results against the same scanner used by the sample dashboard.</p>
+                <h1>Drop a Config. See Your Risk.</h1>
+                <p>Upload your YAML or JSON service definition and get a scored reliability assessment in seconds — the same 8-rule engine that powers the dashboard. Open-source workflow for technical validation. Take it private for regulated environments.</p>
             </div>
 
             <div class="drop-zone" id="dropZone">
@@ -585,7 +831,7 @@
             </div>
 
             <div class="example-section">
-                <h3>Example Configuration</h3>
+                <h3>Example Configuration <span style="text-transform: none; font-weight: 400; color: #f5a623;">— this config has 2 critical findings. Try it.</span></h3>
                 <div class="example-code">
                     <button class="copy-btn" onclick="copyExample()">Copy</button>
                     <pre>services:
@@ -610,6 +856,8 @@
                 <button class="btn btn-secondary" onclick="loadSampleData()">Try with Sample Data</button>
                 <button class="btn btn-primary" id="run-audit-btn" onclick="runAudit()" style="display: none;">Run Audit</button>
             </div>
+
+            <div class="enterprise-note">Need private deployment or data-isolation controls for a regulated environment? <a href="/enterprise">Start an enterprise pilot</a>.</div>
         </div>
 
         <!-- STATE 2: Loading -->
@@ -631,7 +879,7 @@
                 <div class="score-card fade-in">
                     <div class="score-number" id="scoreNumber">0</div>
                     <div class="score-grade" id="scoreGrade">F</div>
-                    <div class="score-label">Reliability Score</div>
+                    <div class="score-label">Risk Score</div>
                 </div>
 
                 <!-- Risk Summary -->
@@ -675,9 +923,9 @@
 
             <!-- CTA -->
             <div class="cta-section">
-                <h3>Need a baseline comparison?</h3>
-                <p>The seeded dashboard shows the same app running against the bundled sample dataset.</p>
-                <button class="btn btn-primary" onclick="openDashboard()">Open Sample Dashboard →</button>
+                <h3>See the full picture</h3>
+                <p>The dashboard shows the same engine against a dependency-dense trading environment. For enterprise buyers, it becomes the leadership view of critical-path exposure, blast radius concentration, and remediation priority.</p>
+                <button class="btn btn-primary" onclick="openDashboard()">Open Live Dashboard →</button>
             </div>
 
             <!-- Back Button -->
@@ -857,17 +1105,42 @@
             runAudit();
         }
 
-        function runAudit() {
+        async function runAudit() {
             if (!currentFileData) return;
 
             setState('loading');
             currentStep = 0;
             animateLoadingSteps();
 
-            // Simulate audit processing
-            setTimeout(() => {
-                performAudit();
-            }, 3000);
+            // Normalize dependencies for backend (convert string deps to objects)
+            const services = (currentFileData.services || []).map(s => ({
+                ...s,
+                dependencies: (s.dependencies || []).map(d =>
+                    typeof d === 'string' ? { name: d, type: 'sync', critical: false } : d
+                )
+            }));
+
+            try {
+                const response = await fetch('/api/audit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ services })
+                });
+
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error || `Server error ${response.status}`);
+                }
+
+                const data = await response.json();
+                currentResults = data;
+                currentResults._rawServices = currentFileData.services; // keep for graph
+                setState('results');
+                renderResults();
+            } catch (err) {
+                alert('Audit failed: ' + err.message);
+                setState('upload');
+            }
         }
 
         function animateLoadingSteps() {
@@ -878,221 +1151,82 @@
             }
         }
 
-        function performAudit() {
-            if (!currentFileData || !currentFileData.services) {
-                alert('Invalid configuration');
-                setState('upload');
-                return;
-            }
-
-            const services = currentFileData.services;
-            const findings = [];
-            const recommendations = new Set();
-
-            // Calculate risk scores
-            let totalRiskScore = 0;
-            const serviceScores = {};
-
-            services.forEach(service => {
-                let risk = 0;
-                const serviceFinding = [];
-
-                // Check for single AZ (CRITICAL)
-                if (service.az_count === 1) {
-                    risk += 30;
-                    serviceFinding.push({
-                        severity: 'CRITICAL',
-                        title: 'Single Availability Zone',
-                        description: `${service.name} runs in only 1 AZ. Complete regional outage risk.`,
-                        blastRadius: `Affects ${service.name}`
-                    });
-                    recommendations.add({
-                        title: 'Deploy to Multiple AZs',
-                        text: 'Distribute services across 2+ availability zones for resilience'
-                    });
-                }
-
-                // Check for no failover (HIGH)
-                if (!service.has_failover) {
-                    risk += 20;
-                    serviceFinding.push({
-                        severity: 'HIGH',
-                        title: 'No Active-Active Failover',
-                        description: `${service.name} lacks failover. Single point of failure.`,
-                        blastRadius: `Affects ${service.name} + dependents`
-                    });
-                }
-
-                // Check for no circuit breaker (HIGH)
-                if (!service.has_circuit_breaker) {
-                    risk += 15;
-                    serviceFinding.push({
-                        severity: 'HIGH',
-                        title: 'No Circuit Breaker',
-                        description: `${service.name} has no circuit breaker. Cascading failure risk.`,
-                        blastRadius: 'Full dependency chain'
-                    });
-                    recommendations.add({
-                        title: 'Implement Circuit Breakers',
-                        text: 'Add circuit breaker patterns (Hystrix, Resilience4j, etc.) to prevent cascades'
-                    });
-                }
-
-                // Check SLO targets (MEDIUM)
-                if (service.slo_target < 0.999) {
-                    risk += 10;
-                    serviceFinding.push({
-                        severity: 'MEDIUM',
-                        title: 'Low SLO Target',
-                        description: `${service.name} SLO of ${(service.slo_target * 100).toFixed(2)}% is below 3-nines.`,
-                        blastRadius: 'Affects downstream services'
-                    });
-                    recommendations.add({
-                        title: 'Tighten SLO Targets',
-                        text: 'Move to 99.9% or higher SLO targets for critical services'
-                    });
-                }
-
-                // Check dependencies (MEDIUM)
-                if (service.dependencies && service.dependencies.length > 3) {
-                    risk += 8;
-                    serviceFinding.push({
-                        severity: 'MEDIUM',
-                        title: 'High Dependency Count',
-                        description: `${service.name} has ${service.dependencies.length} dependencies. Increased failure points.`,
-                        blastRadius: 'Service reliability = product of all dependencies'
-                    });
-                }
-
-                serviceScores[service.name] = Math.min(100, risk);
-                findings.push(...serviceFinding);
-                totalRiskScore += risk;
-            });
-
-            // Calculate overall score (0-100, higher is better)
-            const avgRisk = services.length > 0 ? totalRiskScore / services.length : 0;
-            const reliabilityScore = Math.max(0, 100 - Math.round(avgRisk));
-
-            // Count findings by severity
-            const riskCounts = {
-                CRITICAL: findings.filter(f => f.severity === 'CRITICAL').length,
-                HIGH: findings.filter(f => f.severity === 'HIGH').length,
-                MEDIUM: findings.filter(f => f.severity === 'MEDIUM').length,
-                LOW: findings.filter(f => f.severity === 'LOW').length
-            };
-
-            // Detect recurrence (services with similar risk patterns)
-            const recurrenceWarnings = [];
-            const singleAZServices = services.filter(s => s.az_count === 1).map(s => s.name);
-            const noFailoverServices = services.filter(s => !s.has_failover).map(s => s.name);
-
-            if (singleAZServices.length > 1) {
-                recurrenceWarnings.push({
-                    pattern: 'Single Availability Zone',
-                    services: singleAZServices
-                });
-            }
-
-            if (noFailoverServices.length > 1) {
-                recurrenceWarnings.push({
-                    pattern: 'No Failover Configuration',
-                    services: noFailoverServices
-                });
-            }
-
-            currentResults = {
-                score: reliabilityScore,
-                riskCounts,
-                findings,
-                services,
-                recurrenceWarnings,
-                recommendations: Array.from(recommendations)
-            };
-
-            setState('results');
-            renderResults();
-        }
-
         function renderResults() {
-            const results = currentResults;
+            const r = currentResults;
 
-            // Render score
-            const score = Math.round(results.score);
+            // Risk score (higher = worse, matching dashboard)
+            const score = Math.round(r.overall_risk_score || 0);
             document.getElementById('scoreNumber').textContent = score;
 
-            let grade = 'F';
-            let gradeClass = 'grade-f';
-            if (score >= 90) { grade = 'A'; gradeClass = 'grade-a'; }
-            else if (score >= 80) { grade = 'B'; gradeClass = 'grade-b'; }
-            else if (score >= 70) { grade = 'C'; gradeClass = 'grade-c'; }
-            else if (score >= 60) { grade = 'D'; gradeClass = 'grade-d'; }
-
+            const label = r.risk_label || 'LOW';
             const gradeEl = document.getElementById('scoreGrade');
-            gradeEl.textContent = grade;
-            gradeEl.className = `score-grade ${gradeClass}`;
+            gradeEl.textContent = label;
+            const gradeColorMap = {
+                'CRITICAL': 'grade-f',
+                'HIGH': 'grade-d',
+                'MEDIUM': 'grade-c',
+                'LOW': 'grade-a',
+            };
+            gradeEl.className = `score-grade ${gradeColorMap[label] || 'grade-c'}`;
 
-            // Render risk summary
-            const riskSummaryHTML = `
+            // Count findings by severity
+            const findings = r.risk_findings || [];
+            const riskCounts = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+            findings.forEach(f => { if (riskCounts.hasOwnProperty(f.severity)) riskCounts[f.severity]++; });
+
+            document.getElementById('riskSummary').innerHTML = `
                 <div class="risk-card">
-                    <div class="risk-count risk-critical">${results.riskCounts.CRITICAL}</div>
+                    <div class="risk-count risk-critical">${riskCounts.CRITICAL}</div>
                     <div class="risk-label">Critical</div>
                 </div>
                 <div class="risk-card">
-                    <div class="risk-count risk-high">${results.riskCounts.HIGH}</div>
+                    <div class="risk-count risk-high">${riskCounts.HIGH}</div>
                     <div class="risk-label">High</div>
                 </div>
                 <div class="risk-card">
-                    <div class="risk-count risk-medium">${results.riskCounts.MEDIUM}</div>
+                    <div class="risk-count risk-medium">${riskCounts.MEDIUM}</div>
                     <div class="risk-label">Medium</div>
                 </div>
                 <div class="risk-card">
-                    <div class="risk-count risk-low">${results.riskCounts.LOW}</div>
+                    <div class="risk-count risk-low">${riskCounts.LOW}</div>
                     <div class="risk-label">Low</div>
                 </div>
             `;
-            document.getElementById('riskSummary').innerHTML = riskSummaryHTML;
 
-            // Render findings
-            const findingsHTML = results.findings.length > 0
-                ? results.findings.map(finding => `
+            // Render critical issues (from backend 8-rule engine)
+            const issues = r.critical_issues || [];
+            const findingsHTML = issues.length > 0
+                ? issues.map(issue => `
                     <div class="finding-card fade-in">
                         <div class="finding-header">
-                            <span class="finding-severity severity-${finding.severity.toLowerCase()}">${finding.severity}</span>
-                            <span class="finding-service">${finding.title}</span>
+                            <span class="finding-severity severity-${issue.severity.toLowerCase()}">${issue.severity}</span>
+                            <span class="finding-service">${issue.service}: ${issue.rule.replace(/_/g, ' ')}</span>
                         </div>
-                        <div class="finding-description">${finding.description}</div>
-                        <div class="blast-radius">📊 ${finding.blastRadius}</div>
+                        <div class="finding-description">${issue.description}</div>
+                        ${issue.blast_radius ? `<div class="blast-radius">Blast radius: ${issue.blast_radius} services affected</div>` : ''}
+                        ${issue.fix_hint ? `<div style="font-size: 12px; color: #f5a623; margin-top: 8px;">Fix: ${issue.fix_hint}</div>` : ''}
                     </div>
                 `).join('')
-                : '<div class="empty-state">No findings detected. Your configuration looks good!</div>';
+                : '<div class="empty-state">No critical findings. Your configuration looks good!</div>';
 
             document.getElementById('findingsList').innerHTML = findingsHTML;
 
-            // Render dependency graph
-            renderDependencyGraph(results.services);
+            // Render dependency graph (from original parsed data)
+            renderDependencyGraph(r._rawServices || []);
 
-            // Render recurrence warnings
-            if (results.recurrenceWarnings.length > 0) {
-                document.getElementById('recurrenceSection').classList.remove('hidden');
-                const warningsHTML = results.recurrenceWarnings.map(warning => `
-                    <div class="warning-card">
-                        <div class="warning-title">⚠️ ${warning.pattern}</div>
-                        <div class="warning-text">Found in: ${warning.services.join(', ')}</div>
+            // Render recurrence warnings (not available in audit mode)
+            document.getElementById('recurrenceSection').classList.add('hidden');
+
+            // Render AI insights as recommendations
+            const insights = r.ai_insights || [];
+            const recsHTML = insights.length > 0
+                ? insights.map(text => `
+                    <div class="recommendation-item fade-in">
+                        <div class="recommendation-text">${text}</div>
                     </div>
-                `).join('');
-                document.getElementById('recurrenceWarnings').innerHTML = warningsHTML;
-            } else {
-                document.getElementById('recurrenceSection').classList.add('hidden');
-            }
-
-            // Render recommendations
-            const recommendationsHTML = results.recommendations.map(rec => `
-                <div class="recommendation-item fade-in">
-                    <div class="recommendation-title">${rec.title}</div>
-                    <div class="recommendation-text">${rec.text}</div>
-                </div>
-            `).join('');
-            document.getElementById('recommendationsList').innerHTML = recommendationsHTML || '<div class="empty-state">All systems optimal!</div>';
+                `).join('')
+                : '<div class="empty-state">All systems optimal!</div>';
+            document.getElementById('recommendationsList').innerHTML = recsHTML;
         }
 
         function renderDependencyGraph(services) {
@@ -1125,13 +1259,15 @@
             });
 
             // D3 force simulation
-            const width = container.clientWidth;
-            const height = 400;
+            const width = container.clientWidth || 600;
+            const height = Math.min(400, window.innerHeight * 0.5);
 
             const svg = d3.select('#dependency-graph')
                 .append('svg')
-                .attr('width', width)
-                .attr('height', height);
+                .attr('width', '100%')
+                .attr('height', height)
+                .attr('viewBox', `0 0 ${width} ${height}`)
+                .attr('preserveAspectRatio', 'xMidYMid meet');
 
             const simulation = d3.forceSimulation(nodes)
                 .force('link', d3.forceLink(links).id(d => d.id).distance(120))
@@ -1191,16 +1327,23 @@
                 return;
             }
 
-            const findings = (currentResults.risk_findings || [])
+            const r = currentResults;
+            const issues = (r.critical_issues || [])
                 .slice(0, 5)
-                .map(item => `- ${item.service || 'service'}: ${item.description || item.rule_name || 'finding'}`)
+                .map(i => `- [${i.severity}] ${i.service}: ${i.description}`)
                 .join('\n');
+            const findings = r.risk_findings || [];
+            const counts = { CRITICAL: 0, HIGH: 0, MEDIUM: 0 };
+            findings.forEach(f => { if (counts.hasOwnProperty(f.severity)) counts[f.severity]++; });
             const summary = [
-                `Reliability score: ${currentResults.overall_risk_score || 0} (${currentResults.risk_label || 'N/A'})`,
-                `Material exposures: ${currentResults.material_exposures || 0}`,
+                `ReliOps Configuration Audit`,
+                `Risk score: ${Math.round(r.overall_risk_score || 0)}/100 (${r.risk_label || 'N/A'})`,
+                `Findings: ${counts.CRITICAL} critical, ${counts.HIGH} high, ${counts.MEDIUM} medium`,
                 '',
                 'Top findings:',
-                findings || '- None'
+                issues || '- None',
+                '',
+                `Scanned ${(r.services_summary || {}).total || 0} services`
             ].join('\n');
 
             navigator.clipboard.writeText(summary)
@@ -1228,6 +1371,49 @@
             document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
             document.getElementById(`state-${state}`).classList.add('active');
         }
+        // ============ JSON VIEWER ============
+        async function openJsonViewer() {
+            const modal = document.getElementById('json-modal');
+            const content = document.getElementById('json-content');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            content.textContent = 'Loading...';
+            try {
+                const response = await fetch('/api/dashboard');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                content.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                content.textContent = `Error loading API data: ${err.message}`;
+            }
+        }
+
+        function closeJsonViewer() {
+            document.getElementById('json-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeJsonViewer();
+        });
     </script>
+
+    <!-- JSON VIEWER MODAL -->
+    <div class="json-modal-overlay" id="json-modal">
+        <div class="json-modal-header">
+            <div>
+                <span class="logo"><span class="logo-icon">⚡</span>ReliOps</span>
+                <span class="json-modal-label" style="margin-left: 16px;">API Response</span>
+                <span class="json-modal-endpoint">/api/dashboard</span>
+            </div>
+            <div class="json-modal-nav">
+                <button class="json-modal-back" onclick="closeJsonViewer()">← Back to Audit</button>
+                <button class="json-modal-close" onclick="closeJsonViewer()" title="Close">&times;</button>
+            </div>
+        </div>
+        <div class="json-modal-body">
+            <pre id="json-content">Loading...</pre>
+        </div>
+    </div>
 </body>
 </html>

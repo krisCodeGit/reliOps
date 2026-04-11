@@ -1,8 +1,9 @@
 """
-ReliOps MVP - Data Models Layer
-SQLite3-based models for incident tracking, service registry, dependency mapping,
-and reliability risk findings.
-Uses only Python standard library (sqlite3).
+ReliOps - Data Models.
+SQLite3 schema and query layer for services, dependencies, incidents,
+risk findings, and reliability debt.
+
+Author: Kris R. (UpliftPal)
 """
 
 import sqlite3

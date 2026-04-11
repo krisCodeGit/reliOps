@@ -12,22 +12,46 @@ __pycache__/
 venv/
 env/
 
+# Secrets and certificates
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
 # Local runtime state
 instance/*
 !instance/.gitkeep
 
-# Logs and local config
+# Logs
+logs/*
+!logs/.gitkeep
 *.log
-.env
-.env.*
 
 # OS and editor files
 .DS_Store
 .idea/
 .vscode/
+*.swp
+*~
 
-# Internal working docs stay local
+# Internal working docs (seed deck, expert reviews, strategy notes)
 docs/internal/**
 !docs/internal/
 !docs/internal/.gitignore
 !docs/internal/README.md
+
+# ───────────────────────────────────────────────────────────────
+# Enterprise-only modules (not part of open-source)
+# These are the paid features: AI insights, pattern analysis,
+# runbook generation, and data sanitization.
+# The open-source core works without them.
+# ───────────────────────────────────────────────────────────────
+app/enterprise/
+
+# Office temp files (PowerPoint lock files, etc.)
+~$*

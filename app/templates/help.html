@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReliOps | Help</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            background: linear-gradient(135deg, #0a0a0f 0%, #0f0f17 100%);
+            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(18, 19, 26, 0.6);
+            border-bottom: 1px solid #1e2028;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            color: #f5a623;
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #8a8f98;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #f5a623;
+        }
+
+        .nav-link.active {
+            color: #f5a623;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px 64px;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            margin-bottom: 48px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #8a8f98;
+            font-size: 15px;
+        }
+
+        /* HOW IT WORKS */
+        .steps-section {
+            margin-bottom: 56px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #f5a623;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+            gap: 16px;
+        }
+
+        .step {
+            background: rgba(18, 19, 26, 0.6);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+            padding: 24px;
+            transition: border-color 0.2s;
+        }
+
+        .step:hover {
+            border-color: rgba(245, 166, 35, 0.3);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: linear-gradient(90deg, #e8762d 0%, #f5a623 100%);
+            color: #0a0a0f;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 50%;
+            margin-bottom: 12px;
+        }
+
+        .step-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .step-desc {
+            color: #8a8f98;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* FAQ ACCORDION */
+        .faq-section {
+            margin-bottom: 48px;
+        }
+
+        .faq-item {
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+            margin-bottom: 4px;
+            background: rgba(18, 19, 26, 0.4);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .faq-question:hover {
+            color: #f5a623;
+        }
+
+        .faq-chevron {
+            font-size: 12px;
+            color: #555;
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+            color: #f5a623;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-inner {
+            padding: 0 20px 16px;
+            color: #8a8f98;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 800px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid #1e2028;
+            color: #8a8f98;
+            font-size: 12px;
+        }
+
+        .footer-logo {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .footer-icon {
+            color: #f5a623;
+            margin-right: 4px;
+        }
+
+        /* RESPONSIVE — TABLET */
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 16px;
+            }
+            .nav-links {
+                gap: 20px;
+            }
+            .container {
+                padding: 32px 16px 48px;
+            }
+            .page-title {
+                font-size: 24px;
+            }
+        }
+
+        /* RESPONSIVE — MOBILE */
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 16px;
+            }
+            .nav-link {
+                font-size: 12px;
+            }
+            .container {
+                padding: 24px 12px 40px;
+            }
+            .page-title {
+                font-size: 20px;
+            }
+            .page-subtitle {
+                font-size: 13px;
+            }
+            .step {
+                padding: 20px 16px;
+            }
+            .faq-question {
+                font-size: 13px;
+                padding: 14px 16px;
+            }
+            .faq-answer-inner {
+                padding: 0 16px 14px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="logo">
+            <span class="logo-icon">⚡</span>ReliOps
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Dashboard</a>
+            <a href="/audit" class="nav-link">Run Audit</a>
+            <a href="/enterprise" class="nav-link">Enterprise</a>
+            <a href="/help" class="nav-link active">Help</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1 class="page-title">How ReliOps Works</h1>
+            <p class="page-subtitle">Reliability risk intelligence for SRE teams, engineering leadership, and regulated production environments.</p>
+        </div>
+
+        <!-- ROLE-BASED PATHS -->
+        <div class="steps-section">
+            <div class="section-label">For SRE Teams</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Audit Your Config</div>
+                    <div class="step-desc">Drop a YAML or JSON service definition into the <a href="/audit" style="color: #f5a623;">Audit Tool</a>. The same 8-rule engine that powers the dashboard will scan it and return scored findings with fix hints — instantly.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Map Blast Radius</div>
+                    <div class="step-desc">The dependency graph traces every connection in your service chain. See exactly how many systems a single failure takes down. Click any hotspot to generate a targeted incident response plan — before you need one.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Fix What Matters Most</div>
+                    <div class="step-desc">Every finding is scored by severity and blast radius, then ranked by risk-reduction ROI. Critical issues include fix hints and runbook generation. Start with the fix that eliminates the most exposure per engineering hour.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="steps-section">
+            <div class="section-label">For Financial-Services Leadership</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">See Your Risk Posture</div>
+                    <div class="step-desc">The dashboard produces a single Operational Reliability Risk score from 0 to 100, severity-weighted so critical issues stand out. Use it to give leadership one clear reliability number instead of scattered technical anecdotes.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Quantify Outage Exposure</div>
+                    <div class="step-desc">Incident Intelligence correlates past incidents to show where cost is concentrated — for example, where repeated reliability gaps are driving the majority of outage impact across trading or critical-path systems.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Prioritize Investment</div>
+                    <div class="step-desc">Blast radius analysis and reliability debt tracking show which remediation work delivers the most risk reduction per engineering dollar spent.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+            <div class="section-label">Common Questions</div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What is ReliOps?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">ReliOps is a reliability risk intelligence platform with an open-source core. It scans your service architecture and surfaces risk — things like missing failover, SLO breaches, dangerous dependency chains, and incident patterns — before they cause outages. Think of it as a reliability posture dashboard for your entire service fleet, with an enterprise delivery path for regulated or business-critical environments.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How do I read the risk score?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">The Operational Reliability Risk score ranges from 0 (no issues) to 100 (critical). It's severity-weighted: CRITICAL findings contribute far more than LOW ones. A score under 30 is healthy, 30–59 is moderate and worth reviewing, and 60+ means you have findings that need prompt attention.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What does the dependency graph show?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">The graph maps every service-to-service dependency in your architecture. Node color reflects risk level — green is clean, yellow has medium findings, red has critical issues. You can drag nodes, zoom, and hover for details. The layout reveals which services are tightly coupled and where a single failure could cascade.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What is blast radius?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Blast radius measures how many downstream services would be affected if a given service fails. ReliOps traces the dependency chain and counts every system that depends — directly or transitively — on that service. A blast radius of 8 means an outage would ripple across 8 other services.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How does ReliOps discover dependencies and blast radius?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">ReliOps takes a config-first approach — it doesn't require runtime agents, APM instrumentation, or access to production. Dependencies are extracted from artifacts your teams already maintain:<br><br>
+                    <strong>Today (open-source core):</strong> YAML/JSON service configs, Kubernetes manifests, Helm charts, docker-compose files, and Terraform state. These declare dependencies explicitly — database connections, upstream services, queue bindings, circuit breaker settings, SLO targets. Most teams underestimate how much their config files already reveal about blast radius.<br><br>
+                    <strong>Enterprise roadmap:</strong> For cloud-native environments, ReliOps ingests Kubernetes API, cloud provider service discovery (AWS CloudMap, etc.), and CI/CD pipeline definitions — passive reads, not agents. For legacy on-prem (common in financial services), the path is config + architecture document ingestion: CMDB exports, network diagrams, and AI-assisted extraction from runbooks and architecture docs.<br><br>
+                    <strong>Why this matters for financial services:</strong> Regulated environments often can't deploy third-party agents into production. The config-first model is not a limitation — it's the unlock. You don't need 100% coverage to deliver value. Even a partial blast radius map with 3–5 critical findings changes how a team prioritizes reliability work.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What does enterprise include that open-source doesn't?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">The open-source core gives you the full config audit engine, 8-rule scoring, blast radius mapping, and dependency visualization — everything you need to validate the workflow. Enterprise delivery adds what regulated, business-critical environments require:<br><br>
+                    <strong>Deployment:</strong> Private deployment in your VPC or on-prem infrastructure. No data leaves your network.<br>
+                    <strong>Identity & access:</strong> SSO integration, role-based access control, audit logging for compliance.<br>
+                    <strong>AI insights:</strong> Local LLM option with dedicated model tuning. Contextual remediation guidance calibrated to your architecture.<br>
+                    <strong>Dependency discovery:</strong> Cloud API ingestion, IaC parsing, CMDB integration, and AI-assisted extraction from legacy architecture docs — expanding coverage beyond config files.<br>
+                    <strong>Continuous monitoring:</strong> Scheduled scans, drift detection, and historical trend analysis.<br>
+                    <strong>Calibration:</strong> Rules, thresholds, and severity weights tuned to your SLO targets and regulatory requirements (SEC 17a-4, DORA, SOC 2).<br>
+                    <strong>Support:</strong> Dedicated onboarding, pilot program, and ongoing reliability engineering advisory.<br><br>
+                    Enterprise contracts start at $150K/year for financial services institutions. <a href="/enterprise" style="color: #f5a623;">Start a pilot →</a></div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How is ReliOps different from AIOps tools like BigPanda or Selector AI?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">AIOps platforms like BigPanda and Selector AI are reactive correlation engines — they sit downstream of your monitoring stack and get smarter about grouping, deduplicating, and routing alerts <em>after</em> something breaks. ReliOps answers a fundamentally different question: what is going to break, how far will it spread, and what is the highest-value fix right now?<br><br>
+                    <strong>Pre-incident vs post-incident:</strong> BigPanda ingests alerts from Datadog, PagerDuty, Splunk and correlates them. Selector AI does the same with network telemetry. Both require something to go wrong first. ReliOps maps dependency risk and blast radius from config files before the first alert fires.<br><br>
+                    <strong>No agent, no integration tax:</strong> BigPanda needs connectors into every alerting and ITSM tool in your stack. Selector AI needs network telemetry pipelines. Both take months to deploy in regulated environments. ReliOps starts from config files you already have — YAML, Helm charts, Terraform, docker-compose. Config to first findings in a week, not a quarter.<br><br>
+                    <strong>Blast radius as the unit of analysis:</strong> AIOps tools think in alerts and incidents. ReliOps thinks in dependency chains and concentration risk. For a trading firm, knowing that three critical order-routing services all depend on the same Redis cluster with no failover is worth more than faster alert grouping after that cluster goes down.<br><br>
+                    <strong>Open-source transparency:</strong> Neither BigPanda nor Selector AI lets you inspect the logic. ReliOps's 8-rule engine is open, auditable, and runnable locally — critical for regulated finserv teams who need to explain scoring to a risk committee.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What are the 8 reliability rules?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">ReliOps runs 8 rules against your services: SLO breach trending, missing cross-AZ failover, missing circuit breakers, retry storm risk, single-owner risk, incident recurrence, missing saturation metrics, and dependency fan-out limits. Each rule produces findings at CRITICAL, HIGH, MEDIUM, or LOW severity.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How do I audit my own service config?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Go to Run Audit in the navigation. Drop in a YAML or JSON file describing your services — include fields like name, tier, owner, SLO targets, and dependencies. ReliOps will run the full rules engine against it and return a scored report with actionable findings.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What do the service tiers mean?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Tiers reflect business criticality. Tier 1 is revenue-critical or customer-facing infrastructure — services where downtime directly impacts users or revenue. Higher tier numbers indicate supporting or internal services. ReliOps weighs findings on Tier-1 services more heavily since their failures have the broadest impact.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What format does the audit accept?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">The audit tool accepts YAML or JSON files with a list of service definitions. Each service should include: name, tier (e.g. tier-1), owner, slo_target, slo_current, dependencies (a list of service names), and optionally deployment info like az_count. You can find a sample in the project's mock data directory.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Is ReliOps open source?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">ReliOps has an open-source core that you can self-host, inspect, and extend. That core is intentionally portable so technical teams can validate the workflow without lock-in. Companies that need supported private deployment, rule calibration, rollout support, or regulated-environment delivery can also engage UpliftPal on an enterprise basis. See <a href="/enterprise" style="color: #f5a623;">Enterprise</a> for the operating model.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What are AI-enhanced insights?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">ReliOps can optionally use an LLM to generate richer, contextual reliability recommendations from your risk findings. All service names and internal identifiers are anonymized before anything is sent. AI insights are off by default — when disabled, ReliOps uses its built-in pattern-based analysis. If the AI provider is ever unavailable, it falls back to pattern-based insights automatically.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How do I enable AI insights?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Add these to your <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">.env</code> file (see <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">.env.example</code> for the full template):<br><br>
+                    <code style="background: #1e2028; padding: 8px 12px; border-radius: 2px; display: block; font-size: 12px; line-height: 1.8;">AI_INSIGHTS_ENABLED=true<br>AI_PROVIDER=openai<br>AI_API_KEY=your-api-key</code><br>
+                    Three providers are supported:<br><br>
+                    <strong>anthropic</strong> — Anthropic Claude API<br>
+                    <strong>openai</strong> — OpenAI GPT API<br>
+                    <strong>local</strong> — Your own self-hosted LLM. Nothing leaves your network. Works with any OpenAI-compatible API: Ollama, vLLM, llama.cpp, LocalAI, LM Studio, and others. Just set <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_BASE_URL</code> to your model endpoint. No API key required unless your endpoint uses one.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Is my data sent to third-party LLMs?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Only if you choose an external provider (anthropic or openai). Even then, ReliOps strips all service names, owner info, and internal identifiers before sending. The LLM only sees anonymized patterns like "Service-A has blast radius 7 without AZ redundancy" — never your real service names or architecture details.<br><br>
+                    <strong>For full data isolation, use the local provider.</strong> Set <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_PROVIDER=local</code> and point <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_BASE_URL</code> at a model running on your own infrastructure. Zero data leaves your network — no external API calls, no third-party access. This is ideal for corporations with strict compliance or data residency requirements.</div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What is the "Generate Response Plan" button?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">When you click "Generate Response Plan" on a critical issue or blast-radius hotspot, ReliOps builds a structured incident runbook for that specific service. The runbook includes: immediate response steps, blast-radius containment actions, a copy-paste communication template, and a post-incident checklist.<br><br>
+                    If AI insights are enabled, the runbook is generated by the LLM using your service's violations, dependency graph, and incident history (anonymized). If AI is off, ReliOps generates a deterministic template based on the same data. Either way, you get actionable steps — not a generic playbook.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What is Incident Intelligence?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">The Incident Intelligence section analyzes your full incident history to surface systemic patterns that span multiple incidents. Instead of looking at each incident individually, it detects:<br><br>
+                    <strong>Root cause categories</strong> — e.g. "3 of 10 incidents involve timeout cascades, costing $4.2M"<br>
+                    <strong>Cost concentration</strong> — e.g. "80% of incident costs trace to services missing circuit breakers"<br>
+                    <strong>Repeat offenders</strong> — services that appear in multiple incidents<br>
+                    <strong>Temporal clusters</strong> — bursts of incidents in short timeframes<br><br>
+                    Each pattern includes a recommendation so you can prioritize the highest-impact fixes.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What are Fix Hints on critical issues?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Each critical and high-severity issue now includes a one-line "Fix" hint — a concrete remediation suggestion mapped to the specific rule that triggered the violation. For example, a missing circuit breaker violation shows "Fix: Add circuit breaker for fault isolation." These hints give SREs an immediate starting point without needing to open a separate runbook.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-logo"><span class="footer-icon">⚡</span>ReliOps by UpliftPal</div>
+        <div>Monitoring tells you something broke. ReliOps tells you what breaks next.</div>
+    </div>
+
+    <script>
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            item.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
