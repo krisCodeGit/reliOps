@@ -307,12 +307,12 @@
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-title">Audit Your Config</div>
-                    <div class="step-desc">Drop a YAML or JSON service definition into the <a href="/audit" style="color: #f5a623;">Audit Tool</a>. The same 8-rule engine that powers the dashboard will scan it and return scored findings with fix hints — instantly.</div>
+                    <div class="step-desc">Drop a YAML or JSON service definition into the <a href="/audit" style="color: #f5a623;">Audit Tool</a>. The same 8-rule engine that powers the dashboard will scan it and return scored findings with fix hints.</div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-title">Map Blast Radius</div>
-                    <div class="step-desc">The dependency graph traces every connection in your service chain. See exactly how many systems a single failure takes down. Click any hotspot to generate a targeted incident response plan — before you need one.</div>
+                    <div class="step-desc">The dependency graph traces every connection in your service chain. See exactly how many systems a single failure takes down. Click any hotspot to generate a targeted incident response plan before you need one.</div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
@@ -333,7 +333,7 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-title">Quantify Outage Exposure</div>
-                    <div class="step-desc">Incident Intelligence correlates past incidents to show where cost is concentrated — for example, where repeated reliability gaps are driving the majority of outage impact across trading or critical-path systems.</div>
+                    <div class="step-desc">Incident Intelligence correlates past incidents to show where cost is concentrated — for example, where repeated reliability gaps are driving most of the outage impact across trading or critical-path systems.</div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
@@ -353,7 +353,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps is a reliability risk intelligence platform with an open-source core. It scans your service architecture and surfaces risk — things like missing failover, SLO breaches, dangerous dependency chains, and incident patterns — before they cause outages. Think of it as a reliability posture dashboard for your entire service fleet, with an enterprise delivery path for regulated or business-critical environments.</div>
+                    <div class="faq-answer-inner">ReliOps is a reliability risk intelligence platform with an open-source core. It scans your service architecture and surfaces risk — things like missing failover, SLO breaches, dangerous dependency chains, and incident patterns before they cause outages. Think of it as a reliability posture dashboard for your entire service fleet, with an enterprise path for regulated environments.</div>
                 </div>
             </div>
 
@@ -394,9 +394,9 @@
                 </button>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">ReliOps takes a config-first approach — it doesn't require runtime agents, APM instrumentation, or access to production. Dependencies are extracted from artifacts your teams already maintain:<br><br>
-                    <strong>Today (open-source core):</strong> YAML/JSON service configs, Kubernetes manifests, Helm charts, docker-compose files, and Terraform state. These declare dependencies explicitly — database connections, upstream services, queue bindings, circuit breaker settings, SLO targets. Most teams underestimate how much their config files already reveal about blast radius.<br><br>
-                    <strong>Enterprise roadmap:</strong> For cloud-native environments, ReliOps ingests Kubernetes API, cloud provider service discovery (AWS CloudMap, etc.), and CI/CD pipeline definitions — passive reads, not agents. For legacy on-prem (common in financial services), the path is config + architecture document ingestion: CMDB exports, network diagrams, and AI-assisted extraction from runbooks and architecture docs.<br><br>
-                    <strong>Why this matters for financial services:</strong> Regulated environments often can't deploy third-party agents into production. The config-first model is not a limitation — it's the unlock. You don't need 100% coverage to deliver value. Even a partial blast radius map with 3–5 critical findings changes how a team prioritizes reliability work.</div>
+                    <strong>Today (open-source core):</strong> YAML/JSON service configs, Kubernetes manifests, Helm charts, docker-compose files, and Terraform state. These declare dependencies explicitly: database connections, upstream services, queue bindings, circuit breaker settings, SLO targets. Most teams underestimate how much their config files already reveal about blast radius.<br><br>
+                    <strong>Enterprise roadmap:</strong> For cloud-native environments, ReliOps ingests Kubernetes API, cloud provider service discovery (AWS CloudMap, etc.), and CI/CD pipeline definitions. Passive reads, not agents. For legacy on-prem (common in financial services), the path is config + architecture document ingestion: CMDB exports, network diagrams, and AI-assisted extraction from runbooks and architecture docs.<br><br>
+                    <strong>Why this matters for financial services:</strong> Regulated environments often can't deploy third-party agents into production. The config-first model is a design choice, not a limitation. You don't need 100% coverage to deliver value. Even a partial blast radius map with 3–5 critical findings changes how a team prioritizes reliability work.</div>
                 </div>
             </div>
 
@@ -406,11 +406,11 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">The open-source core gives you the full config audit engine, 8-rule scoring, blast radius mapping, and dependency visualization — everything you need to validate the workflow. Enterprise delivery adds what regulated, business-critical environments require:<br><br>
+                    <div class="faq-answer-inner">The open-source core gives you the full config audit engine, 8-rule scoring, blast radius mapping, and dependency visualization. Everything you need to validate the workflow. Enterprise delivery adds what regulated, business-critical environments require:<br><br>
                     <strong>Deployment:</strong> Private deployment in your VPC or on-prem infrastructure. No data leaves your network.<br>
                     <strong>Identity & access:</strong> SSO integration, role-based access control, audit logging for compliance.<br>
                     <strong>AI insights:</strong> Local LLM option with dedicated model tuning. Contextual remediation guidance calibrated to your architecture.<br>
-                    <strong>Dependency discovery:</strong> Cloud API ingestion, IaC parsing, CMDB integration, and AI-assisted extraction from legacy architecture docs — expanding coverage beyond config files.<br>
+                    <strong>Dependency discovery:</strong> Cloud API ingestion, IaC parsing, CMDB integration, and AI-assisted extraction from legacy architecture docs, expanding coverage beyond config files.<br>
                     <strong>Continuous monitoring:</strong> Scheduled scans, drift detection, and historical trend analysis.<br>
                     <strong>Calibration:</strong> Rules, thresholds, and severity weights tuned to your SLO targets and regulatory requirements (SEC 17a-4, DORA, SOC 2).<br>
                     <strong>Support:</strong> Dedicated onboarding, pilot program, and ongoing reliability engineering advisory.<br><br>
@@ -424,11 +424,11 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">AIOps platforms like BigPanda and Selector AI are reactive correlation engines — they sit downstream of your monitoring stack and get smarter about grouping, deduplicating, and routing alerts <em>after</em> something breaks. ReliOps answers a fundamentally different question: what is going to break, how far will it spread, and what is the highest-value fix right now?<br><br>
+                    <div class="faq-answer-inner">AIOps platforms like BigPanda and Selector AI are reactive correlation engines. They sit downstream of your monitoring stack and get smarter about grouping, deduplicating, and routing alerts <em>after</em> something breaks. ReliOps answers a different question: what is going to break, how far will it spread, and what is the highest-value fix right now?<br><br>
                     <strong>Pre-incident vs post-incident:</strong> BigPanda ingests alerts from Datadog, PagerDuty, Splunk and correlates them. Selector AI does the same with network telemetry. Both require something to go wrong first. ReliOps maps dependency risk and blast radius from config files before the first alert fires.<br><br>
-                    <strong>No agent, no integration tax:</strong> BigPanda needs connectors into every alerting and ITSM tool in your stack. Selector AI needs network telemetry pipelines. Both take months to deploy in regulated environments. ReliOps starts from config files you already have — YAML, Helm charts, Terraform, docker-compose. Config to first findings in a week, not a quarter.<br><br>
+                    <strong>No agent, no integration tax:</strong> BigPanda needs connectors into every alerting and ITSM tool in your stack. Selector AI needs network telemetry pipelines. Both take months to deploy in regulated environments. ReliOps starts from config files you already have: YAML, Helm charts, Terraform, docker-compose. Config to first findings in a week, not a quarter.<br><br>
                     <strong>Blast radius as the unit of analysis:</strong> AIOps tools think in alerts and incidents. ReliOps thinks in dependency chains and concentration risk. For a trading firm, knowing that three critical order-routing services all depend on the same Redis cluster with no failover is worth more than faster alert grouping after that cluster goes down.<br><br>
-                    <strong>Open-source transparency:</strong> Neither BigPanda nor Selector AI lets you inspect the logic. ReliOps's 8-rule engine is open, auditable, and runnable locally — critical for regulated finserv teams who need to explain scoring to a risk committee.</div>
+                    <strong>Open-source transparency:</strong> Neither BigPanda nor Selector AI lets you inspect the logic. ReliOps's 8-rule engine is open, auditable, and runnable locally. That matters for regulated finserv teams who need to explain scoring to a risk committee.</div>
                 </div>
             </div>
 
@@ -448,7 +448,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Go to Run Audit in the navigation. Drop in a YAML or JSON file describing your services — include fields like name, tier, owner, SLO targets, and dependencies. ReliOps will run the full rules engine against it and return a scored report with actionable findings.</div>
+                    <div class="faq-answer-inner">Go to Run Audit in the navigation. Drop in a YAML or JSON file describing your services. Include fields like name, tier, owner, SLO targets, and dependencies. ReliOps will run the full rules engine against it and return a scored report with actionable findings.</div>
                 </div>
             </div>
 
@@ -458,7 +458,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Tiers reflect business criticality. Tier 1 is revenue-critical or customer-facing infrastructure — services where downtime directly impacts users or revenue. Higher tier numbers indicate supporting or internal services. ReliOps weighs findings on Tier-1 services more heavily since their failures have the broadest impact.</div>
+                    <div class="faq-answer-inner">Tiers reflect business criticality. Tier 1 is revenue-critical or customer-facing infrastructure, services where downtime directly impacts users or revenue. Higher tier numbers indicate supporting or internal services. ReliOps weighs findings on Tier-1 services more heavily since their failures have the broadest impact.</div>
                 </div>
             </div>
 
@@ -478,7 +478,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps has an open-source core that you can self-host, inspect, and extend. That core is intentionally portable so technical teams can validate the workflow without lock-in. Companies that need supported private deployment, rule calibration, rollout support, or regulated-environment delivery can also engage UpliftPal on an enterprise basis. See <a href="/enterprise" style="color: #f5a623;">Enterprise</a> for the operating model.</div>
+                    <div class="faq-answer-inner">ReliOps has an open-source core that you can self-host, inspect, and extend. The core is portable so teams can validate the workflow without lock-in. Companies that need supported private deployment, rule calibration, rollout support, or regulated-environment delivery can also engage UpliftPal on an enterprise basis. See <a href="/enterprise" style="color: #f5a623;">Enterprise</a> for the operating model.</div>
                 </div>
             </div>
 
@@ -488,7 +488,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps can optionally use an LLM to generate richer, contextual reliability recommendations from your risk findings. All service names and internal identifiers are anonymized before anything is sent. AI insights are off by default — when disabled, ReliOps uses its built-in pattern-based analysis. If the AI provider is ever unavailable, it falls back to pattern-based insights automatically.</div>
+                    <div class="faq-answer-inner">ReliOps can optionally use an LLM to generate richer, contextual reliability recommendations from your risk findings. All service names and internal identifiers are anonymized before anything is sent. AI insights are off by default. When disabled, ReliOps uses its built-in pattern-based analysis. If the AI provider is ever unavailable, it falls back to pattern-based insights automatically.</div>
                 </div>
             </div>
 
@@ -514,7 +514,7 @@
                 </button>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">Only if you choose an external provider (anthropic or openai). Even then, ReliOps strips all service names, owner info, and internal identifiers before sending. The LLM only sees anonymized patterns like "Service-A has blast radius 7 without AZ redundancy" — never your real service names or architecture details.<br><br>
-                    <strong>For full data isolation, use the local provider.</strong> Set <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_PROVIDER=local</code> and point <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_BASE_URL</code> at a model running on your own infrastructure. Zero data leaves your network — no external API calls, no third-party access. This is ideal for corporations with strict compliance or data residency requirements.</div>
+                    <strong>For full data isolation, use the local provider.</strong> Set <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_PROVIDER=local</code> and point <code style="background: #1e2028; padding: 2px 6px; border-radius: 2px;">AI_BASE_URL</code> at a model running on your own infrastructure. Zero data leaves your network. No external API calls, no third-party access. Ideal for environments with strict compliance or data residency requirements.</div>
                 </div>
             </div>
             <div class="faq-item">
@@ -524,7 +524,7 @@
                 </button>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">When you click "Generate Response Plan" on a critical issue or blast-radius hotspot, ReliOps builds a structured incident runbook for that specific service. The runbook includes: immediate response steps, blast-radius containment actions, a copy-paste communication template, and a post-incident checklist.<br><br>
-                    If AI insights are enabled, the runbook is generated by the LLM using your service's violations, dependency graph, and incident history (anonymized). If AI is off, ReliOps generates a deterministic template based on the same data. Either way, you get actionable steps — not a generic playbook.</div>
+                    If AI insights are enabled, the runbook is generated by the LLM using your service's violations, dependency graph, and incident history (anonymized). If AI is off, ReliOps generates a deterministic template based on the same data. Either way, you get actionable steps, not a generic playbook.</div>
                 </div>
             </div>
 
@@ -549,7 +549,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Each critical and high-severity issue now includes a one-line "Fix" hint — a concrete remediation suggestion mapped to the specific rule that triggered the violation. For example, a missing circuit breaker violation shows "Fix: Add circuit breaker for fault isolation." These hints give SREs an immediate starting point without needing to open a separate runbook.</div>
+                    <div class="faq-answer-inner">Each critical and high-severity issue now includes a one-line "Fix" hint: a concrete remediation suggestion mapped to the specific rule that triggered the violation. For example, a missing circuit breaker violation shows "Fix: Add circuit breaker for fault isolation." These hints give SREs an immediate starting point without needing to open a separate runbook.</div>
                 </div>
             </div>
         </div>
