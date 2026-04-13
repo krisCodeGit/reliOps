@@ -83,86 +83,7 @@
             color: #f5a623;
         }
 
-        .nav-link-action {
-            color: rgba(255, 255, 255, 0.9);
-            padding: 6px 14px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background:
-                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 42%, transparent 70%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.5) 60%),
-                rgba(15, 15, 15, 0.6);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.25),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-                0 4px 12px -4px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-        }
-        .nav-link-action:hover {
-            color: #ffffff;
-            transform: translateY(-1px);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.35),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.15),
-                0 6px 16px -4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        .panel {
-            background: rgba(18, 19, 26, 0.56);
-            border: 1px solid #1e2028;
-            border-radius: 2px;
-            padding: 36px;
-        }
-
-        .eyebrow {
-            color: #f5a623;
-            text-transform: uppercase;
-            letter-spacing: 1.6px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .hero h1 {
-            font-size: 50px;
-            line-height: 1.08;
-            letter-spacing: -1.4px;
-            margin-bottom: 18px;
-            max-width: 12ch;
-        }
-
-        .hero-accent {
-            background: linear-gradient(90deg, #ffffff 0%, #f5a623 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            color: #9ca3af;
-            font-size: 18px;
-            max-width: 62ch;
-            margin-bottom: 28px;
-        }
-
-        .cta-row {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        /* ── Glass button (from UpliftPal) ── */
+        /* ── Glass button ── */
         .btn-glass {
             display: inline-flex;
             align-items: center;
@@ -213,70 +134,72 @@
                 0 12px 40px -8px rgba(0, 0, 0, 0.7),
                 0 4px 12px rgba(0, 0, 0, 0.5);
             border-color: rgba(255, 255, 255, 0.3);
-            background:
-                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.15) 42%, transparent 70%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.65) 60%),
-                rgba(20, 20, 20, 0.8);
         }
 
         .btn-glass:hover::before { opacity: 1; }
 
         .btn-glass:active {
             transform: translateY(0px) scale(0.98);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 2px 8px rgba(0, 0, 0, 0.5),
-                0 4px 16px -8px rgba(0, 0, 0, 0.6);
-            background:
-                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08) 42%, transparent 70%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.75) 60%),
-                rgba(12, 12, 12, 0.85);
         }
 
-        .hero-note {
+        .btn-primary {
+            background: linear-gradient(90deg, #e8762d 0%, #f5a623 100%);
+            border-color: rgba(245, 166, 35, 0.6);
+            color: #0a0a0f;
+            font-weight: 600;
+            box-shadow:
+                0 8px 32px -8px rgba(245, 166, 35, 0.4),
+                0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            border-color: rgba(245, 166, 35, 0.8);
+            opacity: 0.92;
+            box-shadow:
+                0 12px 40px -8px rgba(245, 166, 35, 0.5),
+                0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary::before {
+            display: none;
+        }
+
+        /* ── Mid-page CTA ── */
+        .mid-cta {
+            text-align: center;
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.1);
+            border-radius: 2px;
+        }
+
+        .mid-cta p {
             color: #8a8f98;
             font-size: 14px;
-            max-width: 64ch;
+            margin-bottom: 16px;
         }
 
-        .proof-card h2,
-        .section h2 {
-            font-size: 24px;
-            margin-bottom: 18px;
-            letter-spacing: -0.4px;
+        .mid-cta .cta-row {
+            justify-content: center;
+            margin-bottom: 0;
         }
 
-        .proof-list,
-        .value-list {
-            display: grid;
-            gap: 14px;
+        /* ── Panels ── */
+        .panel {
+            background: rgba(18, 19, 26, 0.56);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+            padding: 36px;
         }
 
-        .proof-item,
-        .value-item {
-            background: rgba(245, 166, 35, 0.03);
-            border: 1px solid rgba(245, 166, 35, 0.08);
-            padding: 16px 18px;
-        }
-
-        .proof-item strong,
-        .value-item strong {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-
-        .proof-item p,
-        .value-item p {
-            color: #9ca3af;
-            font-size: 14px;
-        }
-
-        .section-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-            margin-bottom: 24px;
+        .eyebrow {
+            color: #f5a623;
+            text-transform: uppercase;
+            letter-spacing: 1.6px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
         }
 
         .section-copy {
@@ -285,57 +208,525 @@
             margin-bottom: 18px;
         }
 
-        .buyer-grid,
-        .market-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 24px;
+        /* ── Hero ── */
+        .hero {
             margin-bottom: 24px;
         }
 
-        .buyer-card,
-        .market-card {
-            background: rgba(18, 19, 26, 0.56);
-            border: 1px solid #1e2028;
-            border-radius: 2px;
-            padding: 28px;
+        .hero-panel {
+            padding: 48px 36px;
         }
 
-        .card-kicker {
-            color: #f5a623;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.08;
+            letter-spacing: -1.4px;
+            margin-bottom: 18px;
+            max-width: 16ch;
+        }
+
+        .hero-accent {
+            background: linear-gradient(90deg, #ffffff 0%, #f5a623 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-body {
+            color: #9ca3af;
+            font-size: 17px;
+            max-width: 62ch;
             margin-bottom: 12px;
         }
 
-        .buyer-card h3,
-        .market-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .hero-bullets {
+            display: grid;
+            gap: 6px;
+            list-style: none;
+            color: #d1d5db;
+            font-size: 16px;
+            margin-bottom: 24px;
         }
 
-        .buyer-card p,
-        .market-card p {
-            color: #9ca3af;
-            font-size: 15px;
+        .hero-bullets li::before {
+            content: ">";
+            color: #f5a623;
+            margin-right: 10px;
+            font-weight: 700;
         }
 
-        .bullet-list {
+        .cta-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .hero-trust {
+            color: #6b7280;
+            font-size: 13px;
+            max-width: 64ch;
+        }
+
+        /* ── What you get ── */
+        .outcome-section {
+            margin-bottom: 24px;
+        }
+
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .outcome-main {
+            grid-column: 1 / -1;
+        }
+
+        .outcome-main h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 18px;
+        }
+
+        .outcome-list {
             display: grid;
             gap: 10px;
             list-style: none;
             color: #d1d5db;
             font-size: 15px;
+            margin-bottom: 18px;
         }
 
-        .bullet-list li::before {
+        .outcome-list li::before {
             content: ">";
             color: #f5a623;
             margin-right: 10px;
+            font-weight: 700;
         }
 
+        .outcome-punch {
+            color: #f5a623;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Category cards ── */
+        .category-section {
+            margin-bottom: 24px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .category-card {
+            background: rgba(18, 19, 26, 0.56);
+            border: 1px solid #1e2028;
+            border-radius: 2px;
+            padding: 28px;
+            transition: border-color 0.2s;
+        }
+
+        .category-card.highlight {
+            border-color: rgba(245, 166, 35, 0.3);
+            background: rgba(245, 166, 35, 0.04);
+        }
+
+        .category-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .category-card .card-timing {
+            color: #8a8f98;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .category-card .card-quote {
+            color: #f5a623;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* ── Differentiator ── */
+        .diff-section {
+            margin-bottom: 24px;
+        }
+
+        .diff-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 10px;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .config-tag {
+            padding: 14px 16px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.08);
+            text-align: center;
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+        .diff-punch {
+            color: #8a8f98;
+            font-size: 14px;
+            margin-top: 16px;
+            font-style: italic;
+        }
+
+        /* ── FinServ impact ── */
+        .impact-section {
+            margin-bottom: 24px;
+        }
+
+        .impact-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 18px;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .impact-stat {
+            padding: 18px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.08);
+        }
+
+        .impact-stat .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f5a623;
+            margin-bottom: 4px;
+        }
+
+        .impact-stat .stat-label {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .impact-punch {
+            color: #f5a623;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ── How it works ── */
+        .steps-section {
+            margin-bottom: 24px;
+        }
+
+        .steps-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 18px;
+        }
+
+        .steps-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .step-card {
+            padding: 18px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.08);
+        }
+
+        .step-card .step-num {
+            color: #f5a623;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .step-card strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .step-card p {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* ── AIOps contrast ── */
+        .contrast-section {
+            margin-bottom: 24px;
+        }
+
+        .contrast-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 8px;
+        }
+
+        .contrast-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .contrast-card {
+            padding: 18px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.08);
+        }
+
+        .contrast-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #f5a623;
+        }
+
+        .contrast-card p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* ── Before / After ── */
+        .shift-section {
+            margin-bottom: 24px;
+        }
+
+        .shift-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 18px;
+        }
+
+        .shift-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .shift-col {
+            padding: 18px 20px;
+            font-size: 14px;
+        }
+
+        .shift-col.before {
+            background: rgba(255, 80, 80, 0.04);
+            border: 1px solid rgba(255, 80, 80, 0.12);
+        }
+
+        .shift-col.after {
+            background: rgba(245, 166, 35, 0.04);
+            border: 1px solid rgba(245, 166, 35, 0.12);
+        }
+
+        .shift-col .shift-label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .shift-col.before .shift-label { color: #ff6b6b; }
+        .shift-col.after .shift-label { color: #f5a623; }
+
+        .shift-col .shift-items {
+            display: grid;
+            gap: 8px;
+        }
+
+        .shift-col.before .shift-items { color: #9ca3af; }
+        .shift-col.after .shift-items { color: #d1d5db; }
+
+        /* ── What companies pay for ── */
+        .pricing-section {
+            margin-bottom: 24px;
+        }
+
+        .pricing-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 8px;
+        }
+
+        .pricing-lead {
+            color: #d1d5db;
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        .pricing-phases {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .pricing-phase {
+            padding: 16px 18px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.12);
+        }
+
+        .pricing-phase.featured {
+            background: rgba(245, 166, 35, 0.06);
+            border-color: rgba(245, 166, 35, 0.25);
+        }
+
+        .pricing-phase strong {
+            color: #f5a623;
+            font-size: 14px;
+        }
+
+        .pricing-phase p {
+            color: #9ca3af;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* ── Enterprise capabilities ── */
+        .caps-section {
+            margin-bottom: 24px;
+        }
+
+        .caps-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 8px;
+        }
+
+        .caps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .caps-card {
+            padding: 18px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.08);
+        }
+
+        .caps-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #f5a623;
+        }
+
+        .caps-card p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* ── Pilot timeline ── */
+        .timeline-section {
+            margin-bottom: 24px;
+        }
+
+        .timeline-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 18px;
+        }
+
+        .timeline-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .timeline-card {
+            padding: 18px;
+            background: rgba(245, 166, 35, 0.03);
+            border: 1px solid rgba(245, 166, 35, 0.08);
+        }
+
+        .timeline-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #f5a623;
+        }
+
+        .timeline-card p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* ── Trust strip ── */
+        .trust-section {
+            margin-bottom: 24px;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .trust-item {
+            padding: 16px;
+            background: rgba(18, 19, 26, 0.4);
+            border: 1px solid #1e2028;
+            text-align: center;
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+        /* ── Honesty ── */
+        .honesty-section {
+            margin-bottom: 24px;
+        }
+
+        .honesty-section h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 18px;
+        }
+
+        .honesty-list {
+            display: grid;
+            gap: 8px;
+            list-style: none;
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .honesty-list li::before {
+            content: "—";
+            color: #555;
+            margin-right: 10px;
+        }
+
+        .honesty-punch {
+            color: #d1d5db;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ── Bottom CTA ── */
         .bottom-cta {
             display: grid;
             grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
@@ -343,9 +734,15 @@
             margin-bottom: 24px;
         }
 
+        .bottom-cta h2 {
+            font-size: 24px;
+            letter-spacing: -0.4px;
+            margin-bottom: 10px;
+        }
+
         .bottom-cta p {
             color: #9ca3af;
-            font-size: 16px;
+            font-size: 15px;
             margin-top: 10px;
         }
 
@@ -364,6 +761,11 @@
             border: 1px solid #2a2d38;
             background: rgba(12, 13, 18, 0.8);
             font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        .contact-link:hover {
+            border-color: rgba(245, 166, 35, 0.3);
         }
 
         .contact-link span:last-child {
@@ -371,6 +773,7 @@
             font-weight: 700;
         }
 
+        /* ── Footer ── */
         .footer {
             padding: 30px 12px 12px;
             color: #8a8f98;
@@ -378,17 +781,30 @@
             text-align: center;
         }
 
+        /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
-            .hero,
-            .section-grid,
-            .bottom-cta,
-            .buyer-grid,
-            .market-grid {
+            .outcome-grid,
+            .category-grid,
+            .impact-stats,
+            .steps-row,
+            .contrast-grid,
+            .caps-grid,
+            .timeline-row,
+            .trust-grid,
+            .bottom-cta {
                 grid-template-columns: 1fr;
             }
 
+            .shift-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .config-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .hero h1 {
-                font-size: 40px;
+                font-size: 38px;
                 max-width: none;
             }
         }
@@ -411,17 +827,16 @@
             }
 
             .panel,
-            .buyer-card,
-            .market-card {
+            .hero-panel {
                 padding: 24px 20px;
             }
 
             .hero h1 {
-                font-size: 34px;
+                font-size: 32px;
             }
 
-            .hero p {
-                font-size: 16px;
+            .hero-body {
+                font-size: 15px;
             }
         }
 
@@ -435,7 +850,7 @@
             }
 
             .hero h1 {
-                font-size: 28px;
+                font-size: 26px;
             }
 
             .cta-row {
@@ -445,6 +860,14 @@
             .btn-glass,
             .contact-link {
                 width: 100%;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -463,218 +886,294 @@
             </div>
         </div>
 
+        <!-- ═══ HERO ═══ -->
         <div class="hero">
-            <div class="panel">
-                <div class="eyebrow">Enterprise Reliability Delivery</div>
-                <h1>Open-source core. <span class="hero-accent">Enterprise delivery</span> for regulated infrastructure teams.</h1>
-                <p>In trading and market infrastructure, outages are P&amp;L events. ReliOps gives SRE and platform teams a concrete way to map where the next costly incident originates, how far it spreads, and which fix delivers the highest risk reduction per engineering dollar. Enterprise adds private deployment, data isolation, and a leadership-ready reliability readout.</p>
-                <div class="cta-row">
-                    <a class="btn-glass" href="mailto:sales@upliftpal.com?subject=ReliOps%20Enterprise%20Pilot">Start a Pilot</a>
-                    <a class="btn-glass" href="/audit">Run Technical Audit</a>
-                </div>
-                <div class="hero-note">Built for hedge funds, broker-dealers, exchanges, and trading fintechs where a single outage minute costs more than the annual reliability tooling budget.</div>
-            </div>
-
-            <div class="panel proof-card">
-                <h2>What buyers actually get</h2>
-                <div class="proof-list">
-                    <div class="proof-item">
-                        <strong>Executive reliability brief</strong>
-                        <p>A leadership-ready readout of concentration risk, critical-path exposure, and the remediation work with the highest risk reduction per engineering dollar.</p>
-                    </div>
-                    <div class="proof-item">
-                        <strong>Private deployment path</strong>
-                        <p>Run ReliOps in your own environment with local model options for strict data-isolation and regulated operating requirements.</p>
-                    </div>
-                    <div class="proof-item">
-                        <strong>SRE-operable workflow</strong>
-                        <p>Service audit, blast-radius analysis, incident-pattern review, and response-plan generation in one workflow instead of scattered spreadsheets and tribal knowledge.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="buyer-grid">
-            <div class="buyer-card">
-                <div class="card-kicker">Champion</div>
-                <h3>SRE and platform engineering</h3>
-                <p>The team already firefighting cross-service fragility. ReliOps gives them a concrete way to prove where risk is systemic, not anecdotal, and build a remediation backlog ranked by impact.</p>
-            </div>
-            <div class="buyer-card">
-                <div class="card-kicker">Economic Buyer</div>
-                <h3>CTO, Head of Infrastructure, or engineering leadership</h3>
-                <p>ReliOps ties reliability work directly to outage exposure, critical-path concentration, and prioritized risk reduction, not generic observability noise.</p>
-            </div>
-            <div class="buyer-card">
-                <div class="card-kicker">Operational Wedge</div>
-                <h3>Trading, market data, risk, and settlement paths</h3>
-                <p>The strongest wedge is where dependency chains are dense, incident minutes are expensive, and resilience decisions visibly affect revenue, clients, or regulatory posture.</p>
-            </div>
-        </div>
-
-        <div class="section-grid">
-            <div class="panel section">
-                <div class="eyebrow">Open-Source Core</div>
-                <h2>What stays open</h2>
-                <p class="section-copy">The core is portable, inspectable, and useful without a sales conversation. Validate the workflow on your own terms.</p>
-                <div class="value-list">
-                    <div class="value-item">
-                        <strong>Self-hosted rules engine and dashboard</strong>
-                        <p>Teams can run the core locally, inspect the logic, and validate the product against their own architecture.</p>
-                    </div>
-                    <div class="value-item">
-                        <strong>Config audit and dependency review</strong>
-                        <p>The open product proves the workflow: upload service definitions, surface critical issues, inspect blast radius, and review incident patterns.</p>
-                    </div>
-                    <div class="value-item">
-                        <strong>No lock-in story</strong>
-                        <p>Open source builds trust. It tells technical buyers they are adopting a transparent reliability model rather than a black box.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel section">
-                <div class="eyebrow">Enterprise Engagement</div>
-                <h2>What companies pay for</h2>
-                <p class="section-copy">Speed, deployment quality, calibration, and a business-ready operating model for regulated environments.</p>
-                <ul class="bullet-list">
-                    <li>Supported private deployment for regulated or latency-sensitive teams.</li>
-                    <li>Rule calibration against your architecture, service tiers, and operating standards.</li>
-                    <li>Guided pilot with SRE walkthroughs and leadership readout.</li>
-                    <li>Local model and data-isolation setup for strict compliance environments.</li>
-                    <li>Continuous dependency discovery via cloud and IaC API integration.</li>
-                    <li>Reliability review sessions focused on the highest-value remediation backlog.</li>
+            <div class="panel hero-panel">
+                <div class="eyebrow">Enterprise Reliability Intelligence</div>
+                <h1>Know what breaks next — <span class="hero-accent">before it costs you.</span></h1>
+                <p class="hero-body">Open-source core. Enterprise delivery for regulated infrastructure teams.</p>
+                <p class="hero-body" style="margin-bottom: 6px;">In trading systems, outages are P&amp;L events. ReliOps shows:</p>
+                <ul class="hero-bullets">
+                    <li>where the next incident starts</li>
+                    <li>how far it spreads (blast radius)</li>
+                    <li>which fix reduces the most risk</li>
                 </ul>
-                <div style="margin-top: 20px; display: grid; gap: 10px;">
-                    <div style="padding: 14px 16px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.12);">
-                        <strong style="color: #f5a623; font-size: 13px;">Phase 1: Open-Source Validation</strong>
-                        <p style="color: #9ca3af; font-size: 13px; margin-top: 4px;">Free. Self-host, run audits, validate the workflow on your own infrastructure.</p>
+                <div class="cta-row">
+                    <a class="btn-glass btn-primary" href="/audit">Run Technical Audit</a>
+                    <a class="btn-glass" href="mailto:sales@upliftpal.com?subject=ReliOps%20Enterprise%20Pilot">Start a Pilot</a>
+                </div>
+                <div class="hero-trust">Built for hedge funds, broker-dealers, exchanges, and trading platforms where one outage minute can exceed annual tooling cost.</div>
+            </div>
+        </div>
+
+        <!-- ═══ WHAT YOU GET ═══ -->
+        <div class="outcome-section">
+            <div class="panel">
+                <div class="eyebrow">What You Actually Get</div>
+                <div class="outcome-main">
+                    <ul class="outcome-list">
+                        <li>A ranked list of what will break next</li>
+                        <li>Blast radius mapped across dependencies</li>
+                        <li>A prioritized fix backlog with ROI</li>
+                        <li>Leadership-ready reliability readout</li>
+                    </ul>
+                    <div class="outcome-punch">Not alerts. Not dashboards. A decision system.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ WHERE RELIOPS FITS ═══ -->
+        <div class="category-section">
+            <div class="category-grid">
+                <div class="category-card">
+                    <h3>Observability</h3>
+                    <div class="card-timing">Detects after failure</div>
+                    <div class="card-quote">"Something is wrong."</div>
+                </div>
+                <div class="category-card">
+                    <h3>Incident Management</h3>
+                    <div class="card-timing">Responds during failure</div>
+                    <div class="card-quote">"Let's recover."</div>
+                </div>
+                <div class="category-card highlight">
+                    <h3>ReliOps</h3>
+                    <div class="card-timing">Predicts before failure</div>
+                    <div class="card-quote">"Here's what breaks next."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ NO AGENTS ═══ -->
+        <div class="diff-section">
+            <div class="panel">
+                <div class="eyebrow">Core Differentiator</div>
+                <h2>No agents. No production access.</h2>
+                <p class="section-copy">ReliOps works from what you already have:</p>
+                <div class="config-grid">
+                    <div class="config-tag">YAML / JSON configs</div>
+                    <div class="config-tag">Kubernetes manifests</div>
+                    <div class="config-tag">Terraform / IaC</div>
+                    <div class="config-tag">Architecture docs</div>
+                </div>
+                <p class="diff-punch">Your system already describes itself. We map the risk.</p>
+            </div>
+        </div>
+
+        <!-- ═══ FINSERV IMPACT ═══ -->
+        <div class="impact-section">
+            <div class="panel">
+                <div class="eyebrow">Why This Matters</div>
+                <h2>In financial systems, downtime is not technical — it's financial</h2>
+                <div class="impact-stats">
+                    <div class="impact-stat">
+                        <div class="stat-value">$5.6M/hr</div>
+                        <div class="stat-label">Average outage cost</div>
                     </div>
-                    <div style="padding: 14px 16px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.12);">
-                        <strong style="color: #f5a623; font-size: 13px;">Phase 2: Guided Pilot ($25-50K)</strong>
-                        <p style="color: #9ca3af; font-size: 13px; margin-top: 4px;">Audit your top 10 services. Deployed in your environment with SRE walkthrough and leadership readout.</p>
+                    <div class="impact-stat">
+                        <div class="stat-value">Config + deps</div>
+                        <div class="stat-label">Where most failures originate</div>
                     </div>
-                    <div style="padding: 14px 16px; background: rgba(245, 166, 35, 0.06); border: 1px solid rgba(245, 166, 35, 0.2);">
-                        <strong style="color: #f5a623; font-size: 13px;">Phase 3: Enterprise Platform ($200K+/year)</strong>
-                        <p style="color: #9ca3af; font-size: 13px; margin-top: 4px;">Full deployment with continuous monitoring, rule calibration, outage simulation, and board-ready reporting.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PILOT TIMELINE -->
-        <div class="panel" style="margin-bottom: 24px;">
-            <div class="eyebrow">Pilot Timeline</div>
-            <h2 style="font-size: 24px; margin-bottom: 18px; letter-spacing: -0.4px;">Config to first findings in under a week</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px;">
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Week 1</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Ingest your service definitions, run initial audit, deploy in your environment.</p>
-                </div>
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Week 2</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Map dependencies and blast radius. Deliver first risk report to SRE and leadership.</p>
-                </div>
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Week 3</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Prioritized remediation plan with fix-level guidance. Board-ready reliability risk assessment.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="market-grid">
-            <div class="market-card">
-                <div class="card-kicker">Why This Beachhead</div>
-                <h3>Financial services feels the pain fastest</h3>
-                <p>In trading and market infrastructure, outages are not just technical defects. They hit execution quality, client confidence, and operating risk immediately.</p>
-            </div>
-            <div class="market-card">
-                <div class="card-kicker">Why ReliOps Fits</div>
-                <h3>Dependency density creates hidden concentration risk</h3>
-                <p>Order routing, pricing, market-data ingestion, risk checks, and notification chains often fail through coupling. ReliOps is strongest where that coupling is hard to see early.</p>
-            </div>
-            <div class="market-card">
-                <div class="card-kicker">Expansion Path</div>
-                <h3>Payments, fintech, healthcare, and other regulated systems</h3>
-                <p>Once the financial-services wedge is established, the same story extends to any environment where uptime, compliance, and critical-path dependencies matter.</p>
-            </div>
-        </div>
-
-        <!-- COMPETITIVE POSITIONING -->
-        <div class="panel" style="margin-bottom: 24px;">
-            <div class="eyebrow">How ReliOps Is Different</div>
-            <h2 style="font-size: 24px; margin-bottom: 8px; letter-spacing: -0.4px;">AIOps reacts to incidents. ReliOps prevents them.</h2>
-            <p class="section-copy" style="margin-bottom: 18px;">Tools like BigPanda and Selector AI correlate alerts after something breaks. ReliOps maps dependency risk and blast radius before the first alert fires, from config files your teams already maintain.</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px;">
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">No integration tax</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">AIOps platforms need months of connector setup into every alerting and ITSM tool. ReliOps starts from YAML, Helm charts, and Terraform you already have.</p>
-                </div>
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Blast radius, not alert noise</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">AIOps thinks in alerts and incidents. ReliOps thinks in dependency chains and concentration risk. The signals that matter before outages happen.</p>
-                </div>
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Open and auditable</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Neither BigPanda nor Selector AI lets you inspect the scoring logic. ReliOps's 8-rule engine is open-source. Explain every finding to your risk committee.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- BEFORE vs AFTER -->
-        <div class="panel" style="margin-bottom: 24px;">
-            <div class="eyebrow">The Shift</div>
-            <h2 style="font-size: 24px; margin-bottom: 18px; letter-spacing: -0.4px;">What changes with ReliOps</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
-                <div style="padding: 14px 18px; background: rgba(255, 80, 80, 0.04); border: 1px solid rgba(255, 80, 80, 0.12); font-size: 14px;">
-                    <strong style="color: #ff6b6b; display: block; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Before</strong>
-                    <div style="display: grid; gap: 8px; color: #9ca3af;">
-                        <div>Unknown blast radius</div>
-                        <div>Reactive incident response</div>
-                        <div>Risk described in anecdotes</div>
-                        <div>Scattered spreadsheets and tribal knowledge</div>
-                        <div>Months to deploy observability tooling</div>
+                    <div class="impact-stat">
+                        <div class="stat-value">Invisible</div>
+                        <div class="stat-label">Blast radius until it's too late</div>
                     </div>
                 </div>
-                <div style="padding: 14px 18px; background: rgba(245, 166, 35, 0.04); border: 1px solid rgba(245, 166, 35, 0.12); font-size: 14px;">
-                    <strong style="color: #f5a623; display: block; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">After</strong>
-                    <div style="display: grid; gap: 8px; color: #d1d5db;">
-                        <div>Fully mapped dependency chains</div>
-                        <div>Pre-incident risk prioritization</div>
-                        <div>Quantified exposure per service</div>
-                        <div>Single reliability readout for leadership</div>
-                        <div>Config to first findings in a week</div>
+                <div class="impact-punch">You don't need more monitoring. You need foresight.</div>
+            </div>
+        </div>
+
+        <!-- ═══ MID-PAGE CTA ═══ -->
+        <div class="mid-cta">
+            <p>See your highest-risk failure path in minutes.</p>
+            <div class="cta-row">
+                <a class="btn-glass btn-primary" href="/audit">Run Technical Audit</a>
+                <a class="btn-glass" href="mailto:sales@upliftpal.com?subject=ReliOps%20Enterprise%20Pilot">Start a Pilot</a>
+            </div>
+        </div>
+
+        <!-- ═══ HOW IT WORKS ═══ -->
+        <div class="steps-section">
+            <div class="panel">
+                <div class="eyebrow">How It Works</div>
+                <h2>From config to risk map in minutes</h2>
+                <div class="steps-row">
+                    <div class="step-card">
+                        <div class="step-num">Step 1</div>
+                        <strong>Upload config</strong>
+                        <p>Drop YAML / JSON service definitions.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">Step 2</div>
+                        <strong>See your risk map</strong>
+                        <p>Dependencies + blast radius, scored and ranked.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">Step 3</div>
+                        <strong>Fix what matters</strong>
+                        <p>Prioritized actions with risk-reduction ROI.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PREMIUM CAPABILITIES -->
-        <div class="panel" style="margin-bottom: 24px;">
-            <div class="eyebrow">Enterprise Capabilities</div>
-            <h2 style="font-size: 24px; margin-bottom: 8px; letter-spacing: -0.4px;">Features that close deals</h2>
-            <p class="section-copy" style="margin-bottom: 18px;">These are the capabilities that make enterprise buyers say yes.</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 16px;">
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Outage simulation</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Pick any service and simulate failure. See impacted systems, estimated revenue exposure, and time-to-detect across the dependency chain.</p>
-                </div>
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Board-ready risk report</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Auto-generated PDF: top 5 outage risks, dollar impact, and fix ROI. Hand it to your CTO or risk committee without reformatting.</p>
-                </div>
-                <div style="padding: 18px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.08);">
-                    <strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #f5a623;">Regulatory gap mapping</strong>
-                    <p style="color: #9ca3af; font-size: 14px;">Map findings directly to DORA, SOC 2, and internal control frameworks. Show auditors exactly where operational resilience gaps exist.</p>
+        <!-- ═══ AIOPS CONTRAST ═══ -->
+        <div class="contrast-section">
+            <div class="panel">
+                <div class="eyebrow">How ReliOps Is Different</div>
+                <h2>AIOps explains the past. ReliOps predicts the next failure.</h2>
+                <p class="section-copy">AIOps correlates alerts after something breaks. ReliOps maps risk before it does.</p>
+                <div class="contrast-grid">
+                    <div class="contrast-card">
+                        <strong>No integration tax</strong>
+                        <p>AIOps platforms need months of connector setup. ReliOps starts from YAML, Helm charts, and Terraform you already have.</p>
+                    </div>
+                    <div class="contrast-card">
+                        <strong>Blast radius, not alert noise</strong>
+                        <p>AIOps thinks in alerts and incidents. ReliOps thinks in dependency chains and concentration risk.</p>
+                    </div>
+                    <div class="contrast-card">
+                        <strong>Open and auditable</strong>
+                        <p>ReliOps's 8-rule engine is open-source. Explain every finding to your risk committee.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- ═══ BEFORE / AFTER ═══ -->
+        <div class="shift-section">
+            <div class="panel" style="padding: 36px 36px 0;">
+                <div class="eyebrow">The Shift</div>
+                <h2>What changes with ReliOps</h2>
+                <div class="shift-grid">
+                    <div class="shift-col before">
+                        <span class="shift-label">Before</span>
+                        <div class="shift-items">
+                            <div>Reactive firefighting</div>
+                            <div>Unknown dependencies</div>
+                            <div>Postmortems after the damage</div>
+                            <div>Alert noise</div>
+                        </div>
+                    </div>
+                    <div class="shift-col after">
+                        <span class="shift-label">After</span>
+                        <div class="shift-items">
+                            <div>Pre-incident prioritization</div>
+                            <div>Mapped blast radius</div>
+                            <div>Prevented incidents</div>
+                            <div>Clear risk signals</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ WHAT COMPANIES PAY FOR ═══ -->
+        <div class="pricing-section">
+            <div class="panel">
+                <div class="eyebrow">Enterprise Engagement</div>
+                <h2>What you're actually buying</h2>
+                <p class="pricing-lead">You're not buying monitoring. You're buying avoided outages.</p>
+                <ul class="outcome-list">
+                    <li>Early visibility into failure paths</li>
+                    <li>Faster, smarter prioritization</li>
+                    <li>Reduced incident frequency</li>
+                    <li>Leadership-level risk clarity</li>
+                </ul>
+                <div class="pricing-phases">
+                    <div class="pricing-phase">
+                        <strong>Phase 1: Open-Source Validation</strong>
+                        <p>Free. Self-host, run audits, validate the workflow on your own infrastructure.</p>
+                    </div>
+                    <div class="pricing-phase featured">
+                        <strong>Phase 2: Guided Pilot ($25-50K)</strong>
+                        <p>Audit your top 10 services. Deployed in your environment with SRE walkthrough and leadership readout.</p>
+                    </div>
+                    <div class="pricing-phase featured">
+                        <strong>Phase 3: Enterprise Platform ($200K+/year)</strong>
+                        <p>Full deployment with continuous monitoring, rule calibration, outage simulation, and board-ready reporting.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ ENTERPRISE CAPABILITIES ═══ -->
+        <div class="caps-section">
+            <div class="panel">
+                <div class="eyebrow">Enterprise Capabilities</div>
+                <h2>Features that close deals</h2>
+                <div class="caps-grid">
+                    <div class="caps-card">
+                        <strong>Outage simulation</strong>
+                        <p>Pick any service and simulate failure. See impacted systems, estimated revenue exposure, and time-to-detect across the dependency chain.</p>
+                    </div>
+                    <div class="caps-card">
+                        <strong>Board-ready risk report</strong>
+                        <p>Auto-generated PDF: top 5 outage risks, dollar impact, and fix ROI. Hand it to your CTO or risk committee without reformatting.</p>
+                    </div>
+                    <div class="caps-card">
+                        <strong>Regulatory gap mapping</strong>
+                        <p>Map findings directly to DORA, SOC 2, and internal control frameworks. Show auditors exactly where operational resilience gaps exist.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ PILOT TIMELINE ═══ -->
+        <div class="timeline-section">
+            <div class="panel">
+                <div class="eyebrow">Pilot Timeline</div>
+                <h2>Config to first findings in under a week</h2>
+                <div class="timeline-row">
+                    <div class="timeline-card">
+                        <strong>Week 1</strong>
+                        <p>Ingest your service definitions, run initial audit, deploy in your environment.</p>
+                    </div>
+                    <div class="timeline-card">
+                        <strong>Week 2</strong>
+                        <p>Map dependencies and blast radius. Deliver first risk report to SRE and leadership.</p>
+                    </div>
+                    <div class="timeline-card">
+                        <strong>Week 3</strong>
+                        <p>Prioritized remediation plan with fix-level guidance. Board-ready reliability risk assessment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ TRUST ═══ -->
+        <div class="trust-section">
+            <div class="trust-grid">
+                <div class="trust-item">Built by Wall Street SRE leaders</div>
+                <div class="trust-item">Open-source core (inspectable)</div>
+                <div class="trust-item">Enterprise-ready deployment</div>
+                <div class="trust-item">Data stays in your environment</div>
+            </div>
+        </div>
+
+        <!-- ═══ HONESTY ═══ -->
+        <div class="honesty-section">
+            <div class="panel">
+                <div class="eyebrow">Transparency</div>
+                <h2>What ReliOps does not do (yet)</h2>
+                <ul class="honesty-list">
+                    <li>Not real-time monitoring</li>
+                    <li>Not incident response</li>
+                    <li>Not full system coverage required</li>
+                </ul>
+                <div class="honesty-punch">You don't need full coverage to find your biggest risks.</div>
+            </div>
+        </div>
+
+        <!-- ═══ BOTTOM CTA ═══ -->
         <div class="bottom-cta">
             <div class="panel">
-                <div class="eyebrow">Pilot Motion</div>
-                <h2>Start with one high-value service chain</h2>
-                <p>Run ReliOps as a focused pilot on a critical dependency path: order routing, market data, or settlement. $25-50K to audit your top 10 services with a leadership readout. Use the results to justify broader adoption.</p>
+                <div class="eyebrow">Get Started</div>
+                <h2>Start with one service</h2>
+                <p>Drop a config. See your highest-risk failure path in minutes.</p>
+                <div class="cta-row" style="margin-top: 20px;">
+                    <a class="btn-glass btn-primary" href="/audit">Run Technical Audit</a>
+                    <a class="btn-glass" href="mailto:sales@upliftpal.com?subject=ReliOps%20Enterprise%20Pilot">Start a Pilot</a>
+                </div>
             </div>
             <div class="panel">
                 <div class="contact-block">

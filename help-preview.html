@@ -431,49 +431,14 @@
             .container {
                 padding: 24px 12px 40px;
             }
-            .page-header {
-                margin-bottom: 28px;
-            }
             .page-title {
                 font-size: 20px;
             }
             .page-subtitle {
                 font-size: 13px;
             }
-            .steps-section {
-                margin-bottom: 20px;
-            }
             .step {
-                padding: 16px;
-            }
-            .step-number {
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
-                font-size: 12px;
-                margin-bottom: 8px;
-            }
-            .step-title {
-                font-size: 14px;
-                margin-bottom: 4px;
-            }
-            .step-desc {
-                font-size: 12px;
-            }
-            .step-desc p + p {
-                margin-top: 3px;
-            }
-            .trust-strip {
-                font-size: 11px;
-                padding: 12px 16px;
-                gap: 6px 14px;
-                margin-bottom: 28px;
-            }
-            .value-section {
-                margin-bottom: 28px;
-            }
-            .value-item {
-                padding: 16px;
+                padding: 20px 16px;
             }
             .faq-question {
                 font-size: 13px;
@@ -482,6 +447,14 @@
             .faq-answer-inner {
                 padding: 0 16px 14px;
                 font-size: 12px;
+            }
+            .trust-strip {
+                font-size: 11px;
+                padding: 12px 16px;
+                gap: 6px 14px;
+            }
+            .value-item {
+                padding: 16px;
             }
             .bottom-cta {
                 padding: 32px 16px;
@@ -733,16 +706,6 @@
 
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    Is ReliOps open source?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps has an open-source core you can self-host, inspect, and extend. The core is portable so teams can validate the workflow without lock-in. Companies that need private deployment, rule calibration, or regulated-environment delivery can engage on an enterprise basis. See <a href="/enterprise" style="color: #f5a623;">Enterprise</a> for details.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
                     Can this integrate with existing workflows?
                     <span class="faq-chevron">▼</span>
                 </button>
@@ -754,101 +717,6 @@
                             <li>Internal workflows</li>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- USING RELIOPS FAQ -->
-        <div class="faq-section">
-            <div class="section-label">Using ReliOps</div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    How do I read the risk score?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">The Operational Reliability Risk score ranges from 0 (no issues) to 100 (critical). It's severity-weighted — CRITICAL findings contribute far more than LOW ones. Under 30 is healthy, 30–59 is moderate and worth reviewing, and 60+ means findings that need prompt attention.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    What is blast radius?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">Blast radius measures how many downstream services would be affected if a given service fails. ReliOps traces the dependency chain and counts every system that depends — directly or transitively — on that service. A blast radius of 8 means an outage would ripple across 8 other services.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    What does the dependency graph show?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">The graph maps every service-to-service dependency in your architecture. Node color reflects risk level — green is clean, yellow has medium findings, red has critical issues. You can drag nodes, zoom, and hover for details. The layout reveals which services are tightly coupled and where a single failure could cascade.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    What are the 8 reliability rules?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps runs 8 rules against your services: SLO breach trending, missing cross-AZ failover, missing circuit breakers, retry storm risk, single-owner risk, incident recurrence, missing saturation metrics, and dependency fan-out limits. Each rule produces findings at CRITICAL, HIGH, MEDIUM, or LOW severity.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    How do I audit my own service config?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">Go to <a href="/audit" style="color: #f5a623;">Run Audit</a> in the navigation. Drop in a YAML or JSON file describing your services. Include fields like name, tier, owner, SLO targets, and dependencies. ReliOps runs the full rules engine and returns a scored report with actionable findings.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    What format does the audit accept?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">YAML or JSON with a list of service definitions. Each service should include: name, tier (e.g. tier-1), owner, slo_target, slo_current, dependencies (a list of service names), and optionally deployment info like az_count.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    What do the service tiers mean?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">Tiers reflect business criticality. Tier 1 is revenue-critical or customer-facing infrastructure — services where downtime directly impacts users or revenue. Higher tier numbers indicate supporting or internal services. ReliOps weighs findings on Tier-1 services more heavily since their failures have the broadest impact.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    What is the "Generate Response Plan" button?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">When you click "Generate Response Plan" on a critical issue or blast-radius hotspot, ReliOps builds a structured incident runbook for that service. It includes immediate response steps, blast-radius containment actions, a communication template, and a post-incident checklist — actionable steps, not a generic playbook.</div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    Is my data sent to third-party LLMs?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">Only if you opt in to an external AI provider. Even then, ReliOps strips all service names, owner info, and internal identifiers before sending. The LLM only sees anonymized patterns. For full data isolation, use the local provider — zero data leaves your network. AI insights are off by default.</div>
                 </div>
             </div>
         </div>
