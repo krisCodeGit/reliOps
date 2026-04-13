@@ -115,11 +115,30 @@ def _configure_logging(app):
 _configure_logging(app)
 
 
+@app.context_processor
+def inject_globals():
+    """Variables available in every Jinja template."""
+    return {"asset_v": config.ASSET_VERSION}
+
+
 @app.after_request
-def add_cors_headers(response):
+def add_headers(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    if response.content_type and 'text/html' in response.content_type:
+        if app.debug:
+            # Dev: always fetch fresh templates
+            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            response.headers['Pragma'] = 'no-cache'
+            response.headers['Expires'] = '0'
+        else:
+            # Prod: short cache for HTML, revalidate periodically
+            response.headers['Cache-Control'] = 'public, max-age=300, must-revalidate'
+    elif request.path.startswith('/static/') and not app.debug:
+        # Prod: long cache for static assets (busted by ?v=ASSET_VERSION)
+        timeout = config.STATIC_CACHE_TIMEOUT
+        response.headers['Cache-Control'] = f'public, max-age={timeout}, immutable'
     return response
 
 

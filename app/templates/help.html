@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>ReliOps | Help</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -12,12 +15,19 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html {
+            background: #0a0a0f;
+        }
+
+        body {
             width: 100%;
             min-height: 100%;
+            background: #0a0a0f;
             background: linear-gradient(135deg, #0a0a0f 0%, #0f0f17 100%);
-            color: #ffffff;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #fdf6ec;
+            font-family: "Inter", -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             font-size: 14px;
             line-height: 1.6;
         }
@@ -39,8 +49,11 @@
         }
 
         .logo-icon {
-            color: #f5a623;
+            width: 24px;
+            height: 24px;
             margin-right: 8px;
+            vertical-align: middle;
+            object-fit: contain;
         }
 
         .nav-links {
@@ -62,6 +75,33 @@
 
         .nav-link.active {
             color: #f5a623;
+        }
+
+        .nav-link-action {
+            color: rgba(255, 255, 255, 0.9);
+            padding: 6px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background:
+                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 42%, transparent 70%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.5) 60%),
+                rgba(15, 15, 15, 0.6);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+                0 4px 12px -4px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        .nav-link-action:hover {
+            color: #ffffff;
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+                0 6px 16px -4px rgba(0, 0, 0, 0.5);
         }
 
         /* CONTAINER */
@@ -282,7 +322,7 @@
     <!-- TOP BAR -->
     <div class="top-bar">
         <div class="logo">
-            <span class="logo-icon">⚡</span>ReliOps
+            <img src="/static/img/upliftpal-icon.png" alt="ReliOps" class="logo-icon">ReliOps
         </div>
         <div class="nav-links">
             <a href="/" class="nav-link">Dashboard</a>
@@ -306,18 +346,18 @@
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <div class="step-title">Audit Your Config</div>
-                    <div class="step-desc">Drop a YAML or JSON service definition into the <a href="/audit" style="color: #f5a623;">Audit Tool</a>. The same 8-rule engine that powers the dashboard will scan it and return scored findings with fix hints.</div>
+                    <div class="step-title">See Your Biggest Outage Risk</div>
+                    <div class="step-desc">Drop a YAML or JSON service definition into the <a href="/audit" style="color: #f5a623;">Audit Tool</a>. The 8-rule engine scores it and surfaces the findings most likely to cause an incident, with fix hints.</div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <div class="step-title">Map Blast Radius</div>
-                    <div class="step-desc">The dependency graph traces every connection in your service chain. See exactly how many systems a single failure takes down. Click any hotspot to generate a targeted incident response plan before you need one.</div>
+                    <div class="step-title">See How Far It Spreads</div>
+                    <div class="step-desc">The dependency graph traces every connection in your service chain. See exactly how many systems a single failure takes down. Click any hotspot to generate a response plan before you need one.</div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <div class="step-title">Fix What Matters Most</div>
-                    <div class="step-desc">Every finding is scored by severity and blast radius, then ranked by risk-reduction ROI. Critical issues include fix hints and runbook generation. Start with the fix that eliminates the most exposure per engineering hour.</div>
+                    <div class="step-title">Fix the Highest-Impact Issue</div>
+                    <div class="step-desc">Findings are ranked by risk-reduction ROI, not just severity. Critical issues include fix hints and runbook generation. Start with the fix that eliminates the most exposure per engineering hour.</div>
                 </div>
             </div>
         </div>
@@ -414,7 +454,7 @@
                     <strong>Continuous monitoring:</strong> Scheduled scans, drift detection, and historical trend analysis.<br>
                     <strong>Calibration:</strong> Rules, thresholds, and severity weights tuned to your SLO targets and regulatory requirements (SEC 17a-4, DORA, SOC 2).<br>
                     <strong>Support:</strong> Dedicated onboarding, pilot program, and ongoing reliability engineering advisory.<br><br>
-                    Enterprise contracts start at $150K/year for financial services institutions. <a href="/enterprise" style="color: #f5a623;">Start a pilot →</a></div>
+                    Guided pilots start at $25-50K. Enterprise platform contracts start at $200K/year for financial services institutions. <a href="/enterprise" style="color: #f5a623;">Start a pilot →</a></div>
                 </div>
             </div>
 
@@ -557,7 +597,7 @@
 
     <!-- FOOTER -->
     <div class="footer">
-        <div class="footer-logo"><span class="footer-icon">⚡</span>ReliOps by UpliftPal</div>
+        <div class="footer-logo"><img src="/static/img/upliftpal-icon.png" alt="" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 4px;">ReliOps by UpliftPal</div>
         <div>Monitoring tells you something broke. ReliOps tells you what breaks next.</div>
     </div>
 

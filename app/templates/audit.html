@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>ReliOps | Configuration Audit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
@@ -13,10 +16,16 @@
             box-sizing: border-box;
         }
 
+        html {
+            background: #0a0a0f;
+        }
+
         body {
             background: #0a0a0f;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            color: #fdf6ec;
+            font-family: "Inter", -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             line-height: 1.6;
         }
 
@@ -33,6 +42,16 @@
         .navbar-logo {
             font-size: 1.5rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar-logo img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+        .navbar-logo span {
             background: linear-gradient(135deg, #e8762d, #f5a623);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -169,19 +188,20 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: #f5a623;
-            color: #0a0a0f;
-            border: none;
+            background: linear-gradient(180deg, #35353c 0%, #26262c 100%);
+            color: #c8ccd4;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 0.5rem 1rem;
-            border-radius: 2px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: 600;
-            transition: background 0.2s;
+            transition: border-color 0.2s, transform 0.15s;
         }
 
         .copy-btn:hover {
-            background: #e8762d;
+            border-color: rgba(255, 255, 255, 0.18);
+            transform: translateY(-1px);
         }
 
         /* Buttons */
@@ -209,35 +229,79 @@
             text-decoration: underline;
         }
 
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 2px;
-            font-size: 1rem;
-            font-weight: 600;
+        /* ── Glass button (from UpliftPal) ── */
+        .btn-glass {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background:
+                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.12) 42%, transparent 70%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.7) 60%),
+                rgba(15, 15, 15, 0.75);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+                0 8px 32px -8px rgba(0, 0, 0, 0.6),
+                0 2px 8px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            padding: 0.55rem 1.35rem;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.2s ease, background 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
+            text-decoration: none;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #f5a623, #e8762d);
-            color: #0a0a0f;
+        .btn-glass::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(245, 166, 35, 0.3);
+        .btn-glass:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+                0 12px 40px -8px rgba(0, 0, 0, 0.7),
+                0 4px 12px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+            background:
+                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.15) 42%, transparent 70%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.65) 60%),
+                rgba(20, 20, 20, 0.8);
         }
 
-        .btn-secondary {
-            background: #12131a;
-            color: #f5a623;
-            border: 2px solid #f5a623;
+        .btn-glass:hover::before { opacity: 1; }
+
+        .btn-glass:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 2px 8px rgba(0, 0, 0, 0.5),
+                0 4px 16px -8px rgba(0, 0, 0, 0.6);
+            background:
+                radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08) 42%, transparent 70%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.75) 60%),
+                rgba(12, 12, 12, 0.85);
         }
 
-        .btn-secondary:hover {
-            background: rgba(245, 166, 35, 0.1);
+        .btn-glass-sm {
+            padding: 0.45rem 1rem;
+            font-size: 12px;
+            border-radius: 12px;
         }
 
         /* STATE 2: Loading */
@@ -700,10 +764,6 @@
             .finding-card {
                 padding: 1rem;
             }
-            .btn {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
-            }
             .cta-section {
                 padding: 1.5rem;
             }
@@ -739,8 +799,11 @@
             color: #fff;
         }
         .json-modal-header .logo-icon {
-            color: #f5a623;
+            width: 20px;
+            height: 20px;
             margin-right: 6px;
+            vertical-align: middle;
+            object-fit: contain;
         }
         .json-modal-nav {
             display: flex;
@@ -806,7 +869,7 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="navbar-logo">ReliOps</div>
+        <div class="navbar-logo"><img src="/static/img/upliftpal-icon.png" alt="ReliOps"><span>ReliOps</span></div>
         <ul class="navbar-nav">
             <li><a href="/">Dashboard</a></li>
             <li><a href="/audit" style="color: #f5a623;">Configuration Audit</a></li>
@@ -853,8 +916,8 @@
             </div>
 
             <div class="button-group">
-                <button class="btn btn-secondary" onclick="loadSampleData()">Try with Sample Data</button>
-                <button class="btn btn-primary" id="run-audit-btn" onclick="runAudit()" style="display: none;">Run Audit</button>
+                <button class="btn-glass" onclick="loadSampleData()">Try with Sample Data</button>
+                <button class="btn-glass" id="run-audit-btn" onclick="runAudit()" style="display: none;">Run Audit</button>
             </div>
 
             <div class="enterprise-note">Need private deployment or data-isolation controls for a regulated environment? <a href="/enterprise">Start an enterprise pilot</a>.</div>
@@ -916,8 +979,8 @@
             <div class="share-section">
                 <p>Share or export the current audit output</p>
                 <div class="share-buttons">
-                    <button class="btn btn-secondary" onclick="shareReport()">Copy Summary</button>
-                    <button class="btn btn-secondary" onclick="downloadPDF()">Print / Save as PDF</button>
+                    <button class="btn-glass btn-glass-sm" onclick="shareReport()">Copy Summary</button>
+                    <button class="btn-glass btn-glass-sm" onclick="downloadPDF()">Print / Save as PDF</button>
                 </div>
             </div>
 
@@ -925,12 +988,12 @@
             <div class="cta-section">
                 <h3>See the full picture</h3>
                 <p>The dashboard shows the same engine against a dependency-dense trading environment. For enterprise buyers, it becomes the leadership view of critical-path exposure, blast radius concentration, and remediation priority.</p>
-                <button class="btn btn-primary" onclick="openDashboard()">Open Live Dashboard →</button>
+                <button class="btn-glass" onclick="openDashboard()">Open Live Dashboard →</button>
             </div>
 
             <!-- Back Button -->
             <div style="text-align: center; margin-top: 2rem;">
-                <button class="btn btn-secondary" onclick="startOver()">Run Another Audit</button>
+                <button class="btn-glass" onclick="startOver()">Run Another Audit</button>
             </div>
         </div>
     </div>
@@ -1402,7 +1465,7 @@
     <div class="json-modal-overlay" id="json-modal">
         <div class="json-modal-header">
             <div>
-                <span class="logo"><span class="logo-icon">⚡</span>ReliOps</span>
+                <span class="logo"><img src="/static/img/upliftpal-icon.png" alt="ReliOps" class="logo-icon">ReliOps</span>
                 <span class="json-modal-label" style="margin-left: 16px;">API Response</span>
                 <span class="json-modal-endpoint">/api/dashboard</span>
             </div>

@@ -42,6 +42,18 @@ CACHE_TTL = 600  # 10 minutes in seconds
 PORT = int(os.environ.get('PORT', 5000))
 
 # ---------------------------------------------------------------------------
+# Asset cache-busting & static file caching
+# ---------------------------------------------------------------------------
+# Bump ASSET_VERSION on each deploy to force browsers to re-fetch static assets.
+# Uses semver (e.g. 1.0.0 → 1.1.0) so you can track what changed.
+# In templates: <link href="/static/style.css?v={{ asset_v }}">
+ASSET_VERSION = os.environ.get('ASSET_VERSION', '1.0.0')
+
+# How long (seconds) browsers/CDN cache /static/ files. 604800 = 7 days.
+# ASSET_VERSION query param busts cache on deploy regardless of this TTL.
+STATIC_CACHE_TIMEOUT = int(os.environ.get('STATIC_CACHE_TIMEOUT', '604800'))
+
+# ---------------------------------------------------------------------------
 # AI-Enhanced Insights (opt-in)
 # ---------------------------------------------------------------------------
 # Set AI_INSIGHTS_ENABLED=true to use an LLM for richer reliability insights.
