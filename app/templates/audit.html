@@ -882,19 +882,35 @@
         <!-- STATE 1: Upload -->
         <div id="state-upload" class="state active">
             <div class="upload-hero">
-                <h1>Drop a Config. See Your Risk.</h1>
-                <p>Upload your YAML or JSON service definition and get a scored reliability assessment in seconds — the same 8-rule engine that powers the dashboard. Open-source workflow for technical validation. Take it private for regulated environments.</p>
+                <h1>Drop a config. See what breaks next.</h1>
+                <p style="margin-bottom: 1rem;">Upload your YAML or JSON config. ReliOps scores:</p>
+                <div style="display: inline-block; text-align: left; margin-bottom: 2rem;">
+                    <div style="color: #d1d5db; font-size: 1rem; margin-bottom: 6px;"><span style="color: #f5a623; font-weight: 700; margin-right: 8px;">></span>blast radius</div>
+                    <div style="color: #d1d5db; font-size: 1rem; margin-bottom: 6px;"><span style="color: #f5a623; font-weight: 700; margin-right: 8px;">></span>failover gaps</div>
+                    <div style="color: #d1d5db; font-size: 1rem; margin-bottom: 10px;"><span style="color: #f5a623; font-weight: 700; margin-right: 8px;">></span>dependency risk</div>
+                    <div style="color: #8a8f98; font-size: 0.85rem;">No agents. No production access. Results in seconds.</div>
+                </div>
             </div>
 
             <div class="drop-zone" id="dropZone">
                 <div class="drop-zone-icon">📁</div>
-                <div class="drop-zone-text">Drop your YAML or JSON file here</div>
-                <div class="drop-zone-subtext">or click to browse (max 1MB)</div>
+                <div class="drop-zone-text">Drop your config to map risk instantly</div>
+                <div class="drop-zone-subtext">YAML or JSON · No prod access required</div>
                 <input type="file" id="file-input" accept=".yaml,.yml,.json">
             </div>
 
+            <!-- What happens next -->
+            <div style="text-align: center; margin: 1.5rem 0 2rem; padding: 20px 24px; background: rgba(245, 166, 35, 0.03); border: 1px solid rgba(245, 166, 35, 0.1); border-radius: 2px;">
+                <div style="color: #8a8f98; font-size: 0.85rem; margin-bottom: 10px;">In ~30 seconds, you'll see:</div>
+                <div style="display: inline-block; text-align: left;">
+                    <div style="color: #d1d5db; font-size: 0.9rem; margin-bottom: 4px;"><span style="color: #f5a623; margin-right: 8px;">></span>your highest-risk service</div>
+                    <div style="color: #d1d5db; font-size: 0.9rem; margin-bottom: 4px;"><span style="color: #f5a623; margin-right: 8px;">></span>blast radius across dependencies</div>
+                    <div style="color: #d1d5db; font-size: 0.9rem;"><span style="color: #f5a623; margin-right: 8px;">></span>prioritized fixes</div>
+                </div>
+            </div>
+
             <div class="example-section">
-                <h3>Example Configuration <span style="text-transform: none; font-weight: 400; color: #f5a623;">— this config has 2 critical findings. Try it.</span></h3>
+                <h3>Example config <span style="text-transform: none; font-weight: 400; color: #f5a623;">— reveals 2 critical failure risks. Run it to see blast radius and exposure.</span></h3>
                 <div class="example-code">
                     <button class="copy-btn" onclick="copyExample()">Copy</button>
                     <pre>services:
@@ -916,11 +932,14 @@
             </div>
 
             <div class="button-group">
-                <button class="btn-glass" onclick="loadSampleData()">Try with Sample Data</button>
+                <button class="btn-glass" onclick="loadSampleData()">Run Sample Risk Analysis</button>
                 <button class="btn-glass" id="run-audit-btn" onclick="runAudit()" style="display: none;">Run Audit</button>
             </div>
 
-            <div class="enterprise-note">Need private deployment or data-isolation controls for a regulated environment? <a href="/enterprise">Start an enterprise pilot</a>.</div>
+            <!-- Trust microcopy -->
+            <div style="text-align: center; color: #555; font-size: 0.8rem; margin-bottom: 2rem;">Your config is not stored. No production access required.</div>
+
+            <div class="enterprise-note">Need this in your environment with data isolation and SSO? <a href="/enterprise">Start an enterprise pilot →</a></div>
         </div>
 
         <!-- STATE 2: Loading -->
