@@ -915,10 +915,6 @@
                 </div>
             </div>
 
-            <div class="button-group">
-                <button class="btn-glass" onclick="loadSampleData()">Run Sample Risk Analysis</button>
-            </div>
-
             <div class="example-section" id="exampleConfig">
                 <h3>Example config <span style="text-transform: none; font-weight: 400; color: #f5a623;">— reveals 2 critical failure risks. Run it to see blast radius and exposure.</span></h3>
                 <div class="example-code">
@@ -938,6 +934,9 @@
     az_count: 1
     has_failover: false
     slo_target: 0.9999</pre>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button class="btn-glass" onclick="loadSampleData()">Run This Example</button>
                 </div>
             </div>
 
@@ -1102,6 +1101,16 @@
                     // Validate structure has services
                     if (!parsed.services || !Array.isArray(parsed.services) || parsed.services.length === 0) {
                         showDropZoneError('No services found in your config. Your file needs a top-level "services:" list with at least one service.');
+                        return;
+                    }
+
+                    // Validate services have meaningful fields beyond just a name
+                    const validFields = ['tier', 'az_count', 'has_failover', 'has_circuit_breaker', 'slo_target', 'dependencies'];
+                    const hasValidService = parsed.services.some(s =>
+                        s.name && validFields.some(f => s.hasOwnProperty(f))
+                    );
+                    if (!hasValidService) {
+                        showDropZoneError('Your config has service names but is missing required fields (tier, az_count, has_failover, slo_target, etc.).');
                         return;
                     }
 
@@ -1480,7 +1489,16 @@
             currentFileData = null;
             currentResults = null;
             document.getElementById('file-input').value = '';
-            document.getElementById('run-audit-btn').style.display = 'none';
+            clearDropZoneError();
+            // Reset drop zone appearance
+            const dropZone = document.getElementById('dropZone');
+            dropZone.querySelector('.drop-zone-icon').textContent = '📁';
+            dropZone.querySelector('.drop-zone-text').textContent = 'Tap to upload or drop your config';
+            dropZone.querySelector('.drop-zone-subtext').textContent = 'YAML or JSON · No prod access required';
+            dropZone.style.borderColor = '';
+            dropZone.style.background = '';
+            // Scroll to top so user sees the upload zone
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function setState(state) {
