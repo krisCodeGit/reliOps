@@ -1076,18 +1076,8 @@
                         currentFileData = parseYAML(content);
                     }
 
-                    // Visual feedback: update drop zone to show accepted file
-                    const dropZone = document.getElementById('dropZone');
-                    dropZone.style.borderColor = '#f5a623';
-                    dropZone.style.background = 'rgba(245, 166, 35, 0.06)';
-                    dropZone.querySelector('.drop-zone-icon').textContent = '✅';
-                    dropZone.querySelector('.drop-zone-text').textContent = file.name;
-                    dropZone.querySelector('.drop-zone-subtext').textContent = 'Tap again to change file';
-
-                    // Show Run Audit button and scroll it into view
-                    const runBtn = document.getElementById('run-audit-btn');
-                    runBtn.style.display = 'inline-block';
-                    setTimeout(() => runBtn.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                    // Auto-run audit immediately after successful parse
+                    runAudit();
                 } catch (error) {
                     alert('Error parsing file: ' + error.message);
                 }
