@@ -1,9 +1,9 @@
 [
   {
-    "name": "market-data-gateway",
+    "name": "edge-gateway",
     "tier": 1,
-    "owner": "Market Data",
-    "team": "Market Data Engineering",
+    "owner": "Edge Platform",
+    "team": "Edge Platform Engineering",
     "slo_target": 0.9999,
     "slo_current": 0.9997,
     "az_count": 1,
@@ -11,13 +11,13 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": true,
     "critical": true,
-    "description": "Ingests real-time market feeds from exchanges"
+    "description": "Ingests real-time data feeds from downstream systems"
   },
   {
-    "name": "order-router",
+    "name": "request-router",
     "tier": 1,
-    "owner": "Trading Systems",
-    "team": "Trading Infrastructure",
+    "owner": "Request Systems",
+    "team": "Workflow Platform",
     "slo_target": 0.9999,
     "slo_current": 0.9995,
     "az_count": 2,
@@ -25,13 +25,13 @@
     "has_circuit_breaker": false,
     "has_rate_limiting": true,
     "critical": true,
-    "description": "Routes orders to exchanges with retry logic"
+    "description": "Routes requests to downstream systems with retry logic"
   },
   {
-    "name": "risk-engine",
+    "name": "policy-engine",
     "tier": 1,
-    "owner": "Risk Management",
-    "team": "Risk Systems",
+    "owner": "Policy",
+    "team": "Policy Systems",
     "slo_target": 0.9999,
     "slo_current": null,
     "az_count": 2,
@@ -39,13 +39,13 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": true,
     "critical": true,
-    "description": "Real-time risk calculations and position limits"
+    "description": "Real-time risk calculations and state limits"
   },
   {
-    "name": "trade-execution",
+    "name": "workflow-executor",
     "tier": 1,
-    "owner": "Trading Systems",
-    "team": "Trading Infrastructure",
+    "owner": "Request Systems",
+    "team": "Workflow Platform",
     "slo_target": 0.9999,
     "slo_current": 0.9998,
     "az_count": 2,
@@ -53,13 +53,13 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": true,
     "critical": true,
-    "description": "Executes approved trades on exchanges"
+    "description": "Executes approved workflows on downstream systems"
   },
   {
-    "name": "position-manager",
+    "name": "state-manager",
     "tier": 1,
-    "owner": "Portfolio",
-    "team": "Portfolio Operations",
+    "owner": "State",
+    "team": "State Operations",
     "slo_target": 0.9999,
     "slo_current": 0.9996,
     "az_count": 2,
@@ -67,13 +67,13 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": true,
     "critical": true,
-    "description": "Tracks and manages current positions in real-time"
+    "description": "Tracks and manages current shared state in real-time"
   },
   {
-    "name": "pricing-service",
+    "name": "compute-service",
     "tier": 2,
-    "owner": "Quant Research",
-    "team": "Pricing Models",
+    "owner": "Compute",
+    "team": "Compute Platform",
     "slo_target": 0.999,
     "slo_current": 0.9988,
     "az_count": 2,
@@ -84,10 +84,10 @@
     "description": "Pricing models and valuation calculations"
   },
   {
-    "name": "portfolio-analytics",
+    "name": "analytics-service",
     "tier": 2,
-    "owner": "Portfolio",
-    "team": "Portfolio Operations",
+    "owner": "State",
+    "team": "State Operations",
     "slo_target": 0.999,
     "slo_current": null,
     "az_count": 1,
@@ -95,13 +95,13 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": false,
     "critical": false,
-    "description": "Portfolio analytics and PnL calculations"
+    "description": "State analytics and usage calculations"
   },
   {
-    "name": "compliance-engine",
+    "name": "audit-engine",
     "tier": 2,
-    "owner": "Compliance",
-    "team": "Compliance Automation",
+    "owner": "Governance",
+    "team": "Governance Automation",
     "slo_target": 0.999,
     "slo_current": 0.9992,
     "az_count": 2,
@@ -109,13 +109,13 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": true,
     "critical": false,
-    "description": "Regulatory compliance checks and rule validation"
+    "description": "Governance compliance checks and rule validation"
   },
   {
-    "name": "settlement-service",
+    "name": "fulfillment-service",
     "tier": 2,
     "owner": "Operations",
-    "team": "Settlement Operations",
+    "team": "Fulfillment Operations",
     "slo_target": 0.999,
     "slo_current": 0.9989,
     "az_count": 2,
@@ -123,7 +123,7 @@
     "has_circuit_breaker": false,
     "has_rate_limiting": true,
     "critical": false,
-    "description": "Trade settlement and cash management"
+    "description": "Fulfillment state updates and cash management"
   },
   {
     "name": "auth-service",
@@ -154,7 +154,7 @@
     "description": "Alert and notification delivery system"
   },
   {
-    "name": "analytics-dashboard",
+    "name": "ops-dashboard",
     "tier": 3,
     "owner": "Analytics",
     "team": "Analytics Platform",
@@ -170,8 +170,8 @@
   {
     "name": "audit-log-service",
     "tier": 3,
-    "owner": "Compliance",
-    "team": "Compliance Automation",
+    "owner": "Governance",
+    "team": "Governance Automation",
     "slo_target": 0.99,
     "slo_current": 0.9934,
     "az_count": 2,
@@ -179,6 +179,6 @@
     "has_circuit_breaker": true,
     "has_rate_limiting": false,
     "critical": false,
-    "description": "Regulatory audit trail and compliance logging"
+    "description": "Governance audit trail and compliance logging"
   }
 ]

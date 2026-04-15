@@ -1,7 +1,2 @@
 Flask>=3.0.0
 gunicorn>=21.2.0
-
-# AI-enhanced insights
-anthropic>=0.40.0    # For Claude (AI_PROVIDER=anthropic)
-openai>=1.0.0        # For GPT (AI_PROVIDER=openai)
-# No extra deps needed for local models (AI_PROVIDER=local)

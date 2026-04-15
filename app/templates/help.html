@@ -501,7 +501,6 @@
         <div class="nav-links">
             <a href="/" class="nav-link">Dashboard</a>
             <a href="/audit" class="nav-link">Run Audit</a>
-            <a href="/enterprise" class="nav-link">Enterprise</a>
             <a href="/help" class="nav-link active">Help</a>
         </div>
     </div>
@@ -551,8 +550,6 @@
             <span>No production access</span>
             <span class="trust-dot">·</span>
             <span>Config-first</span>
-            <span class="trust-dot">·</span>
-            <span>Built for regulated environments</span>
         </div>
 
         <!-- WHAT YOU GET -->
@@ -564,12 +561,12 @@
                     <div class="value-desc">Surface configuration gaps, missing safeguards, and single points of failure before they break production.</div>
                 </div>
                 <div class="value-item">
-                    <div class="value-title">Turn Risk into a Response Plan</div>
-                    <div class="value-desc">Generate actionable remediation steps before incidents happen — not during them.</div>
+                    <div class="value-title">Turn Risk into Clear Next Steps</div>
+                    <div class="value-desc">Generate actionable remediation guidance before incidents happen — not during them.</div>
                 </div>
                 <div class="value-item">
                     <div class="value-title">Learn from Past Incidents</div>
-                    <div class="value-desc">Capture and reuse reliability patterns so the same failure doesn't repeat.</div>
+                    <div class="value-desc">Use incident history and service context to prioritize the risks most likely to repeat.</div>
                 </div>
                 <div class="value-item">
                     <div class="value-title">Quantify Outage Exposure</div>
@@ -619,7 +616,7 @@
                             <li>YAML / JSON service configs</li>
                             <li>Kubernetes manifests</li>
                             <li>Terraform / IaC</li>
-                            <li>Architecture docs (enterprise)</li>
+                            <li>Architecture docs</li>
                         </ul>
                         No runtime telemetry is required.
                     </div>
@@ -653,9 +650,9 @@
                         <ul>
                             <li>No direct production access</li>
                             <li>Works on declarative configs</li>
-                            <li>Can run in your environment (enterprise)</li>
+                            <li>Runs in your own environment</li>
                         </ul>
-                        Designed for regulated environments like financial services.
+                        Designed to work without direct runtime access.
                     </div>
                 </div>
             </div>
@@ -688,7 +685,7 @@
                             <li>SRE teams</li>
                             <li>Platform / infrastructure engineers</li>
                             <li>Engineering leadership</li>
-                            <li>Regulated environments (finserv, fintech, etc.)</li>
+                            <li>Software teams operating multi-service systems</li>
                         </ul>
                     </div>
                 </div>
@@ -700,7 +697,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Minutes. Upload a config and get a risk report immediately.<br><br>Enterprise deployments typically show value within weeks.</div>
+                    <div class="faq-answer-inner">Minutes. Upload a config and get a risk report immediately.</div>
                 </div>
             </div>
 
@@ -737,7 +734,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps has an open-source core you can self-host, inspect, and extend. The core is portable so teams can validate the workflow without lock-in. Companies that need private deployment, rule calibration, or regulated-environment delivery can engage on an enterprise basis. See <a href="/enterprise" style="color: #f5a623;">Enterprise</a> for details.</div>
+                    <div class="faq-answer-inner">Yes. ReliOps is designed to be self-hosted, inspectable, and portable so teams can validate the workflow without lock-in.</div>
                 </div>
             </div>
 
@@ -747,7 +744,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Yes (Enterprise). Outputs can align with:
+                    <div class="faq-answer-inner">Yes. Outputs can align with:
                         <ul>
                             <li>Incident tools</li>
                             <li>Runbooks</li>
@@ -798,7 +795,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">ReliOps runs 8 rules against your services: SLO breach trending, missing cross-AZ failover, missing circuit breakers, retry storm risk, single-owner risk, incident recurrence, missing saturation metrics, and dependency fan-out limits. Each rule produces findings at CRITICAL, HIGH, MEDIUM, or LOW severity.</div>
+                    <div class="faq-answer-inner">ReliOps runs a compact set of reliability checks against your services and dependencies. The exact checks can evolve over time, but the output stays the same: ranked findings that show where resilience gaps are most likely to hurt you.</div>
                 </div>
             </div>
 
@@ -834,11 +831,11 @@
 
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
-                    What is the "Generate Response Plan" button?
+                    Does the public edition include guided response workflows?
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">When you click "Generate Response Plan" on a critical issue or blast-radius hotspot, ReliOps builds a structured incident runbook for that service. It includes immediate response steps, blast-radius containment actions, a communication template, and a post-incident checklist — actionable steps, not a generic playbook.</div>
+                    <div class="faq-answer-inner">The public edition focuses on surfacing ranked risks, blast radius, and prioritized fixes. Teams can then use that output in their own incident and remediation workflows.</div>
                 </div>
             </div>
 
@@ -848,7 +845,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Only if you opt in to an external AI provider. Even then, ReliOps strips all service names, owner info, and internal identifiers before sending. The LLM only sees anonymized patterns. For full data isolation, use the local provider — zero data leaves your network. AI insights are off by default.</div>
+                    <div class="faq-answer-inner">The public edition does not require any third-party LLM connection to be useful. Core analysis works from configuration and dependency data alone.</div>
                 </div>
             </div>
         </div>

@@ -46,10 +46,8 @@ docs/internal/**
 !docs/internal/README.md
 
 # ───────────────────────────────────────────────────────────────
-# Enterprise-only modules (not part of open-source)
-# These are the paid features: AI insights, pattern analysis,
-# runbook generation, and data sanitization.
-# The open-source core works without them.
+# Private add-on modules (not part of the public repo)
+# The open-source core works without anything in this directory.
 # ───────────────────────────────────────────────────────────────
 app/enterprise/
 

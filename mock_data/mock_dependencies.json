@@ -1,125 +1,125 @@
 [
   {
-    "source_service": "order-router",
-    "target_service": "market-data-gateway",
+    "source_service": "request-router",
+    "target_service": "edge-gateway",
     "dep_type": "sync",
     "is_critical": true,
-    "description": "Order router reads market prices for order validation"
+    "description": "Request router reads upstream data for request validation"
   },
   {
-    "source_service": "order-router",
-    "target_service": "risk-engine",
+    "source_service": "request-router",
+    "target_service": "policy-engine",
     "dep_type": "sync",
     "is_critical": true,
-    "description": "Order router calls risk engine for pre-trade risk checks"
+    "description": "Request router calls policy engine for pre-workflow risk checks"
   },
   {
-    "source_service": "order-router",
-    "target_service": "trade-execution",
+    "source_service": "request-router",
+    "target_service": "workflow-executor",
     "dep_type": "sync",
     "is_critical": true,
-    "description": "Order router sends approved orders to execution service"
+    "description": "Request router sends approved requests to workflow executor"
   },
   {
-    "source_service": "trade-execution",
-    "target_service": "order-router",
+    "source_service": "workflow-executor",
+    "target_service": "request-router",
     "dep_type": "sync",
     "is_critical": true,
-    "description": "Execution service validates orders through router"
+    "description": "Workflow executor validates requests through router"
   },
   {
-    "source_service": "trade-execution",
-    "target_service": "position-manager",
+    "source_service": "workflow-executor",
+    "target_service": "state-manager",
     "dep_type": "async",
     "is_critical": true,
-    "description": "Execution service publishes trade events to position manager"
+    "description": "Workflow executor publishes workflow events to state manager"
   },
   {
-    "source_service": "risk-engine",
-    "target_service": "market-data-gateway",
+    "source_service": "policy-engine",
+    "target_service": "edge-gateway",
     "dep_type": "sync",
     "is_critical": true,
-    "description": "Risk engine consumes market prices for risk calculations"
+    "description": "Policy engine consumes upstream data for risk calculations"
   },
   {
-    "source_service": "risk-engine",
-    "target_service": "position-manager",
+    "source_service": "policy-engine",
+    "target_service": "state-manager",
     "dep_type": "sync",
     "is_critical": true,
-    "description": "Risk engine reads positions for risk computation"
+    "description": "Policy engine reads shared state for risk computation"
   },
   {
-    "source_service": "risk-engine",
-    "target_service": "pricing-service",
+    "source_service": "policy-engine",
+    "target_service": "compute-service",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Risk engine uses pricing models for derivatives valuation"
+    "description": "Policy engine uses compute models for downstream enrichment"
   },
   {
-    "source_service": "position-manager",
+    "source_service": "state-manager",
     "target_service": "audit-log-service",
     "dep_type": "async",
     "is_critical": false,
-    "description": "Position manager publishes position events for audit"
+    "description": "State manager publishes state events for audit"
   },
   {
-    "source_service": "portfolio-analytics",
-    "target_service": "position-manager",
+    "source_service": "analytics-service",
+    "target_service": "state-manager",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Portfolio analytics queries position data"
+    "description": "State analytics queries state data"
   },
   {
-    "source_service": "portfolio-analytics",
-    "target_service": "pricing-service",
+    "source_service": "analytics-service",
+    "target_service": "compute-service",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Portfolio analytics uses pricing for PnL calculations"
+    "description": "State analytics uses compute for usage calculations"
   },
   {
-    "source_service": "portfolio-analytics",
-    "target_service": "market-data-gateway",
+    "source_service": "analytics-service",
+    "target_service": "edge-gateway",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Portfolio analytics reads market prices for analytics"
+    "description": "State analytics reads upstream data for analytics"
   },
   {
-    "source_service": "compliance-engine",
-    "target_service": "trade-execution",
+    "source_service": "audit-engine",
+    "target_service": "workflow-executor",
     "dep_type": "async",
     "is_critical": false,
-    "description": "Compliance engine monitors executed trades"
+    "description": "Governance engine monitors executed workflows"
   },
   {
-    "source_service": "compliance-engine",
+    "source_service": "audit-engine",
     "target_service": "audit-log-service",
     "dep_type": "async",
     "is_critical": false,
-    "description": "Compliance engine reads audit logs for rule validation"
+    "description": "Governance engine reads audit logs for rule validation"
   },
   {
-    "source_service": "settlement-service",
-    "target_service": "trade-execution",
+    "source_service": "fulfillment-service",
+    "target_service": "workflow-executor",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Settlement service queries executed trades"
+    "description": "Settlement service queries executed workflows"
   },
   {
-    "source_service": "settlement-service",
-    "target_service": "position-manager",
+    "source_service": "fulfillment-service",
+    "target_service": "state-manager",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Settlement service verifies positions"
+    "description": "Settlement service verifies shared state"
   },
   {
-    "source_service": "analytics-dashboard",
-    "target_service": "position-manager",
+    "source_service": "ops-dashboard",
+    "target_service": "state-manager",
     "dep_type": "sync",
     "is_critical": false,
-    "description": "Dashboard queries live position data"
+    "description": "Dashboard queries live state data"
   },
   {
-    "source_service": "analytics-dashboard",
+    "source_service": "ops-dashboard",
     "target_service": "audit-log-service",
     "dep_type": "sync",
     "is_critical": false,
@@ -127,14 +127,14 @@
   },
   {
     "source_service": "notification-service",
-    "target_service": "order-router",
+    "target_service": "request-router",
     "dep_type": "async",
     "is_critical": false,
-    "description": "Notification service subscribes to order events"
+    "description": "Notification service subscribes to request events"
   },
   {
     "source_service": "notification-service",
-    "target_service": "risk-engine",
+    "target_service": "policy-engine",
     "dep_type": "async",
     "is_critical": false,
     "description": "Notification service subscribes to risk alerts"

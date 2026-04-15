@@ -212,23 +212,6 @@
             margin-bottom: 2rem;
         }
 
-        .enterprise-note {
-            text-align: center;
-            color: #8a8f98;
-            font-size: 0.95rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .enterprise-note a {
-            color: #f5a623;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .enterprise-note a:hover {
-            text-decoration: underline;
-        }
-
         /* ── Glass button (from UpliftPal) ── */
         .btn-glass {
             display: inline-flex;
@@ -691,9 +674,6 @@
                 flex-direction: column;
                 align-items: center;
             }
-            .enterprise-note {
-                font-size: 0.9rem;
-            }
             #dependency-graph {
                 height: 300px;
             }
@@ -875,7 +855,6 @@
         <ul class="navbar-nav">
             <li><a href="/">Dashboard</a></li>
             <li><a href="/audit" style="color: #f5a623;">Configuration Audit</a></li>
-            <li><a href="/enterprise">Enterprise</a></li>
             <li><a href="/help">Help</a></li>
         </ul>
     </nav>
@@ -900,7 +879,7 @@
                 <div class="drop-zone-subtext">YAML or JSON · No prod access required</div>
                 <div id="drop-zone-error" style="display: none; margin-top: 12px; padding: 10px 14px; background: rgba(211, 47, 47, 0.08); border: 1px solid rgba(211, 47, 47, 0.3); border-radius: 2px; text-align: left;">
                     <div id="drop-zone-error-msg" style="color: #ef5350; font-size: 0.85rem; margin-bottom: 6px;"></div>
-                    <div style="color: #8a8f98; font-size: 0.8rem;">Your file must be a YAML or JSON config with a <code style="color: #f5a623;">services:</code> list. <a href="#exampleConfig" style="color: #f5a623; text-decoration: underline;" onclick="event.stopPropagation();">See example below</a></div>
+                    <div style="color: #8a8f98; font-size: 0.8rem;">Check the <a href="#exampleConfig" style="color: #f5a623; text-decoration: underline;" onclick="event.stopPropagation();">example config below</a> to see what ReliOps expects.</div>
                 </div>
                 <input type="file" id="file-input" accept=".yaml,.yml,.json">
             </div>
@@ -920,16 +899,16 @@
                 <div class="example-code">
                     <button class="copy-btn" onclick="copyExample()">Copy</button>
                     <pre>services:
-  - name: order-router
+  - name: request-router
     tier: 1
     az_count: 1
     has_failover: false
     has_circuit_breaker: true
     slo_target: 0.999
     dependencies:
-      - market-data-gateway
-      - risk-engine
-  - name: market-data-gateway
+      - edge-gateway
+      - policy-engine
+  - name: edge-gateway
     tier: 1
     az_count: 1
     has_failover: false
@@ -943,7 +922,6 @@
             <!-- Trust microcopy -->
             <div style="text-align: center; color: #555; font-size: 0.8rem; margin-bottom: 2rem;">Your config is not stored. No production access required.</div>
 
-            <div class="enterprise-note">Need this in your environment with data isolation and SSO? <a href="/enterprise">Start an enterprise pilot →</a></div>
         </div>
 
         <!-- STATE 2: Loading -->
@@ -1010,7 +988,7 @@
             <!-- CTA -->
             <div class="cta-section">
                 <h3>See the full picture</h3>
-                <p>The dashboard shows the same engine against a dependency-dense trading environment. For enterprise buyers, it becomes the leadership view of critical-path exposure, blast radius concentration, and remediation priority.</p>
+                <p>The dashboard runs the same public rules engine against a richer sample environment so you can explore critical-path exposure, blast radius concentration, and remediation priority.</p>
                 <button class="btn-glass" onclick="openDashboard()">Open Live Dashboard →</button>
             </div>
 
@@ -1029,7 +1007,7 @@
             'Scanning services...',
             'Analyzing dependencies...',
             'Calculating blast radius...',
-            'Detecting recurrence patterns...',
+            'Ranking the most important findings...',
             'Generating recommendations...'
         ];
         let currentStep = 0;
@@ -1078,12 +1056,12 @@
             const validExts = ['.yaml', '.yml', '.json'];
             const hasValidExt = validExts.some(ext => file.name.toLowerCase().endsWith(ext));
             if (!hasValidExt) {
-                showDropZoneError(`"${file.name}" is not a supported format. Please upload a .yaml or .json file.`);
+                showDropZoneError(`That file type isn't supported — try a .yaml or .json file instead.`);
                 return;
             }
 
             if (file.size > 1024 * 1024) {
-                showDropZoneError('File too large (max 1MB). Try trimming unused services or splitting into smaller configs.');
+                showDropZoneError('That file is too large (1MB max). Try a smaller config or split it into parts.');
                 return;
             }
 
@@ -1100,17 +1078,18 @@
 
                     // Validate structure has services
                     if (!parsed.services || !Array.isArray(parsed.services) || parsed.services.length === 0) {
-                        showDropZoneError('No services found in your config. Your file needs a top-level "services:" list with at least one service.');
+                        showDropZoneError('We couldn\'t find any services in that file. ReliOps needs a config that lists your services — see the example below.');
                         return;
                     }
 
                     // Validate services have meaningful fields beyond just a name
-                    const validFields = ['tier', 'az_count', 'has_failover', 'has_circuit_breaker', 'slo_target', 'dependencies'];
+                    // (exclude 'dependencies' since the parser always adds it as empty array)
+                    const requiredFields = ['tier', 'az_count', 'has_failover', 'has_circuit_breaker', 'slo_target'];
                     const hasValidService = parsed.services.some(s =>
-                        s.name && validFields.some(f => s.hasOwnProperty(f))
+                        s.name && requiredFields.some(f => s.hasOwnProperty(f))
                     );
                     if (!hasValidService) {
-                        showDropZoneError('Your config has service names but is missing required fields (tier, az_count, has_failover, slo_target, etc.).');
+                        showDropZoneError('We found service names but not enough detail to run an audit. Each service needs fields like tier, az_count, and slo_target.');
                         return;
                     }
 
@@ -1118,7 +1097,7 @@
                     // Auto-run audit immediately after successful parse
                     runAudit();
                 } catch (error) {
-                    showDropZoneError(`Could not parse "${file.name}": ${error.message}`);
+                    showDropZoneError(`We couldn't read that file — it may not be valid YAML or JSON. Double-check the format and try again.`);
                 }
             };
             reader.readAsText(file);
@@ -1169,16 +1148,16 @@
 
         function copyExample() {
             const exampleText = `services:
-  - name: order-router
+  - name: request-router
     tier: 1
     az_count: 1
     has_failover: false
     has_circuit_breaker: true
     slo_target: 0.999
     dependencies:
-      - market-data-gateway
-      - risk-engine
-  - name: market-data-gateway
+      - edge-gateway
+      - policy-engine
+  - name: edge-gateway
     tier: 1
     az_count: 1
     has_failover: false
@@ -1191,16 +1170,16 @@
             currentFileData = {
                 services: [
                     {
-                        name: 'order-router',
+                        name: 'request-router',
                         tier: 1,
                         az_count: 1,
                         has_failover: false,
                         has_circuit_breaker: true,
                         slo_target: 0.999,
-                        dependencies: ['market-data-gateway', 'risk-engine']
+                        dependencies: ['edge-gateway', 'policy-engine']
                     },
                     {
-                        name: 'market-data-gateway',
+                        name: 'edge-gateway',
                         tier: 1,
                         az_count: 1,
                         has_failover: false,
@@ -1208,13 +1187,13 @@
                         dependencies: []
                     },
                     {
-                        name: 'risk-engine',
+                        name: 'policy-engine',
                         tier: 2,
                         az_count: 2,
                         has_failover: true,
                         has_circuit_breaker: true,
                         slo_target: 0.99,
-                        dependencies: ['market-data-gateway']
+                        dependencies: ['edge-gateway']
                     },
                     {
                         name: 'notification-service',
@@ -1223,7 +1202,7 @@
                         has_failover: false,
                         has_circuit_breaker: false,
                         slo_target: 0.95,
-                        dependencies: ['order-router']
+                        dependencies: ['request-router']
                     }
                 ]
             };
@@ -1264,7 +1243,7 @@
                 renderResults();
             } catch (err) {
                 setState('upload');
-                showDropZoneError('Audit failed: ' + err.message + '. Please try again or use a different config.');
+                showDropZoneError('Something went wrong running the audit. Please try again in a moment.');
             }
         }
 
@@ -1342,8 +1321,8 @@
             // Render recurrence warnings (not available in audit mode)
             document.getElementById('recurrenceSection').classList.add('hidden');
 
-            // Render AI insights as recommendations
-            const insights = r.ai_insights || [];
+            // Render suggested next actions
+            const insights = r.insights || [];
             const recsHTML = insights.length > 0
                 ? insights.map(text => `
                     <div class="recommendation-item fade-in">

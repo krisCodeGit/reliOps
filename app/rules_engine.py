@@ -594,15 +594,8 @@ def detect_drift(db_path):
 # ---------------------------------------------------------------------------
 
 # Module-level flag set by generate_insights() to track which path was used.
-# Consumed by build_dashboard_json() in __init__.py for the insights_source field.
-_last_insights_source = 'rules-engine'
-
-
 def generate_insights(db_path, violations, risk_score):
     """Generate natural language insights from violations and score.
-
-    If AI_INSIGHTS_ENABLED is set, attempts to use an LLM for richer insights.
-    Falls back to deterministic pattern-based insights on any failure.
 
     Args:
         db_path: str, path to SQLite database
@@ -612,43 +605,7 @@ def generate_insights(db_path, violations, risk_score):
     Returns:
         list[str], up to 5 insight strings
     """
-    global _last_insights_source
-
-    from app.config import AI_INSIGHTS_ENABLED
-
-    if AI_INSIGHTS_ENABLED and violations:
-        try:
-            ai_result = _get_ai_insights(violations, risk_score)
-            if ai_result:
-                _last_insights_source = 'ai'
-                return ai_result
-        except Exception as e:
-            import logging
-            logging.getLogger('reliops.ai').warning(
-                "AI insights failed, falling back to deterministic: %s", e
-            )
-
-    _last_insights_source = 'rules-engine'
     return _generate_deterministic_insights(db_path, violations, risk_score)
-
-
-def _get_ai_insights(violations, risk_score):
-    """
-    Sanitize violations and call the configured AI provider.
-
-    Returns:
-        list[str] or None
-    """
-    from app.enterprise.ai_sanitizer import sanitize_violations, build_ai_prompt
-    from app.enterprise.ai_providers import get_ai_provider
-
-    provider = get_ai_provider()
-    if not provider:
-        return None
-
-    sanitized = sanitize_violations(violations, risk_score)
-    prompt = build_ai_prompt(sanitized)
-    return provider.get_insights(prompt)
 
 
 def _generate_deterministic_insights(db_path, violations, risk_score):
@@ -720,7 +677,7 @@ def _generate_deterministic_insights(db_path, violations, risk_score):
         services = list(set(v.service for v in single_az))
         insights.append(
             f"{len(services)} Tier-1 service(s) lack cross-AZ failover or are single points of failure: "
-            f"{', '.join(services)}. An AZ outage would impact the critical trading path."
+            f"{', '.join(services)}. An AZ outage would impact the critical service path."
         )
 
     # --- Insight 5: Complexity / dependency growth ---

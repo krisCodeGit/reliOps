@@ -740,13 +740,6 @@
             flex: 1;
         }
 
-        .issue-content .btn-runbook {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: fit-content;
-        }
-
         .issue-title {
             font-weight: 600;
             margin-bottom: 4px;
@@ -978,7 +971,7 @@
             transition: width 0.6s ease;
         }
 
-        /* AI INSIGHTS */
+        /* SUGGESTED ACTIONS */
         .insights-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1834,97 +1827,6 @@
         }
         .pattern-rec strong { color: #f5a623; }
 
-        /* RUNBOOK MODAL */
-        .runbook-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1100;
-        }
-        .runbook-overlay.active { display: flex; }
-        .runbook-panel {
-            background: rgba(18, 19, 26, 0.97);
-            border: 1px solid #1e2028;
-            border-radius: 4px;
-            width: 92%;
-            max-width: 820px;
-            max-height: 88vh;
-            overflow-y: auto;
-            padding: 0;
-        }
-        .runbook-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            border-bottom: 1px solid #1e2028;
-            position: sticky;
-            top: 0;
-            background: rgba(18, 19, 26, 0.98);
-            z-index: 2;
-        }
-        .runbook-header h2 {
-            margin: 0;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        .runbook-source {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 2px;
-            font-weight: 600;
-            margin-left: 12px;
-        }
-        .runbook-source.ai { background: linear-gradient(90deg, #e8762d 0%, #f5a623 100%); color: #0a0a0f; }
-        .runbook-source.deterministic { background: #2a2d35; color: #8a8f98; }
-        .runbook-close {
-            background: none;
-            border: none;
-            color: #8a8f98;
-            font-size: 28px;
-            cursor: pointer;
-            padding: 0 4px;
-            line-height: 1;
-        }
-        .runbook-close:hover { color: #f5a623; }
-        .runbook-body { padding: 24px; }
-        .runbook-section { margin-bottom: 28px; }
-        .runbook-section h4 {
-            color: #f5a623;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 12px;
-        }
-        .runbook-section ol, .runbook-section ul {
-            margin-left: 20px;
-            color: #a8adb5;
-            line-height: 1.9;
-            font-size: 13px;
-        }
-        .runbook-section li { margin-bottom: 4px; }
-        .runbook-pre {
-            background: rgba(10, 10, 15, 0.8);
-            padding: 16px;
-            border-radius: 2px;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 12px;
-            color: #a8adb5;
-            white-space: pre-wrap;
-            line-height: 1.6;
-            border: 1px solid #1e2028;
-        }
-        .runbook-meta {
-            font-size: 12px;
-            color: #757575;
-            margin-top: 8px;
-        }
-
         /* FIX HINT */
         .fix-hint {
             font-size: 12px;
@@ -1932,12 +1834,7 @@
             margin-top: 6px;
         }
 
-        /* GENERATE RUNBOOK BUTTON — uses btn-glass + btn-glass-sm */
-        .btn-runbook { margin-top: 8px; }
-
         @media (max-width: 768px) {
-            .runbook-panel { width: 98%; max-height: 94vh; }
-            .runbook-header h2 { font-size: 15px; }
             .pattern-meta { flex-wrap: wrap; gap: 8px; }
         }
     </style>
@@ -1954,15 +1851,14 @@
             </div>
             <div class="nav-links">
                 <a href="/help" class="nav-link">Help</a>
-                <a href="/enterprise" class="nav-link">Enterprise</a>
             </div>
         </div>
 
         <!-- HERO SECTION -->
         <div class="hero-section">
-            <div class="hero-eyebrow">Reliability Risk Intelligence for Financial Services</div>
+            <div class="hero-eyebrow">Reliability Risk Intelligence for Service Architectures</div>
             <h1 class="hero-headline">See where your next costly incident starts — before it starts</h1>
-            <p class="hero-subtitle">ReliOps scores every service in your dependency chain for failover gaps, blast radius, and SLO drift. Drop a config, get a risk map in seconds. Built for order routing, market data, risk engines, and settlement systems.</p>
+            <p class="hero-subtitle">ReliOps scores every service in your dependency chain for failover gaps, blast radius, and SLO drift. Drop a config, get a risk map in seconds.</p>
             <div class="hero-ctas">
                 <button class="btn-glass" onclick="window.location.href='/audit'">Find Your Outage Risk (30 sec)</button>
                 <a href="/help" class="link-secondary">See How It Works <span>→</span></a>
@@ -2023,12 +1919,11 @@
         <!-- EXPLORE MORE — full table of contents for below-fold sections -->
         <div class="explore-links">
             <div class="explore-header">From risk → action</div>
-            <a href="#section-issues" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-issues').scrollIntoView({behavior:'smooth'});">Generate Response Plans</a>
+            <a href="#section-issues" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-issues').scrollIntoView({behavior:'smooth'});">Top Findings</a>
             <a href="#section-blast" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-blast').scrollIntoView({behavior:'smooth'});">Blast Radius Simulation</a>
             <a href="#section-drift" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-drift').scrollIntoView({behavior:'smooth'});">SLO Drift Detection</a>
             <a href="#section-recurrence" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-recurrence').scrollIntoView({behavior:'smooth'});">Repeat Failure Risk</a>
             <a href="#section-debt" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-debt').scrollIntoView({behavior:'smooth'});">Reliability Debt Backlog</a>
-            <a href="#section-patterns" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-patterns').scrollIntoView({behavior:'smooth'});">Incident Cost Patterns</a>
             <a href="#section-insights" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-insights').scrollIntoView({behavior:'smooth'});">Prioritized Actions</a>
             <a href="#section-depgraph" class="explore-link" onclick="event.preventDefault(); document.getElementById('section-depgraph').scrollIntoView({behavior:'smooth'});">Dependency Graph</a>
         </div>
@@ -2127,23 +2022,6 @@
                 </div>
             </div>
 
-            <!-- ROW 3.5: Incident Intelligence -->
-            <div class="card fade-in" id="section-patterns" style="animation-delay: 0.27s;">
-                <div class="card-title"><span class="card-icon">🔍</span>Incident Intelligence</div>
-                <div class="loading">
-                    <div class="spinner">
-                        <div class="spinner-dot"></div>
-                        <div class="spinner-dot"></div>
-                        <div class="spinner-dot"></div>
-                    </div>
-                    <div class="content">
-                        <div id="patterns-container">
-                            <div class="skeleton skeleton-line" style="width: 100%; height: 60px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- ROW 4: Suggested Next Actions -->
             <div class="card fade-in" id="section-insights" style="animation-delay: 0.3s;">
                 <div class="card-title"><span class="card-icon">🧠</span>Suggested Next Actions</div>
@@ -2182,15 +2060,13 @@
         </div>
 
         <!-- TRUST LINE -->
-        <div class="trust-line">Broker-Dealers · Hedge Funds · Exchanges · Trading Fintech · Market-Data Platforms</div>
+        <div class="trust-line">Config-first · No agents · No production access required</div>
 
         <!-- FOOTER -->
         <div class="footer">
             <div class="footer-logo"><img src="/static/img/upliftpal-icon.png" alt="" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 4px;">ReliOps by UpliftPal</div>
             <div>Monitoring tells you something broke. ReliOps tells you what breaks next.</div>
             <div class="footer-links">
-                <a href="/enterprise">Enterprise</a>
-                <a href="mailto:sales@upliftpal.com?subject=ReliOps%20Enterprise%20Pilot">sales@upliftpal.com</a>
                 <a href="#" onclick="event.preventDefault(); openJsonViewer()">View Sample API</a>
             </div>
         </div>
@@ -2198,22 +2074,6 @@
 
     <!-- TOOLTIP -->
     <div class="tooltip" id="tooltip"></div>
-
-    <!-- RUNBOOK MODAL -->
-    <div class="runbook-overlay" id="runbook-overlay">
-        <div class="runbook-panel">
-            <div class="runbook-header">
-                <div style="display: flex; align-items: center;">
-                    <h2 id="runbook-title">Response Plan</h2>
-                    <span class="runbook-source" id="runbook-source-badge"></span>
-                </div>
-                <button class="runbook-close" onclick="closeRunbook()" title="Close">&times;</button>
-            </div>
-            <div class="runbook-body" id="runbook-body">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-    </div>
 
     <!-- JSON VIEWER MODAL -->
     <div class="json-modal-overlay" id="json-modal">
@@ -2441,11 +2301,8 @@
             // Reliability Debt
             renderReliabilityDebt(data.reliability_debt || {});
 
-            // Incident Patterns
-            renderIncidentPatterns(data.incident_patterns || {});
-
-            // AI Insights
-            renderAIInsights(data.ai_insights || [], data.insights_source || 'rules-engine');
+            // Suggested next actions
+            renderInsights(data.insights || []);
 
             // Lazy-load dependency graph when section scrolls into view
             const depSection = document.getElementById('section-depgraph');
@@ -2602,7 +2459,6 @@
                         <div class="issue-title">${escapeHtml(issue.service || 'Unknown Service')} · ${escapeHtml(issue.rule || 'Risk')}</div>
                         <div class="issue-detail">${escapeHtml(issue.description || '')}</div>
                         ${fixHint}
-                        <button class="btn-glass btn-glass-sm btn-runbook" onclick="showRunbookModal('${escapeHtml(issue.service)}')">Generate Response Plan</button>
                     </div>
                 `;
                 container.appendChild(item);
@@ -2623,7 +2479,7 @@
 
             const html = hotspots.slice(0, 5).map(item => `
                 <div class="service-item">
-                    <div class="service-name" style="cursor: pointer; color: #f5a623;" onclick="showRunbookModal('${escapeHtml(item.service)}')">${escapeHtml(item.service || 'Unknown Service')}</div>
+                    <div class="service-name" style="color: #f5a623;">${escapeHtml(item.service || 'Unknown Service')}</div>
                     <div class="service-impact">Blast radius: ${item.blast_radius || 0} — potentially affects ${item.affected_count || item.blast_radius || 0} downstream services.</div>
                 </div>
             `).join('');
@@ -2724,7 +2580,7 @@
             container.closest('.loading').classList.remove('loading');
         }
 
-        function renderAIInsights(insights, source) {
+        function renderInsights(insights) {
             const container = document.getElementById('insights-grid');
             container.innerHTML = '';
 
@@ -2734,14 +2590,12 @@
                 return;
             }
 
-            const isAI = source === 'ai';
-
             insights.forEach((insight, idx) => {
                 const card = document.createElement('div');
                 card.className = 'insight-card fade-in';
                 card.style.animationDelay = `${idx * 0.05}s`;
                 card.innerHTML = `
-                    <div class="insight-icon">${isAI ? '🤖' : '💡'}</div>
+                    <div class="insight-icon">💡</div>
                     <div class="insight-text">${escapeHtml(typeof insight === 'string' ? insight : (insight.text || ''))}</div>
                 `;
                 container.appendChild(card);
@@ -2749,181 +2603,6 @@
 
             container.closest('.loading').classList.remove('loading');
         }
-
-        // ============ INCIDENT PATTERNS ============
-
-        function renderIncidentPatterns(data) {
-            const container = document.getElementById('patterns-container');
-            container.innerHTML = '';
-
-            const patterns = data.patterns || [];
-            if (patterns.length === 0) {
-                container.innerHTML = '<p style="color: #8a8f98;">No systemic patterns detected across incident history.</p>';
-                container.closest('.loading').classList.remove('loading');
-                return;
-            }
-
-            let html = '';
-
-            // Summary header
-            const totalCost = data.incident_cost_total || 0;
-            const totalInc = data.total_incidents_analyzed || 0;
-            if (totalInc > 0) {
-                html += `<div style="margin-bottom: 16px; font-size: 13px; color: #8a8f98;">
-                    Analyzed <strong style="color: #fff;">${totalInc}</strong> incidents |
-                    Total impact: <strong style="color: #f5a623;">$${(totalCost / 1000000).toFixed(1)}M</strong>
-                </div>`;
-            }
-
-            patterns.forEach((p, idx) => {
-                const sev = (p.severity || 'medium').toLowerCase();
-                const impactM = ((p.total_impact_usd || 0) / 1000000).toFixed(1);
-
-                html += `
-                    <div class="pattern-card ${sev} fade-in" style="animation-delay: ${idx * 0.05}s;">
-                        <div class="pattern-card-title">${escapeHtml(p.title || '')}</div>
-                        <div class="pattern-card-desc">${escapeHtml(p.description || '')}</div>
-                        <div class="pattern-meta">
-                            <span>${p.frequency || 0} incident${(p.frequency || 0) !== 1 ? 's' : ''}</span>
-                            <span>$${impactM}M impact</span>
-                            <span>${escapeHtml((p.type || '').replace(/_/g, ' '))}</span>
-                        </div>
-                        <div class="pattern-services">
-                            ${(p.services_involved || []).slice(0, 5).map(s =>
-                                `<span class="pattern-svc-badge">${escapeHtml(s)}</span>`
-                            ).join('')}
-                            ${(p.services_involved || []).length > 5 ? `<span class="pattern-svc-badge">+${p.services_involved.length - 5} more</span>` : ''}
-                        </div>
-                        ${p.recommendation ? `<div class="pattern-rec"><strong>Recommendation:</strong> ${escapeHtml(p.recommendation)}</div>` : ''}
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-            container.closest('.loading').classList.remove('loading');
-        }
-
-        // ============ RUNBOOK MODAL ============
-
-        function showRunbookModal(serviceName) {
-            const overlay = document.getElementById('runbook-overlay');
-            const body = document.getElementById('runbook-body');
-            const title = document.getElementById('runbook-title');
-            const badge = document.getElementById('runbook-source-badge');
-
-            title.textContent = 'Response Plan: ' + serviceName;
-            badge.textContent = '';
-            badge.className = 'runbook-source';
-            body.innerHTML = `
-                <div style="text-align: center; padding: 48px;">
-                    <div class="spinner" style="display: inline-flex; margin-bottom: 16px;">
-                        <div class="spinner-dot"></div>
-                        <div class="spinner-dot"></div>
-                        <div class="spinner-dot"></div>
-                    </div>
-                    <div style="color: #8a8f98;">Generating response plan for ${escapeHtml(serviceName)}...</div>
-                </div>
-            `;
-            overlay.classList.add('active');
-
-            fetch('/api/runbook/' + encodeURIComponent(serviceName), { method: 'POST' })
-                .then(r => {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.json();
-                })
-                .then(data => renderRunbook(data))
-                .catch(err => {
-                    body.innerHTML = `<div style="padding: 32px; color: #d32f2f;">
-                        Failed to generate response plan: ${escapeHtml(err.message)}
-                    </div>`;
-                });
-        }
-
-        function renderRunbook(data) {
-            const body = document.getElementById('runbook-body');
-            const badge = document.getElementById('runbook-source-badge');
-            const r = data.runbook || {};
-            const isAI = data.source === 'ai';
-
-            badge.textContent = isAI ? 'AI' : 'Template';
-            badge.className = 'runbook-source ' + (isAI ? 'ai' : 'deterministic');
-
-            let html = '';
-
-            // Immediate Response
-            const steps = r.immediate_response || [];
-            if (steps.length) {
-                html += `<div class="runbook-section">
-                    <h4>Immediate Response</h4>
-                    <ol>${steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ol>
-                </div>`;
-            }
-
-            // Blast Containment
-            const bc = r.blast_containment || {};
-            if (bc.strategy || (bc.actions && bc.actions.length)) {
-                html += `<div class="runbook-section">
-                    <h4>Blast Radius Containment</h4>`;
-                if (bc.strategy) {
-                    html += `<p style="color: #a8adb5; margin-bottom: 12px; font-size: 13px;">${escapeHtml(bc.strategy)}</p>`;
-                }
-                if (bc.affected_services && bc.affected_services.length) {
-                    html += `<div class="runbook-meta" style="margin-bottom: 12px;">Affected: ${bc.affected_services.slice(0, 8).map(s => escapeHtml(s)).join(', ')}</div>`;
-                }
-                if (bc.actions && bc.actions.length) {
-                    html += `<ol>${bc.actions.map(a => `<li>${escapeHtml(a)}</li>`).join('')}</ol>`;
-                }
-                html += `</div>`;
-            }
-
-            // Communication
-            const comm = r.communication || {};
-            if (comm.template) {
-                html += `<div class="runbook-section">
-                    <h4>Communication Template</h4>
-                    <div class="runbook-pre">${escapeHtml(comm.template)}</div>`;
-                if (comm.stakeholders && comm.stakeholders.length) {
-                    html += `<div class="runbook-meta" style="margin-top: 12px;">Notify: ${comm.stakeholders.map(s => escapeHtml(s)).join(', ')}</div>`;
-                }
-                if (comm.timeline) {
-                    html += `<div class="runbook-meta">Timeline: ${escapeHtml(comm.timeline)}</div>`;
-                }
-                html += `</div>`;
-            }
-
-            // Post-Incident
-            const pi = r.post_incident || {};
-            if ((pi.checklist && pi.checklist.length) || (pi.monitoring_gaps && pi.monitoring_gaps.length)) {
-                html += `<div class="runbook-section">
-                    <h4>Post-Incident Checklist</h4>`;
-                if (pi.checklist && pi.checklist.length) {
-                    html += `<ul>${pi.checklist.map(c => `<li>☐ ${escapeHtml(c)}</li>`).join('')}</ul>`;
-                }
-                if (pi.monitoring_gaps && pi.monitoring_gaps.length) {
-                    html += `<div style="margin-top: 16px;"><h4 style="color: #f5a623; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Monitoring Gaps</h4>
-                    <ul>${pi.monitoring_gaps.map(g => `<li>${escapeHtml(g)}</li>`).join('')}</ul></div>`;
-                }
-                html += `</div>`;
-            }
-
-            body.innerHTML = html || '<p style="color: #8a8f98; padding: 24px;">No runbook data available.</p>';
-        }
-
-        function closeRunbook() {
-            document.getElementById('runbook-overlay').classList.remove('active');
-        }
-
-        // Close runbook on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeRunbook();
-            }
-        });
-
-        // Close runbook on overlay click
-        document.getElementById('runbook-overlay').addEventListener('click', function(e) {
-            if (e.target === this) closeRunbook();
-        });
 
         // ============ D3 DEPENDENCY GRAPH ============
 

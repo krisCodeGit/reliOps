@@ -15,7 +15,10 @@ from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
 
-from app.config import BASE_DIR, INSTANCE_DIR, CACHE_DIR, MOCK_DATA_DIR, DB_PATH, CACHE_TTL, PORT
+from app.config import (
+    BASE_DIR, INSTANCE_DIR, CACHE_DIR, MOCK_DATA_DIR, DB_PATH,
+    CACHE_MODE, CACHE_TTL, PORT,
+)
 from app.models import (
     init_db, seed_from_mock_data,
     query_services, query_dependencies, query_incidents,
@@ -26,17 +29,6 @@ from app.rules_engine import (
     run_scan, calculate_risk_score, detect_drift,
     generate_insights, calculate_blast_radius
 )
-# Enterprise modules (proprietary; gracefully degrade when absent)
-try:
-    from app.enterprise.pattern_analyzer import detect_systemic_patterns
-    from app.enterprise.runbook_generator import generate_runbook
-    ENTERPRISE_AVAILABLE = True
-except ImportError:
-    detect_systemic_patterns = None
-    generate_runbook = None
-    ENTERPRISE_AVAILABLE = False
-
-
 # ---------------------------------------------------------------------------
 # Fix-hint mapping (one-liner remediation per rule)
 # ---------------------------------------------------------------------------
@@ -73,8 +65,6 @@ def _configure_logging(app):
     log_level = level_map.get(flag)
     if not log_level:
         logging.getLogger("reliops").handlers.clear()
-        logging.getLogger("reliops.ai").handlers.clear()
-        logging.getLogger("reliops.runbook").handlers.clear()
         return
 
     project_root = Path(app.root_path).parent
@@ -104,8 +94,6 @@ def _configure_logging(app):
             },
             "loggers": {
                 "reliops": {"handlers": ["file"], "level": log_level, "propagate": False},
-                "reliops.ai": {"handlers": ["file"], "level": log_level, "propagate": False},
-                "reliops.runbook": {"handlers": ["file"], "level": log_level, "propagate": False},
             },
         }
     )
@@ -133,8 +121,9 @@ def add_headers(response):
             response.headers['Pragma'] = 'no-cache'
             response.headers['Expires'] = '0'
         else:
-            # Prod: short cache for HTML, revalidate periodically
-            response.headers['Cache-Control'] = 'public, max-age=300, must-revalidate'
+            # Prod: always revalidate HTML (browser sends ETag, gets 304 if unchanged)
+            # This prevents stale templates after deploys while still being fast
+            response.headers['Cache-Control'] = 'no-cache'
     elif request.path.startswith('/static/') and not app.debug:
         # Prod: long cache for static assets (busted by ?v=ASSET_VERSION)
         timeout = config.STATIC_CACHE_TIMEOUT
@@ -146,30 +135,64 @@ def add_headers(response):
 # Caching helpers
 # ---------------------------------------------------------------------------
 
+def _db_fingerprint():
+    """Return a short hash representing the current DB state.
+    Uses the file's modification time + size as a fast proxy.
+    Changes when the DB is reseeded or modified."""
+    try:
+        st = os.stat(str(DB_PATH))
+        raw = f"{st.st_mtime}:{st.st_size}"
+        return hashlib.md5(raw.encode()).hexdigest()[:12]
+    except OSError:
+        return "no-db"
+
+
 def get_cache_path(key):
     hash_key = hashlib.md5(key.encode()).hexdigest()
     return os.path.join(str(CACHE_DIR), f'{hash_key}.json')
 
 
 def get_cached(key):
+    """Return cached JSON data if still valid, else None.
+
+    In content-hash mode: cache is valid as long as the DB hasn't changed.
+    In TTL mode: cache is valid until CACHE_TTL seconds have passed.
+    """
     cache_path = get_cache_path(key)
-    if os.path.exists(cache_path):
+    if not os.path.exists(cache_path):
+        return None
+    try:
+        with open(cache_path, 'r') as f:
+            wrapper = json.load(f)
+    except (json.JSONDecodeError, IOError, OSError):
+        return None
+
+    if CACHE_MODE == 'content-hash':
+        # Valid if DB fingerprint matches what was stored
+        if wrapper.get('_db_fp') == _db_fingerprint():
+            return wrapper.get('data')
+        return None
+    else:
+        # TTL mode: valid if file is younger than CACHE_TTL
         try:
-            stat = os.stat(cache_path)
-            age = datetime.utcnow().timestamp() - stat.st_mtime
+            age = datetime.utcnow().timestamp() - os.stat(cache_path).st_mtime
             if age < CACHE_TTL:
-                with open(cache_path, 'r') as f:
-                    return json.load(f)
-        except (json.JSONDecodeError, IOError, OSError):
+                return wrapper.get('data')
+        except OSError:
             pass
-    return None
+        return None
 
 
 def set_cache(key, value):
+    """Store data in cache with current DB fingerprint."""
     cache_path = get_cache_path(key)
+    wrapper = {
+        '_db_fp': _db_fingerprint(),
+        'data': value,
+    }
     try:
         with open(cache_path, 'w') as f:
-            json.dump(value, f)
+            json.dump(wrapper, f)
     except IOError:
         pass
 
@@ -277,10 +300,6 @@ def build_dashboard_json():
     drift_signals = detect_drift(db_path)
     insights = generate_insights(db_path, violations, risk_result)
 
-    # Track which insight source was used (set as side-effect in generate_insights)
-    from app.rules_engine import _last_insights_source
-    insights_source = _last_insights_source
-
     tier1_services = [s for s in services if 'tier-1' in str(s.get('tier', ''))]
     at_risk_services = list({v.service for v in violations if v.severity in ['CRITICAL', 'HIGH']})
 
@@ -332,8 +351,7 @@ def build_dashboard_json():
         'risk_findings': [v.to_dict() for v in violations[:20]],
         'recurrence_alerts': recurrence_alerts,
         'drift_signals': drift_signals[:5],
-        'ai_insights': insights[:5],
-        'insights_source': insights_source,
+        'insights': insights[:5],
         'reliability_debt': {
             'critical': debt_by_severity['critical'],
             'high': debt_by_severity['high'],
@@ -346,7 +364,6 @@ def build_dashboard_json():
             'tier1': len(tier1_services),
             'at_risk': len(at_risk_services),
         },
-        'incident_patterns': detect_systemic_patterns(db_path) if detect_systemic_patterns else [],
     }
 
     set_cache('dashboard', dashboard)
@@ -415,7 +432,7 @@ def build_audit_dashboard(services_config):
         'risk_findings': [v.to_dict() for v in violations[:20]],
         'recurrence_alerts': [],
         'drift_signals': [],
-        'ai_insights': generate_insights(db_path, violations, risk_result)[:5],
+        'insights': generate_insights(db_path, violations, risk_result)[:5],
         'reliability_debt': {'critical': 0, 'high': 0, 'medium': 0, 'total_effort_days': 0},
         'blast_radius_hotspots': hotspots,
         'services_summary': {
@@ -443,12 +460,6 @@ def audit():
 @app.route('/help')
 def help_page():
     return render_template('help.html')
-
-
-@app.route('/enterprise')
-def enterprise_page():
-    return render_template('enterprise.html')
-
 
 @app.route('/api/dashboard')
 def api_dashboard():
@@ -524,34 +535,6 @@ def api_blast_radius(service_name):
     return jsonify(calculate_blast_radius(str(DB_PATH), service_name))
 
 
-@app.route('/api/runbook/<service_name>', methods=['POST', 'OPTIONS'])
-def api_runbook(service_name):
-    """Generate an on-demand incident response runbook for a service."""
-    if request.method == 'OPTIONS':
-        return '', 200
-
-    # Check cache first (5-minute TTL, same as dashboard)
-    cache_key = f'runbook:{service_name}'
-    cached = get_cached(cache_key)
-    if cached:
-        return jsonify(cached)
-
-    if not generate_runbook:
-        return jsonify({'error': 'Runbook generation requires ReliOps Enterprise'}), 403
-
-    try:
-        result = generate_runbook(str(DB_PATH), service_name)
-        if result is None:
-            return jsonify({'error': f'Service "{service_name}" not found'}), 404
-
-        set_cache(cache_key, result)
-        return jsonify(result)
-    except Exception as e:
-        import logging
-        logging.getLogger('reliops.runbook').warning("Runbook generation failed: %s", e)
-        return jsonify({'error': 'Failed to generate runbook'}), 500
-
-
 @app.route('/api/audit', methods=['POST', 'OPTIONS'])
 def api_audit():
     if request.method == 'OPTIONS':
@@ -560,6 +543,31 @@ def api_audit():
     if not data:
         return jsonify({'error': 'Invalid JSON'}), 400
     return jsonify(build_audit_dashboard(data.get('services', [])))
+
+
+# ---------------------------------------------------------------------------
+# Startup cache warming
+# ---------------------------------------------------------------------------
+# Pre-build the dashboard JSON on startup so the first visitor gets a fast
+# response. Runs in a background thread to avoid delaying app readiness.
+
+import threading
+
+def _warm_cache():
+    """Build dashboard cache on startup so first visitor doesn't wait for AI."""
+    try:
+        with app.app_context():
+            cached = get_cached('dashboard')
+            if not cached:
+                logger.info("Warming dashboard cache...")
+                build_dashboard_json()
+                logger.info("Dashboard cache warmed successfully")
+            else:
+                logger.info("Dashboard cache already fresh, skipping warmup")
+    except Exception as e:
+        logger.warning("Cache warmup failed (will build on first request): %s", e)
+
+threading.Thread(target=_warm_cache, daemon=True).start()
 
 
 # ---------------------------------------------------------------------------
